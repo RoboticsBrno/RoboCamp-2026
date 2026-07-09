@@ -4,33 +4,39 @@ glightbox: false
 
 # Robotický tábor
 
-Hlavním výrobkem letošního tábora je [Robůtek V2](https://robutek.robotikabrno.cz/v2/)
+Hlavním výrobkem letošního tábora je Robodeck.
 
-[Dokumentace](https://robutek.robotikabrno.cz/v2/){ .md-button .md-button--primary }
+![Robodeck](assets/robodeck-cover.png)
 
-![Robutek](assets/V2_robutek-final-cover.png)
+něco o tom #TODO
+ 
+<br>
+
+#TODO něco tady napsat
+
+[Lekce](https://2026.robotikabrno.cz/lekce){ .md-button  }
 
 <br>
-Minulý rok byl [Robůtek V1](https://robutek.robotikabrno.cz/v1/), ale tento rok mu přibylo dost nových funkcí a rozšíření.
-- RGB senzor zespod Robůtka + přidavný RGB senzor na modulu
-- Lepší přesnost motorů
+
+Programuje se stejně jako posledních pár let v TypeScriptu s pomocí Jacula ([jaculus.org](https://jaculus.org))
+
+Ale tento rok máme nově **blokové** a **textové** programování ve webovém prostředí pomocí [**JacLy**](https://jacly.jaculus.org)
+
+[JacLy](https://jacly.jaculus.org/){ .md-button }
 
 <br>
-Programuje se stejně jako minulý rok v TypeScriptu s pomocí Jacula ([jaculus.org](https://jaculus.org))
 
-[Lekce](https://robutek.robotikabrno.cz/v2/robot){ .md-button }
+Tento rok jsme také zvětšily možnosti pájení o [rozšiřující modulky](https://pmod.robotikabrno.cz) do pmod konektorů, které můžete přidat nejen na svůj Robodeck, ale také na Robůtka nebo elks.
 
 <br>
-Tento rok sice nemáme nové pájecí výrobky, ale všechny pájecí výrobky z minulých let si můžete stále vyrobit.
+
+Část pájecích výrobků si stále můžete vytvořit a k nim návody najdete zde.
 
 [Pájecí výrobky](https://gadgets.robotikabrno.cz/){ .md-button .md-button--primary }
 
+## Všechny odkazy co by se vám mohli hodit
 
-## Rozcestník lokálních adres
-
-- [files.lan](http://files.lan/) - lokální verze souborů
-- [navod.lan](http://navod.lan/) - stejně jako [2026.robotickytabor.cz](https://2026.robotickytabor.cz)
-- [robutek.lan](http://robutek.lan/) - stejně jako [robutek.robotikabrno.cz](https://robutek.robotikabrno.cz)
-- [smd-challenge.lan](http://smd-challenge.lan/) - stejně jako [smd-challenge.robotikabrno.cz](https://smd-challenge.robotikabrno.cz)
-- [gadgets.lan](http://gadgets.lan/) - stejně jako [gadgets.robotikabrno.cz](https://gadgets.robotikabrno.cz)
-- [robocoin.lan](http://robocoin.lan/) - stejně jako [robocoin.robotikabrno.cz](http://robocoin.robotikabrno.cz)
+- [2026.robotickytabor.cz](https://2026.robotickytabor.cz) - Tyto stránky se všemi návody co budete na táboře potřebovat
+- [pmod.robotikabrno.cz](https://pmod.robotikabrno.cz) - Návody rozšiřujících modulů do PMOD konektorů
+- [smd-challenge.robotikabrno.cz](https://smd-challenge.robotikabrno.cz/) - Návody pájecí challenge aka blikače v různých velikostech
+- [gadgets.robotikabrno.cz](https://gadgets.robotikabrno.cz/) - Návody všech dalších pájecích hraček z minulých let 

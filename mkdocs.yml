@@ -114,9 +114,9 @@ extra_css:
 nav:
   - Domů:
       - index.md
-  - Robůtek:
-      - https://robutek.robotikabrno.cz/v2/
-  - Gadgets:
-      - https://gadgets.robotikabrno.cz/
+  - Robodeck:
+      - robodeck/index.md
+  - Lekce:
+      - lekce/index.md
   - Náš tým:
       - https://robotikabrno.cz/cs/nas-tym/
