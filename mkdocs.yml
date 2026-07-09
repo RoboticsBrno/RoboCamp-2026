@@ -118,5 +118,12 @@ nav:
       - robodeck/index.md
   - Lekce:
       - lekce/index.md
+  - Challenge:
+      - challenge/index.md
+      - challenge/snake.md
+      - challenge/tetris.md
+      - challenge/fire.md
+      - challenge/game_of_life.md
+      - challenge/asteroids.md
   - Náš tým:
       - https://robotikabrno.cz/cs/nas-tym/
