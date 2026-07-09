@@ -2,7 +2,7 @@
 
 Na této stránce najdete podrobný návod na stavbu Robodecku, který je hlavním výrobkem letošního tábora.
 
-Ten je znázorněn na obrázku XY.
+![Robodeck](kroky/assets/foto29.jpg)
 
 Výroba je rozdělena na čtyři části:
 
