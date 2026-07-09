@@ -8,6 +8,6 @@ Odkazy které by se vám mohli hodit:
 
 Každý pixel má teplotu (0-255), teplota se šíří dolů na displeji s náhodnou variací.
 
-- **tip**: použij lookup tabulku 37 barev
-- **bonus**: vítr ovlivňuje směr šíření, padající popel, materiály (dřevo hoří, voda hasí)
-- **velký bonus**: fluid-based simulace, částicový systém jisker, dynamické osvětlení okolí, čtyřfázový model (zahřívání>zapálení>hoření>uhasení)
+**tip**: použij lookup tabulku 37 barev<br>
+**bonus**: vítr ovlivňuje směr šíření, padající popel, materiály (dřevo hoří, voda hasí)<br>
+**velký bonus**: fluid-based simulace, částicový systém jisker, dynamické osvětlení okolí, čtyřfázový model (zahřívání>zapálení>hoření>uhasení)
