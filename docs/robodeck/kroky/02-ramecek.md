@@ -54,6 +54,9 @@ Displej orientujeme tak, aby šipky ukazovali doprava a dolů. Do rámečku disp
 
 Následně přiložíme velkou dřevěnou deskou, ve které je vyříznutý otvor. Otvor přijde "nahoru". Dále si připravíma dva krátké šroubky, na které nasadíme plastové kroužky. 
 
+!!! danger "Upozornění"
+    Desku položíme tak, aby byla hezčí stranou dolů k displeji, škaredější nahoru. Viditelná bude pouze ta strana dotýkající se displeje.
+
 ![Přiložení velké dřevěné desky](assets/foto11.jpg)
 
 ---
