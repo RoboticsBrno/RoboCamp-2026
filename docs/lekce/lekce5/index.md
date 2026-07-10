@@ -64,10 +64,17 @@ const renderer = new Renderer(display.width, display.height);
 renderer.render(root, display.frame, true, Format.RGB_888);
 display.show();
 ```
-!!! note "Všiměte si, že nastavení pivota na souřadnice 0, 0 vede k rotaci okolo rohu čtverce, ne okolo pixelu se souřadnicemi 0, 0."
-
+!!! note "Všiměte si, že nastavení pivota na souřadnice 0, 0 vede k rotaci okolo rohu čtverce, ne okolo pixelu se souřadnicemi 0, 0. Jak bychom to museli udělat, kdybychom chtěli více tvarů otáčet kolem jednoho středu?"
 
 ## Kolekce
 
+Kolekce jsou speciální grafické prvky, které se vyznačují tím, že můžou obsahovat jiné grafické prvky, včetně kolekcí. Když provedeme posunutí, škálování, nebo rotaci kolekce, tak se tato operace projeví na všech členech této kolekce.
 
-## Postup vykreslování
+Když jsme zadávali souřadnice geometrických tvarů v předchozích příkladech, tak jsme ve skutečnosti nezadávali konkrétní pozice pixelů na displeji, ale souřadnice relativní vzhledem ke kořenové (root) kolekci, do které jsme museli přidat všechny prvky, které měly být viditelné.
+
+## Úkol 1
+Změňte v našem programu parametry root kolekce. Jak se to projeví na výstupu?
+
+
+## Výstupní úloha V1
+Vhodným složením trojúhelníku a obdélníku nakreslete domeček.
