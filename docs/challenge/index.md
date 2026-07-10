@@ -1,4 +1,4 @@
-# Challenge
+# Výzvy
 
 Místo komplexních úkolů u lekcí máme návrhy na projeky, a těšíme se co vše vymyslíte.
 

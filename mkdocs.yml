@@ -51,8 +51,11 @@ markdown_extensions:
   - pymdownx.details
   - pymdownx.keys
   - attr_list
-  - pymdownx.tabbed
+  - pymdownx.tabbed:
+      alternate_style: true
   - meta
+  - pymdownx.tabbed:
+      alternate_style: true
   - pymdownx.snippets:
       url_download: True
   - pymdownx.tasklist:
@@ -81,14 +84,24 @@ plugins:
   #     options: "typedoc.json"
   #     name: "Jaculus API documentation"
 
-  # - zip_folders:
-  #     folders:
-  #       - robot/lekce1/example1
-  #       - robot/lekce3/project3
-  #       - robot/lekce4/project4
-  #       - robot/lekce6/project6
-  #       - robot/lekce8/project8
-  #     debug: true
+  - zip_folders:
+      folders:
+        - lekce/baseExample
+        - moduly/dpad/dpad-example
+        - moduly/enkoder/enkoder-example
+        - moduly/gyro/gyro-example
+        - moduly/ir/ir-example
+        - moduly/joystick/joystick-example
+        - moduly/fotorezistor/fotorezistor-example
+        - moduly/piezo/piezo-example
+        - moduly/rfid/rfid-example
+        - moduly/rtc/rtc-example
+        - moduly/teplota/teplota-example
+        - moduly/dpad/dpad-example
+      formats:
+        - zip
+        - tar.gz
+      debug: true
 
   - auto-refresh-build-pages:
       update_message: "Návod byl aktualizován, chcete načíst novou verzi?"
@@ -114,20 +127,42 @@ extra_css:
 nav:
   - Domů:
       - index.md
-  - Robodeck:
+  - Stavba Robodecku:
       - robodeck/index.md
       - robodeck/kroky/01-pajeni.md
       - robodeck/kroky/02-ramecek.md
       - robodeck/kroky/03-spojeni.md
       - robodeck/kroky/04-dokonceni.md
-  - Lekce:
+  - Programovací lekce:
       - lekce/index.md
-  - Challenge:
+      - lekce/faq/index.md
+      - lekce/lekce0/index.md
+      - lekce/lekce1/index.md
+      - lekce/lekce2/index.md
+      - lekce/lekce3/index.md
+      - lekce/lekce4/index.md
+      - lekce/lekce5/index.md
+      - lekce/lekce6/index.md
+      - lekce/lekce7/index.md
+      - lekce/lekce8/index.md
+      - lekce/lekce9/index.md
+      - lekce/scene-builder/index.md
+  - Rozšířující moduly:
+      - moduly/index.md
+      - moduly/dpad/index.md
+      - moduly/gyro/index.md
+      - moduly/ir/index.md
+      - moduly/joystick/index.md
+      - moduly/fotorezistor/index.md
+      - moduly/piezo/index.md
+      - moduly/enkoder/index.md
+      - moduly/rfid/index.md
+      - moduly/rtc/index.md
+      - moduly/teplota/index.md
+  - Programovací výzvy:
       - challenge/index.md
       - challenge/snake.md
       - challenge/tetris.md
       - challenge/fire.md
       - challenge/game_of_life.md
       - challenge/asteroids.md
-  - Náš tým:
-      - https://robotikabrno.cz/cs/nas-tym/
