@@ -116,6 +116,10 @@ nav:
       - index.md
   - Robodeck:
       - robodeck/index.md
+      - robodeck/kroky/01-pajeni.md
+      - robodeck/kroky/02-ramecek.md
+      - robodeck/kroky/03-spojeni.md
+      - robodeck/kroky/04-dokonceni.md
   - Lekce:
       - lekce/index.md
   - Challenge:
