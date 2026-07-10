@@ -59,12 +59,12 @@ Do kulatých závorek teď píšeme jen výraz, který určuje, jestli se cyklus
 Kód, který se má vykonávat, dokud platí podmínka, může vypadat třeba takto:
 
 ```ts
-import * as gpio from "gpio";
+import { Button } from "button";
 // pin kde je zapojené tlačítko, vyměň za číslo pinu na kterém máš svoje tlačítko připojené
 const BUTTON_PIN = 16; 
-gpio.pinMode(BUTTON_PIN, gpio.PinMode.INPUT);
 
-while (gpio.read(BUTTON_PIN) == 1) {
+const button = new Button(BUTTON_PIN);
+while (!button.isPressed()) {
   // cyklus kontroluje, zdali je tlačítko zmáčknuté (gpio.read() vrací 1, pokud
   // je tlačítko zmáčknuté), dokud není zmáčknuté, vypisuje "NOT PRESSED"
   console.log("NOT PRESSED");
