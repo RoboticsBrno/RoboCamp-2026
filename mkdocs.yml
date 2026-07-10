@@ -86,6 +86,7 @@ plugins:
 
   - zip_folders:
       folders:
+        - lekce/baseExample
         - moduly/dpad/dpad-example
         - moduly/enkoder/enkoder-example
         - moduly/gyro/gyro-example
