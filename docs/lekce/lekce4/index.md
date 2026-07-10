@@ -1,4 +1,4 @@
-# Lekce 3 - Proměnné a podmínky
+# Lekce 4 - Proměnné a podmínky
 
 === "Bločky"
     <!-- TODO blocky  -->
@@ -127,10 +127,10 @@ Vytvoříme si nový projekt z odkazu:
 
 === "Odkaz"
     ```
-    https://robutek.robotikabrno.cz/v2/robot/lekce3/project3.tar.gz
+    https://robutek.robotikabrno.cz/v2/robot/lekce4/project4.tar.gz
     ```
 === "Zip"
-    [Stáhnout ZIP](./project3.zip){ .md-button .md-button--primary }
+    [Stáhnout ZIP](./project4.zip){ .md-button .md-button--primary }
 
 
 ## Zadání A

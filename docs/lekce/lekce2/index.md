@@ -1,6 +1,6 @@
 # Lekce 2 - RGB LED + tlačítko + události
 
-V této lekci si napíšeme své první programy.
+V této lekci začneme se zajímavějšími programy.
 
 Ukážeme si ovládání RGB LED umístěné na ESP32 a práci s událostmi řízenými tlačítkem nebo časem.
 
@@ -8,6 +8,16 @@ Ukážeme si ovládání RGB LED umístěné na ESP32 a práci s událostmi ří
     V lekci 1. jsme se naučili jak vytvořit nový projekt. Teď si tuto znalost ověříme.
 
 === "Bločky"
+    ## Zadání A
+    Nejprve si ověříme znalosti z minulé lekce. Zkusíme blikat RGB LED na Saturnu (pin 48). Na začátku tohoto úkolu si otevřeme nový prázdný projekt. Můžete se inspirovat projektem z minulé lekce.
+
+    ??? tip "Řešení"
+        ![blockSolutionA](./assets/blocksSolutionA.png)
+
+    Co je to událost v programování?
+
+    <!-- TODO chceme tu vysvětlovat  -->
+
     <!-- TODO new project creation -->
     <!-- TODO Zadani A -->
     <!-- TODO Co je to udalost? dava to vubec smysl -->
