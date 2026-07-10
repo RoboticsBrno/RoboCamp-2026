@@ -92,12 +92,15 @@ Pomocí funkce `#!ts Display.fill` lze jednoduše vyplnit celý displej jednolit
 === "Bločky"
     ![](./assets/wehavescratchathome3.png)
 
+!!! info
+    Pokud chceš vyčistit obrazovku, můžeš použít optimalizovanou funkci `clear`.
+
 ## Zadání B
 
 Vyplň celý displej modrou barvou a pak po dvou vteřinách žlutou.
 
 ??? tip "Nápověda"
-    Čekání se dělá pomocí následujícího příkazu: `#!ts await sleep(pocetMilisekund);`
+    Čeká se pomocí příkazu `#!ts await sleep(pocetMilisekund);`
 
     ??? tip "Nápověda 2"
         Jedna sekunda má tisíc milisekund.
@@ -171,7 +174,7 @@ Vyplň celý displej modrou barvou a pak po dvou vteřinách žlutou.
     === "Bločky"
         ![](./assets/wehavescratchathome0.png)
 
-## Výstupní úkol
+## Zadání výstupního úkolu
 
 Nakresli smajlík :-) Ćím hezčí, tím víc bodů*
 
