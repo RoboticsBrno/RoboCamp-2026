@@ -11,5 +11,5 @@ Výroba je rozdělena na čtyři části:
 3. [Spojení předchozích dvou částí](kroky/03-spojeni.md)
 4. [Dokončení](kroky/04-dokonceni.md)
 
-!!! danger "Upozornění"
-	Není první dva body lze udělat v libovolném pořadí. Je proto možné začít bodem číslo 2. (rámeček), pokud nebude u pájení místo.
+!!! warning "Upozornění"
+	První dva body lze udělat v **libovolném pořadí**. Je proto možné začít lepením rámečku, pokud nebude u pájení místo.
