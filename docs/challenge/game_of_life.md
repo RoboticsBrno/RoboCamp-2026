@@ -10,10 +10,10 @@ Odkazy které by se vám mohli hodit:
 
 Každá buňka má 8 sousedů. A každá buňka se rozhoduje podle těchto pravidel
 
-- živá buňka s **méně než 2** sousedy - zemře 
-- živá buňka se **2 nebo 3** sousedy - přežije 
-- živá buňka s **více než 3** sousedy - zemře 
-- mrtvá buňka s **přesně 3** sousedy - ožije
+- živá buňka s **méně než 2** živými sousedy - zemře 
+- živá buňka se **2 nebo 3** živými sousedy - přežije 
+- živá buňka s **více než 3** živými sousedy - zemře 
+- mrtvá buňka s **přesně 3** živými sousedy - ožije
 
 <br>
 
