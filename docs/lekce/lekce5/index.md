@@ -1,145 +1,87 @@
-# Lekce 5 - Servo (Kreslení tužkou)
+# Lekce 5 - Vektorová grafika
+V přechozích lekcích jsme viděli, jak ovládat jednotlivé pixely displeje. V této lekci si ukážeme jak vykreslovat složitější tvary a struktury.
 
-Abychom mohli používat servo, musíme ho inicializovat. K tomu slouží příkaz `#!ts const servo = new Servo(SERVO_PIN, 1, 4)`. Parametr `SERVO_PIN` specifikuje, na který pin je servo připojeno.
+## Jednoduché tvary
 
-```ts
-import { Servo } from "./libs/servo.js";
-import { createRobutek } from "./libs/robutek.js";
+Ještě než začneme s vykreslováním jednoduchých tvarů, je potřeba si připravit kostru projektu:
 
-const robutek = createRobutek("V2");
-
-// robutek.Pins.Servo2 je pin 38
-const servo = new Servo(robutek.Pins.Servo2, 1, 4);
-```
-
-Na nastavení pozice serva používáme funkci `#!ts write(POSITION)`. Parametr `POSITION` je číslo od 0 do 1023. Specifikuje úhel, na který se má servo otočit.
-
-```ts
-servo.write(0); // 0°
-servo.write(512); // 90°
-servo.write(1023); // 180°
-```
-
-!!! note "Pro konverzi úhlu na číslo musíme úhel vynásobit 1024 a vydělit 180"
-
-## Kreslení tužkou
-
-Tím, že zvedáme nebo pokládáme servo, můžeme ovládat připevněnou tužku.
-Abychom si nemuseli pamatovat konkrétní hodnoty pro zvedání tužky, Robůtek má 3 předdefinované konstaty pro ovládání: `Up`, `Down` a `Unload`.
-Pokud bychom do něj dávali různé druhy tužek, můžeme si samozřejmě nadefinovat vlastní.
-
-Aby ovládací konstanty fungovaly, musí být pacička nasazena ve správné pozici. Proto musíme servo programem otočit na 0° a pacičku nasadit tak, aby směřovala přímo vzhůru.
-
-```ts
-import { createRobutek } from "./libs/robutek.js";
-import { Servo } from "./libs/servo.js";
-
-const robutek = createRobutek("V2");
-const servo = new Servo(robutek.Pins.Servo2, 1, 4);
-
-servo.write(0);
-```
-
-![](./assets/servoArmAttached.jpg)
-
-Jakmile máme pacičku správně nastavenou, můžeme na ni nasadit fixu.
-
-![](../../robotAssembly/assets/stage2/IMG-stage2-step14b.jpeg)
-
-Teď už máme všechno připraveno, takže můžeme kreslit.
-
-Na nastavení pozice tužky zase použijeme funkci `#!ts write(POSITION)`. Místo čísla `0-1023` ale do parametru `POSITION` vložíme jednu z konstant `Up`, `Down` a `Unload`.
-
-```ts
-import { Servo } from "./libs/servo.js";
-import { createRobutek } from "./libs/robutek.js";
-const robutek = createRobutek("V2");
-
-const pen = new Servo(robutek.Pins.Servo2, 1, 4); // robutek.Pins.Servo2 je pin 38
-
-// Začne kreslit
-pen.write(robutek.PenPos.Down);
-
-// Přestane kreslit
-pen.write(robutek.PenPos.Up);
-
-// Vytáhne tužku
-pen.write(robutek.PenPos.Unload);
-```
-
-!!! note "Neočekávaný výsledek"
-
-    Pokud tento program spustíme, zjistíme, že se provede pouze poslední `write`. Program totiž nečeká na dokončení pohybu, ale příkazy pošle okamžitě po sobě. Servo pak provede pouze poslední přijatý příkaz, z našeho pohledu tedy pohyb na pozici `Unload`. V běžném programu to však nebude problém, jelikož mezi příkazy write budeme provádět i jiné příkazy, jako třeba příkaz `move`, u kterých program čeká na dokončení.
-
-## Zadání A
-
-Vytvořme program, který při zmáčknutí tlačítka zasune pero a druhé tlačítko, které ho vysune.
-
-??? note "Řešení"
-
+=== "Typescript"
     ```ts
-    import { Servo } from "./libs/servo.js";
-    import * as gpio from "gpio";
-    import { createRobutek } from "./libs/robutek.js";
+    import { Display } from "rphub75";
+    import { rgb } from "colors";
+    import * as colors from "colors";
+    import { Renderer, Format, Font, Texture } from "renderer";
+    import { Circle, Rectangle, Point, LineSegment, Collection } from "shapes";
 
-    const robutek = createRobutek("V2");
+    const root = new Collection({ x: 0, y: 0, color: colors.white, z: 0 });
 
-    gpio.pinMode(robutek.Pins.ButtonLeft, gpio.PinMode.INPUT);
-    gpio.pinMode(robutek.Pins.ButtonRight, gpio.PinMode.INPUT);
+    // Sem vepisujte vlastní kod
 
-    const pen = new Servo(robutek.Pins.Servo2, 1, 4);
-
-    gpio.on("falling", robutek.Pins.ButtonLeft, () => {
-        pen.write(robutek.PenPos.Down);
-    });
-
-    gpio.on("falling", robutek.Pins.ButtonRight, () => {
-        pen.write(robutek.PenPos.Up);
-    });
+    const display = new Display();
+    const renderer = new Renderer(display.width, display.height);
+    renderer.render(root, display.frame, true, Format.RGB_888);
+    display.show();
     ```
+=== "Bločky"
+    ![](./assets/stub.png)
 
-## Zadání B
-
-Zkombinujme poznatky z [lekce 4](../lekce4/index.md) s touto a vytvořme program, který po stisku tlačítka nakreslí fixou na papír čtverec.
-
-??? note "Řešení"
-
+Nejdříve si vykreslíme jednoduchý prázdný čtverec a vyplněný kruh:
+=== "TypeScript"
     ```ts
-    import { Servo } from "./libs/servo.js"
-    import * as gpio from "gpio"
-    import { createRobutek } from "./libs/robutek.js"
-    const robutek = createRobutek("V2");
-
-    const LBTN_PIN = 2;
-    const RBTN_PIN = 0;
-
-    gpio.pinMode(LBTN_PIN, gpio.PinMode.INPUT);
-    gpio.pinMode(RBTN_PIN, gpio.PinMode.INPUT);
-
-    const pen = new Servo(robutek.Pins.Servo2, 1, 4);
-
-    gpio.on("falling", LBTN_PIN, async () => {
-        pen.write(robutek.PenPos.Down); // fixa dolů
-
-        robutek.setSpeed(100) // Nastav rychlost na 100
-
-        await robutek.move(0, { distance: 300 }) // Ujeď 30 cm
-        await robutek.rotate(90)
-        await robutek.move(0, { distance: 300 })
-        await robutek.rotate(90)
-        await robutek.move(0, { distance: 300 })
-        await robutek.rotate(90)
-        await robutek.move(0, { distance: 300 })
-        await robutek.rotate(90)
-
-        pen.write(robutek.PenPos.Up); // fixa nahoru
-    });
+    const obdelnik = new Rectangle({x: 10, y: 10, width: 10, height:20, color: colors.yellow})
+    root.add(obdelnik)
+    const kruh = new Circle({x: 32, y: 32, radius: 5, color: colors.green, fill: true})
+    root.add(kruh)
     ```
+=== "Bločky"
+    ![](./assets/add_shapes.png)
 
-## Výstupní ukol V1
+!!! warning "Každý tvar musíme přidat do kolekce, kterou poté renderer vykresluje, nebo do nějaké její podkolekce" 
 
-Př stisknutí jednoho tlačítka vykreslí Robůtek kruh, při stisknutí druhého vykreslí trojúhelník.
+### Rotace
+Vyzkoušíme si ještě rotace. Před prováděním rotací je dobré nastavit si bod (pivot), kolem kterého se bude tvar otáčet
 
-## Výstupní úkol V2
+=== "TypeScript"
+    ```ts
+    obdelnik.setPivot(0,0)
+    obdelnik.rotate(45)
+    ```
+=== "Bločky"
+    ![](./assets/rotate_pivot.png)
+Celý dosavadní kód by měl vypadat nějak takto:
+```ts
+import { Display } from "rphub75";
+import { rgb } from "colors";
+import * as colors from "colors";
+import { Renderer, Format, Font, Texture } from "renderer";
+import { Circle, Rectangle, Point, LineSegment, Collection } from "shapes";
 
-Při stisknutí jednoho tlačítka vykreslí Robůtek první písmeno našeho jména, při stisku druhého tlačítka první písmeno našeho příjmení.
+const root = new Collection({ x: 0, y: 0, color: colors.white, z: 0 });
+
+const obdelnik = new Rectangle({x: 10, y: 10, width: 10, height:20, color: colors.yellow})
+root.add(obdelnik)
+obdelnik.setPivot(0, 0)
+obdelnik.rotate(45)
+
+const kruh = new Circle({x: 32, y: 32, radius: 5, color: colors.green, fill: true})
+root.add(kruh)
+
+const display = new Display();
+const renderer = new Renderer(display.width, display.height);
+renderer.render(root, display.frame, true, Format.RGB_888);
+display.show();
+```
+!!! note "Všiměte si, že nastavení pivota na souřadnice 0, 0 vede k rotaci okolo rohu čtverce, ne okolo pixelu se souřadnicemi 0, 0. Jak bychom to museli udělat, kdybychom chtěli více tvarů otáčet kolem jednoho středu?"
+
+## Kolekce
+
+Kolekce jsou speciální grafické prvky, které se vyznačují tím, že můžou obsahovat jiné grafické prvky, včetně kolekcí. Když provedeme posunutí, škálování, nebo rotaci kolekce, tak se tato operace projeví na všech členech této kolekce.
+
+Když jsme zadávali souřadnice geometrických tvarů v předchozích příkladech, tak jsme ve skutečnosti nezadávali konkrétní pozice pixelů na displeji, ale souřadnice relativní vzhledem ke kořenové (root) kolekci, do které jsme museli přidat všechny prvky, které měly být viditelné.
+
+## Úkol A
+Změňte v našem programu parametry root kolekce. Jak se to projeví na výstupu?
+
+
+## Výstupní úloha V1
+Vhodným složením trojúhelníku a obdélníku nakreslete domeček.
