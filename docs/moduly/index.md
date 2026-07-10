@@ -2,58 +2,68 @@
 
 ### DPad
 
-[DPad modul](dpad/index.md){ .md-button }
+[Stavba](https://pmod.robotikabrno.cz/DPad/){ .md-button }
+[Použití](dpad/index.md){ .md-button }
 
 ---
 
 ### Gyro
 
-[Gyro modul](gyro/index.md){ .md-button }
+[Stavba](https://pmod.robotikabrno.cz/gyro/){ .md-button }
+[Použití](gyro/index.md){ .md-button }
 
 ---
 
 ### IR
 
-[IR modul](ir/index.md){ .md-button }
+[Stavba](https://pmod.robotikabrno.cz/IR/){ .md-button }
+[Použití](ir/index.md){ .md-button }
 
 ---
 
 ### Joystick
 
-[Joystick modul](joystick/index.md){ .md-button }
+[Stavba](https://pmod.robotikabrno.cz/joystick/){ .md-button }
+[Použití](joystick/index.md){ .md-button }
 
 ---
 
 ### Fotorezistor
 
-[Fotorezistor modul](fotorezistor/index.md){ .md-button }
+[Stavba](https://pmod.robotikabrno.cz/photoresistor/){ .md-button }
+[Použití](fotorezistor/index.md){ .md-button }
 
 ---
 
 ### Piezo
 
-[Piezo modul](piezo/index.md){ .md-button }
+[Stavba](https://pmod.robotikabrno.cz/PIEZO/){ .md-button }
+[Použití](piezo/index.md){ .md-button }
 
 ---
 
 ### Enkodér
 
-[Enkodér modul](encoder/index.md){ .md-button }
+[Stavba](https://pmod.robotikabrno.cz/r-encoder/){ .md-button }
+[Použití](encoder/index.md){ .md-button }
 
 ---
 
 ### RFID
 
-[RFID modul](rfid/index.md){ .md-button }
+[Stavba](https://pmod.robotikabrno.cz/RFID/){ .md-button }
+[Použití](rfid/index.md){ .md-button }
 
 ---
 
 ### RTC
 
-[RTC modul](rtc/index.md){ .md-button }
+[Stavba](https://pmod.robotikabrno.cz/RTC/){ .md-button }
+[Použití](rtc/index.md){ .md-button }
 
 ---
 
 ### Teplota
 
-[Teplotní čidlo](temperature/index.md){ .md-button }
+[Stavba](https://pmod.robotikabrno.cz/thermometer/){ .md-button }
+[Použití](temperature/index.md){ .md-button }
