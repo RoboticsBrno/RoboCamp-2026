@@ -150,17 +150,9 @@ Rozšíření pro VSCode nám umožní jednoduše nahrávat kód do Jacula pomoc
     ![Rozšíření bar](./assets/bar.png)
 
     - V boční liště by se měla objevit záložka Jaculus, přes kterou můžete vytovřit projekt a následně spouštět Jaculus příkazy.
+
     ![jacSidebar](./assets/jacSidebar.png)
 
-
-<!-- TODO doesnt rly make sense? who know what is USB UART -->
-
-??? note "Používám Windows a nemůžu se připojit přes USB UART"
-    Pokud se vám nedaří připojit na USB UART port, je nutné doinstalovat správné drivery.
-
-    1. Stáhněte si <a target="_blank" href="https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers">driver</a> pro váš operační systém. Naleznete jej v záložce `Downloads -> Software -> CP210x Universal Windows Driver`.
-    2. Rozbalte ZIP soubor a poté pravým tlačítkem klikněte na `silabser.inf` a vyberte `Install`.
-    3. Vyzkoušejte, zda se vám podařilo připojit Jaculus. (možná budete muset restartovat počítač).
 
 !!! tip "Něco ti nefunguje?"
     Podívej se na [Často kladené dotazy](../faq/index.md)

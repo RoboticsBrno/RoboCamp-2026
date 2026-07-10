@@ -57,52 +57,84 @@ Zde si vyzkoušíme vytvořit první projekt a nahrát jej do Saturnu.
     !!! warning "Po každé změně je potřeba program znovu nahrát."
 
     ## Výsupní úkol V1
-    Udělejte program který bude střídavě blikat LEDkou červeně a zeleně a do konzole vypisovat `Ahojky svete` a `Nazdar svete`.  
+    Udělejte program který bude střídavě blikat LEDkou červeně a do konzole vypisovat `Nazdar svete`.  
 
 
 
 === "TypeScript"
-    <!-- TODO change project creation-->
     Nejprve si vytvoříme nový projekt a zkusíme ho nahrát, abychom otestovali, jestli vše funguje.
     === "Odkaz"
-        odkaz
-    
-    === "VSCode extension"
-        extension
-    
-    === "Command line"
-        cmd
+        Stačí kliknout na odkaz, otevře se nám VSCode a nabídne se nám možnost vytvořit projekt z připraveného balíčku.
 
+        [Create project]( vscode://cubicap.jaculus/import?uri=https://2026.robotickytabor.cz/lekce/baseExample.tar.gz){.md-button .md-button--primary}
+    === "VSCode extension"
+        Otevřeme VSCode, v levém exploreru kliknema na extension `Jaculus` a tlačítko `Create Project`. Vybereme adresář, kde chceme mít projekt uložený a zadáme název projektu. Poté v menu vybereme možnost `Custom package URL` a zadáme toto URL: 
+        
+        `https://2026.robotickytabor.cz/lekce/baseExample.tar.gz`.
+    === "Command line"
+        Tento příkaz stačí zadat do terminálu v adresáři, kde chceme mít projekt uložený. Změníme `<PROJECT_NAME>` na název projektu, který chceme vytvořit.
+        
+        ```bash
+        jac project-create --package https://2026.robotickytabor.cz/lekce/baseExample.tar.gz <PROJECT_NAME>
+        ```
     === "Zip"
-        zip
+        Stáhneme si tento zip soubor, rozbalíme jej a otevřeme ve VSCode.
+        
+        [Zip soubor](https://2026.robotickytabor.cz/lekce/baseExample.zip){.md-button .md-button--primary}
 
     ## Nahrání programu
     <!-- TODO update for new extension -->
-    Pokud nám funguje připojení na :material-eye:`Monitor` a běží nám komunikace se zařízením, můžeme do zařízení zkusit nahrát náš první program.
+    Teď můžeme zkusit na Saturn nahrát náš první program. Vytvořili jsme si projekt, který obsahuje jednoduchý program, který nám bude vypisovat zprávu do konzole a rozsvítí LEDku na Saturnu. 
 
     1. Ve VSCode máme otevřený první projekt. V levém `Exploreru` (`Průzkumníku`) vybereme soubor ze  `src` -> `index.ts`. V něm vidíme náš první program.
-    2. Poté zvolíme :material-arrow-right:`Build, Flash and Monitor` pro nahrání programu do zařízení.
+
+    2. V levém dolním rohu klikneme na tlačítko `COM` a vybereme port, na kterém je Saturn připojený. Pro zjištění správného portu zkusíme Saturn odpojit a znovu připojit. V seznamu portů by se měl objevit nový port, který je právě Saturn. Ten si zapamatujeme a vybereme.
+    ![portSelector](./assets/portSelector.png)
+
+    3. Poté zvolíme :material-arrow-right:`Build, Flash and Monitor` pro nahrání programu do zařízení.
+        ![buildFlashMonitor](./assets/buildFlashMonitor.png)
 
         !!! danger "Pokud se program nenahraje za ~10 vteřin, zkuste zmáčknout tlačítko označené `EN` a program nahrát znovu."
 
-        ![První program](./assets/first-code.png)
-        <!-- TODO: update 2 and 3 current library and jaculus implementations -->
-    3. Měli bychom vidět výstup z programu.
+
+
+    4. Měli bychom vidět výstup z programu a zeleně svítící LEDku na Saturnu. 
         ```bash
-        $ jac monitor --port COM7
-        Connecting to serial at COM7 at 921600 bauds... Connected.
-
-        Robotický tábor 2025, zdraví Jirka Vácha!
-        Robotický tábor 2025, zdraví Jirka Vácha!
+        Ahojky svete
+        Ahojky svete
+        Ahojky svete
+        Ahojky svete
+        Ahojky svete
+        Ahojky svete
+        Ahojky svete
+        Ahojky svete
         ```
-    4. Pro ukončení terminálu, do něj klikneme a stiskneme ++ctrl+c++.
+    5. Pro ukončení terminálu, do něj klikneme a stiskneme ++ctrl+c++.
 
-    <!-- Jak vlastne nas program funguje -->
+    ## Jak vlastně náš program funguje?
+    Tato část importuje knihovny, které nám umožní ovládat LEDku a používat předem definované barvy a vytváří objekt LEDky, se kterým budeme pracovat. V našem případě je to LEDka na pinu 48, která je typu `LED_WS2812B`. Tato část teď není důležitá, takže ji necháme tak, jak je.
+    ```ts
+    import { SmartLed, LED_WS2812B } from "smartled";
+    import * as colors from "colors";
+    const led = new SmartLed(48, 1, LED_WS2812B);
+    ```
+
+    Tato část nastavuje LEDku na zelenou barvu a zobrazuje ji.
+    ```ts
+    led.set(0, colors.green);
+    led.show();
+    ```
+
+    A nakonec tato část vypisuje do konzole zprávu `Ahojky svete` každých 1000ms.
+    ```ts
+    setInterval(() => {
+        console.log("Ahojky svete");
+    }, 1000);
+    ```
 
     ## Úprava programu
 
     Pokud nám funguje nahrávání kódu, můžeme se na něj podívat a zkusit jej upravit.
-    Ve zdrojovém kódu jsou komentáře (`// tohle je komentář`), které nám popisují, co který řádek dělá.
 
     1. Prostudujeme si zdrojový kód.
     2. Upravíme pozdrav na své jméno.
@@ -110,7 +142,7 @@ Zde si vyzkoušíme vytvořit první projekt a nahrát jej do Saturnu.
         ??? note "Řešení"
             ```ts
             ...
-            console.log("Robotický tábor 2025, zdraví Franta Flinta!");  // tady jsem změnil své jméno
+            console.log("Ahojky svete, tady zdravi Frant Flinta z roku 2026");
             ...
             ```
 
@@ -123,31 +155,24 @@ Zde si vyzkoušíme vytvořit první projekt a nahrát jej do Saturnu.
             ...
             ```
 
-    4. Upravíme barvu.
-
+    4. Upravíme barvu. Použijeme předdefinované barvy z knihovny `colors`.
+    Předem definované barvy:
+        - `red`
+        - `orange`
+        - `yellow`
+        - `green`
+        - `light_blue`
+        - `blue`
+        - `purple`
+        - `pink`
+        - `white`
+        - `off`
         ??? note "Řešení"
-            Barvu lze zadat ve formátu RGB - poměr červené, zelené a modré barvy
             ```ts
             ...
-            ledStrip.set(0, colors.rgb(0, 255, 0)); // nastavíme barvu LED na Robůtkovi na zelenou
+            led.set(0, colors.blue); 
             ...
             ```
-            Můžeme také využít předem definované barvy.
-            ```ts
-            import * as colors from "./libs/colors.js"; // musíme na začátku programu importovat knihovnu s barvami
-            ledStrip.set(0, colors.blue); // nastavíme barvu na modrou
-            ```
-            Předem definované barvy:
-
-            - `red`
-            - `orange`
-            - `yellow`
-            - `green`
-            - `light_blue`
-            - `blue`
-            - `purple`
-            - `pink`
-            - `white`
-            - `off`
     
     ## Výstupní úkol V1
+        Udělejte program který bude střídavě blikat LEDkou červeně a do konzole vypisovat Nazdar svete.

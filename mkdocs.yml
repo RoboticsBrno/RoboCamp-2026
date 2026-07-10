@@ -83,14 +83,13 @@ plugins:
   #     options: "typedoc.json"
   #     name: "Jaculus API documentation"
 
-  # - zip_folders:
-  #     folders:
-  #       - robot/lekce1/example1
-  #       - robot/lekce3/project3
-  #       - robot/lekce4/project4
-  #       - robot/lekce6/project6
-  #       - robot/lekce8/project8
-  #     debug: true
+  - zip_folders:
+      folders:
+        - lekce/baseExample
+      formats:
+        - zip
+        - tar.gz
+      debug: true
 
   - auto-refresh-build-pages:
       update_message: "Návod byl aktualizován, chcete načíst novou verzi?"
@@ -124,7 +123,6 @@ nav:
       - lekce/lekce0/index.md
       - lekce/lekce1/index.md
       - lekce/lekce2/index.md
-      - lekce/lekce2-1/index.md
       - lekce/lekce3/index.md
       - lekce/lekce4/index.md
       - lekce/lekce5/index.md
