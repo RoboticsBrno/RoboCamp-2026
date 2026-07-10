@@ -175,4 +175,4 @@ Zde si vyzkoušíme vytvořit první projekt a nahrát jej do Saturnu.
             ```
     
     ## Výstupní úkol V1
-        Udělejte program který bude střídavě blikat LEDkou červeně a do konzole vypisovat Nazdar svete.
+    Udělejte program který bude střídavě blikat LEDkou červeně a do konzole vypisovat Nazdar svete.
