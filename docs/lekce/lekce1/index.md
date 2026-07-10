@@ -1,6 +1,6 @@
 # Lekce 1 - První projekt
 
-Zde si vyzkoušíme vytvořit první projekt a nahrát jej do Robůtka.
+Zde si vyzkoušíme vytvořit první projekt a nahrát jej do Saturnu.
 
 <!-- TODO will need to be changed in other lessons -->
 
@@ -45,43 +45,39 @@ Zde si vyzkoušíme vytvořit první projekt a nahrát jej do Robůtka.
         
         !!! warning "Je důležité vybrat správný typ led, v našem případě `LED_WS2812B`."
 
-    3. Jakmile nám funguje úvodní program, zkusíme si ho trochu upravit. Zkuste si změnit barvu LED, vypisovanou zprávu a dobu čekání mezi výpisy.
-        
-        !!! warning "Po každé změně je potřeba program znovu nahrát."
+    ## Jak vlastně náš program funguje?
+    Náš program se skládá ze dvou částí. 
+    
+    První část je blok `při spuštění`, který se vykoná jen jednou, když se program spustí. V něm inicializujeme LEDku, nastavíme ji na červenou a zobrazíme. 
+    
+    Druhá část je blok `opakuj stále`, který se vykonává stále dokola. V něm vypisujeme do konzole zprávu `Ahojky svete` a čekáme 500ms. 
+    
+    ## Zadání A
+    Jakmile nám funguje úvodní program, zkusíme si ho trochu upravit. Zkusme si změnit barvu LED, vypisovanou zprávu a dobu čekání mezi výpisy. 
+    !!! warning "Po každé změně je potřeba program znovu nahrát."
 
     ## Výsupní úkol V1
     Udělejte program který bude střídavě blikat LEDkou červeně a zeleně a do konzole vypisovat `Ahojky svete` a `Nazdar svete`.  
 
 
 
-=== "VS Code rozšíření"
-    <!-- TODO final project link-->
-    <!-- TODO update extension -->
-    <!-- TODO update link -->
-    ```
-    https://robutek.robotikabrno.cz/v2/robot/lekce1/example1.tar.gz
-    ```
-    !!! warning "Varování"
-        Odkaz si zkopírujte než začnete tvořit projekt, když vyjedete z VSCode při vytváření projektu, vytváření projektu se vám zruší.
+=== "TypeScript"
+    <!-- TODO change project creation-->
+    Nejprve si vytvoříme nový projekt a zkusíme ho nahrát, abychom otestovali, jestli vše funguje.
+    === "Odkaz"
+        odkaz
+    
+    === "VSCode extension"
+        extension
+    
+    === "Command line"
+        cmd
 
-    1. V prvním kroku si na počítači nachystáme složku `RoboCamp-2026`, do které si budeme ukládat veškeré projekty.
-    2. Klikneme pravým tlačítkem na ikonku `Visual Studio Code` a vybereme možnost `New window`.
-    3. Dále v rozšíření Jaculus vybereme `Create Project`.
-    4. Zvolíme umístění projektu do složky `RoboCamp-2025`.
-    5. Zadáme název projektu, např. `prvniProjekt`, potvrdíme `Enter`.
-    6. Vložíme odkaz na projekt, potvrdíme `Enter`.
-    7. Otevře se nám vytvořený projekt.
-    8. Připojíme Robůtka přes `USB-C`. Pokud `USB-C` nefunguje, použijeme `micro-USB`.
-    9. V levém spodním rohu vybereme :material-power-plug:`Select COM port` pro výběr portu, na kterém je Robůtek připojený. Poté se nápis změní na vybraný port.
-
-        ??? tip "Vidíme více portů"
-            Pokud se nám v nabídce zobrazí více portů, odpojíme Robůtka a zjistíme, který port zmizel. Po připojení Robůtka tento port vybereme.
-
-    10. Dále zvolíme :material-eye:`Monitor`, ten slouží pro komunikaci se zařízením.
-
+    === "Zip"
+        zip
 
     ## Nahrání programu
-
+    <!-- TODO update for new extension -->
     Pokud nám funguje připojení na :material-eye:`Monitor` a běží nám komunikace se zařízením, můžeme do zařízení zkusit nahrát náš první program.
 
     1. Ve VSCode máme otevřený první projekt. V levém `Exploreru` (`Průzkumníku`) vybereme soubor ze  `src` -> `index.ts`. V něm vidíme náš první program.
@@ -101,6 +97,7 @@ Zde si vyzkoušíme vytvořit první projekt a nahrát jej do Robůtka.
         ```
     4. Pro ukončení terminálu, do něj klikneme a stiskneme ++ctrl+c++.
 
+    <!-- Jak vlastne nas program funguje -->
 
     ## Úprava programu
 

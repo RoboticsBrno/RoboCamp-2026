@@ -1,0 +1,1 @@
+# Lekce 2.1 - Co je to GPIO?
