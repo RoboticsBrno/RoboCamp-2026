@@ -51,7 +51,8 @@ markdown_extensions:
   - pymdownx.details
   - pymdownx.keys
   - attr_list
-  - pymdownx.tabbed
+  - pymdownx.tabbed:
+      alternate_style: true
   - meta
   - pymdownx.tabbed:
       alternate_style: true
@@ -86,6 +87,17 @@ plugins:
   - zip_folders:
       folders:
         - lekce/baseExample
+        - moduly/dpad/dpad-example
+        - moduly/enkoder/enkoder-example
+        - moduly/gyro/gyro-example
+        - moduly/ir/ir-example
+        - moduly/joystick/joystick-example
+        - moduly/fotorezistor/fotorezistor-example
+        - moduly/piezo/piezo-example
+        - moduly/rfid/rfid-example
+        - moduly/rtc/rtc-example
+        - moduly/teplota/teplota-example
+        - moduly/dpad/dpad-example
       formats:
         - zip
         - tar.gz
@@ -117,6 +129,10 @@ nav:
       - index.md
   - Robodeck:
       - robodeck/index.md
+      - robodeck/kroky/01-pajeni.md
+      - robodeck/kroky/02-ramecek.md
+      - robodeck/kroky/03-spojeni.md
+      - robodeck/kroky/04-dokonceni.md
   - Lekce:
       - lekce/index.md
       - lekce/faq/index.md
@@ -130,5 +146,23 @@ nav:
       - lekce/lekce7/index.md
       - lekce/lekce8/index.md
       - lekce/lekce9/index.md
-  - Náš tým:
-      - https://robotikabrno.cz/cs/nas-tym/
+      - lekce/saturn/index.md
+  - Moduly:
+      - moduly/index.md
+      - moduly/dpad/index.md
+      - moduly/gyro/index.md
+      - moduly/ir/index.md
+      - moduly/joystick/index.md
+      - moduly/fotorezistor/index.md
+      - moduly/piezo/index.md
+      - moduly/enkoder/index.md
+      - moduly/rfid/index.md
+      - moduly/rtc/index.md
+      - moduly/teplota/index.md
+  - Challenge:
+      - challenge/index.md
+      - challenge/snake.md
+      - challenge/tetris.md
+      - challenge/fire.md
+      - challenge/game_of_life.md
+      - challenge/asteroids.md

@@ -1,7 +1,7 @@
 # Lekce 6 - Cykly
 
 V této lekci si představíme cykly. Ty nám umožňují opakovat kód podle nějakého pravidla.
-Zatím je využijeme pro komunikaci s robotem, v následující lekci si ukážeme jejich použití při řízení robota.
+Zatím je využijeme pro kreslení složitějších tvarů na obrazovce.
 
 Máme primárně dva typy cyklů:
 
@@ -37,26 +37,19 @@ Do složených závorek píšeme vykonávaný kód, který se v tomto případě
 
 ## Zadání A
 
-Ve spojení se znalostmi z minulých lekcí napište program, který po stisku tlačítka vypíše čísla 0 až 9 (pomocí `#!ts console.log(CISLO)`), vždy na samostatný řádek. Využijte cyklus.
+Ve spojení se znalostmi z minulých lekcí napište program, který postupně vypíše čísla 0 až 9 (pomocí `#!ts console.log(CISLO)`), vždy na samostatný řádek. Využijte cyklus.
 
 ??? note "Řešení"
 
     ```ts
-    import * as gpio from "gpio";
-    import { createRobutek } from "./libs/robutek";
+    for (let i: number = 0; i < 10; i++) { // vypíšeme čísla od 0 do 9
+        console.log(i);
+        await sleep(100); // menší opoždění, aby bylo vidět jak se to postupně vypisuje.
+    }
+    console.log("Čísla vypsána!");
 
-    const robutek = createRobutek("V2")
-
-    gpio.pinMode(robutek.Pins.ButtonRight, gpio.PinMode.INPUT); // nastaví pin 0 jako vstup
-
-    gpio.on("falling", robutek.Pins.ButtonRight, () => { // událost, která proběhne při stisknutí tlačítka připojeného na pin 0
-        console.log("Stisknuto, začínáme počítat");
-        for (let i: number = 0; i < 10; i++) { // vypíšeme čísla od 0 do 9
-            console.log(i);
-        }
-        console.log(""); // oddělíme jednotlivé stisky
-    });
     ```
+
 
 ## Cyklus while
 
@@ -66,15 +59,12 @@ Do kulatých závorek teď píšeme jen výraz, který určuje, jestli se cyklus
 Kód, který se má vykonávat, dokud platí podmínka, může vypadat třeba takto:
 
 ```ts
-import { createRobutek } from "./libs/robutek.js";
-import * as gpio from "gpio";
+import { Button } from "button";
+// pin kde je zapojené tlačítko, vyměň za číslo pinu na kterém máš svoje tlačítko připojené
+const BUTTON_PIN = 16; 
 
-const robutek = createRobutek("V2");
-
-console.log("START");
-gpio.pinMode(robutek.Pins.ButtonLeft, gpio.PinMode.INPUT);
-
-while (gpio.read(robutek.Pins.ButtonLeft) == 1) {
+const button = new Button(BUTTON_PIN);
+while (!button.isPressed()) {
   // cyklus kontroluje, zdali je tlačítko zmáčknuté (gpio.read() vrací 1, pokud
   // je tlačítko zmáčknuté), dokud není zmáčknuté, vypisuje "NOT PRESSED"
   console.log("NOT PRESSED");
@@ -88,38 +78,36 @@ console.log("END");
 
 ## Zadání B
 
-Nyní napíšeme program, který do konzole vypíše čtverec složený z hvězdiček (znaku `*`). Musíme si uvědomit, že cykly mohou být vloženy do sebe. Zamyseleme se, který z cyklů je pro tento úkol vhodný. Výsledek by měl vypadat přibližně takto.
+Teď vyzkoušíme nakreslit gradient modré a červené na displeji, tak aby se po ose X zvětšovala hodnota červené a po ose Y zvětšovala hodnota modré. Výsledek byl měl vypadat takhle:
 
-```
-***
-***
-***
-```
+<img src="./assets/gradient.png" width="200" height="200">
 
-Velikost tohoto čtverce určete pomocí konstanty, jejíž hodnota udává počet řádku a sloupců.
 
-Pokud nechceme za vypsanými znaky nový řádek, místo známého `#!ts console.log()` použijeme `#!ts stdout.write` ale potřebujeme importovat novou knihovnu: 
-```ts
-import { stdout } from "stdio";
-```
+Musíme si uvědomit, že cykly mohou být vloženy do sebe. Využijte dva `#!ts for` cykly, jeden v druhém, aby jste mohli projít všechny pixely na displeji.
+Jeden prochází řádky, zatímco druhý už prochází každý pixel ve vybraném řádku.
 
 ??? note "Řešení"
 
     ```ts
-    import { stdout } from "stdio";
+    import { Display } from "rphub75";
+    import { rgb } from "colors";
 
-    const SQUARE_SIZE: number = 3; // velikost čtverce
-
-    console.log("Vykreslíme čtverec o velikosti " + SQUARE_SIZE + "x" + SQUARE_SIZE);
-
-    // projdeme všechny řádky
-    for(let row: number = 0; row < SQUARE_SIZE; row++){
-    	// projdeme všechny sloupce
-    	for(let col: number = 0; col < SQUARE_SIZE; col++){
-    		stdout.write("\*"); // vypíšeme hvězdičku
-    	}
-    	stdout.write("\n"); // přesuneme se na další řádek
+    const display = new Display();
+    // tento for loop prochází řádky, po Y od 0 do 64 (výška displeje)
+    for (let y = 0; y < display.height;y++) { 
+        // tento for loop prochází už každý bod na určeném řádku, po X od 0 do 64 (šířka displeje)
+        for (let x = 0; x <display.width;x++){ 
+            // přepočítáme souřadnici X tak, aby jsme dostali celý rozsah červené
+            let red = (x/display.width)*255;
+            // přepočítáme souřadnici Y tak, aby jsme dostali celý rozsah modré
+            let blue = (y/display.height)*255;
+            
+            // pomocí dříve vypočítaných hodnotách nastavíme barvu na vybraný pixel.
+            display.setPixel(x,y,rgb(red,0,blue));
+        }
     }
+    // Nakonec vyzobrazíme všechny pixely na displeji.
+    display.show();
     ```
 
 ## Zadání výstupního úkolu V1
@@ -129,16 +117,8 @@ Zadání je velmi podobné jako zadání A, jen jdou čísla sestupně namísto 
 
 ## Zadání výstupního úkolu V2
 
-Napište program, který bude periodicky blikat ledkou - 500ms svítí, 500ms nesvití. Nepoužívejte `setInterval`.
+Napište program, který vytvoří vodorovný gradient ze zelené na žlutou.
 
 ## Zadání výstupního úkolu V3
 
-Váš poslední úkol je podobný zadání B, budete do konzole vykreslovat geometrický obrazec, akorát tentokrát to bude nebude čtverec, ale trojúhelník jako tenhle:
-
-```
-  *
- ***
-*****
-```
-
-Je důležité se zamyslet nad počty mezer a hvězdiček v každém řádku a jak se mění. Zkuste si jejich počty vypsat řádek po řádku, navede vás to k řešení příkladu.
+Váš poslední úkol je vytvořit šachovnici, tak že se vykreslí bílá jen kdy součet souřadnic je lichý. Využij modulo (`#!ts % `), který dává na výstup zbytek z dělení `#!ts 15 % 8 = 7`.

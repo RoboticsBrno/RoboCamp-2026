@@ -8,35 +8,35 @@ Hlavním výrobkem letošního tábora je Robodeck.
 
 ![Robodeck](assets/robodeck-cover.png)
 
-něco o tom #TODO
- 
-<br>
+Robodeck je modulární platforma sloužící k výuce základů programování a umožňující snadné vytváření a hraní jednoduchých her. Díky modularitě ji lze rozšiřovat o další moduly, které si můžete sami vyrobit a přidat na Robodeck. Všechny moduly jsou kompatibilní s Robůtkem a ELKS, takže je lze použít i u těchto zařízení.
 
-#TODO něco tady napsat
+Postup výroby Robodecku najdete v návodu "Robodeck".
 
-[Lekce](https://2026.robotikabrno.cz/lekce){ .md-button  }
+[Robodeck](/robodeck){ .md-button }
 
-<br>
+Po úspěšném sestavení si můžete vyzkoušet programování a hraní her připravených v lekcích.
 
-Programuje se stejně jako posledních pár let v TypeScriptu s pomocí Jacula ([jaculus.org](https://jaculus.org))
+[Lekce](/lekce){ .md-button }
 
-Ale tento rok máme nově **blokové** a **textové** programování ve webovém prostředí pomocí [**JacLy**](https://jacly.jaculus.org)
+Po dokončení základních lekcí můžete Robodeck rozšiřovat o další moduly.
 
-[JacLy](https://jacly.jaculus.org/){ .md-button }
+[Pájení](https://pmod.robotikabrno.cz/){ .md-button } [Programování](/moduly){ .md-button }
 
-<br>
+Pokud si nevíte rady, zkuste některou z připravených výzev. Jde o jednoduché projekty, které vám pomohou rozkoukat se a naučit se něco nového.
 
-Tento rok jsme také zvětšily možnosti pájení o [rozšiřující modulky](https://pmod.robotikabrno.cz) do pmod konektorů, které můžete přidat nejen na svůj Robodeck, ale také na Robůtka nebo elks.
+[Výzvy](/challenge){ .md-button }
 
-<br>
+Programujeme v TypeScriptu s pomocí Jaculus ([jaculus.org](https://jaculus.org)), stejně jako v předchozích letech. Letos nově nabízíme také **blokové** i **textové** programování ve webovém prostředí pomocí [**JacLy**](https://jacly.jaculus.org).
 
-Část pájecích výrobků si stále můžete vytvořit a k nim návody najdete zde.
+[JacLy](https://jacly.jaculus.org/){ .md-button .md-button--primary }
 
-[Pájecí výrobky](https://gadgets.robotikabrno.cz/){ .md-button .md-button--primary }
+Některé pájecí výrobky si můžete stále vyrobit sami; návody najdete zde.
 
-## Všechny odkazy co by se vám mohli hodit
+[Pájecí výrobky](https://gadgets.robotikabrno.cz/){ .md-button }
 
-- [2026.robotickytabor.cz](https://2026.robotickytabor.cz) - Tyto stránky se všemi návody co budete na táboře potřebovat
-- [pmod.robotikabrno.cz](https://pmod.robotikabrno.cz) - Návody rozšiřujících modulů do PMOD konektorů
-- [smd-challenge.robotikabrno.cz](https://smd-challenge.robotikabrno.cz/) - Návody pájecí challenge aka blikače v různých velikostech
-- [gadgets.robotikabrno.cz](https://gadgets.robotikabrno.cz/) - Návody všech dalších pájecích hraček z minulých let 
+## Užitečné odkazy
+
+- [2026.robotickytabor.cz](https://2026.robotickytabor.cz) - Stránky se všemi návody, které budete na táboře potřebovat
+- [pmod.robotikabrno.cz](https://pmod.robotikabrno.cz) - Pájecí návody rozšiřujících modulů do PMOD konektorů
+- [smd-challenge.robotikabrno.cz](https://smd-challenge.robotikabrno.cz/) - Návody pájecí challenge (blikajícího obvody) v různých velikostech
+- [gadgets.robotikabrno.cz](https://gadgets.robotikabrno.cz) - Návody dalších pájecích hraček z minulých let
