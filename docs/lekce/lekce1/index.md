@@ -41,7 +41,7 @@ Zde si vyzkoušíme vytvořit první projekt a nahrát jej do Saturnu.
     1. Zkusíme si poskládat a nahrát do Saturnu náš první projekt. Prozatím si poskládáme bločky podle obrázku.
     ![firstProject](./assets/blocksFirstProject.png)
 
-    2. Po poskládání bločků klikneme na tlačítko `Připojit` a vybereme port, na kterém je Robůtek připojený. Poté klikneme na tlačítko `Sestavit a nahrát`. Pokud jsme vše udělali správně, měla by se nám na Saturnu rozsvítit LEDka červeně a v konzoli by se nám mělo vypisovat `Ahojky svete`.
+    2. Po poskládání bločků klikneme na tlačítko `Připojit` a vybereme port, na kterém je Robodeck připojený. Poté klikneme na tlačítko `Sestavit a nahrát`. Pokud jsme vše udělali správně, měla by se nám na Saturnu rozsvítit LEDka červeně a v konzoli by se nám mělo vypisovat `Ahojky svete`.
         
         !!! warning "Je důležité vybrat správný typ led, v našem případě `LED_WS2812B`."
 

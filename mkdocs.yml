@@ -127,13 +127,13 @@ extra_css:
 nav:
   - Domů:
       - index.md
-  - Robodeck:
+  - Stavba Robodecku:
       - robodeck/index.md
       - robodeck/kroky/01-pajeni.md
       - robodeck/kroky/02-ramecek.md
       - robodeck/kroky/03-spojeni.md
       - robodeck/kroky/04-dokonceni.md
-  - Lekce:
+  - Programovací lekce:
       - lekce/index.md
       - lekce/faq/index.md
       - lekce/lekce0/index.md
@@ -146,8 +146,8 @@ nav:
       - lekce/lekce7/index.md
       - lekce/lekce8/index.md
       - lekce/lekce9/index.md
-      - lekce/saturn/index.md
-  - Moduly:
+      - lekce/scene-builder/index.md
+  - Rozšířující moduly:
       - moduly/index.md
       - moduly/dpad/index.md
       - moduly/gyro/index.md
@@ -159,7 +159,7 @@ nav:
       - moduly/rfid/index.md
       - moduly/rtc/index.md
       - moduly/teplota/index.md
-  - Challenge:
+  - Programovací výzvy:
       - challenge/index.md
       - challenge/snake.md
       - challenge/tetris.md

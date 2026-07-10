@@ -1,8 +1,4 @@
-# Pinout saturna
-
-![pinout](assets/saturn.png)
-
----
+# Builder scén
 
 Builder pro stavění scén - very WIP TODO @JohnieWalkerCZ
 

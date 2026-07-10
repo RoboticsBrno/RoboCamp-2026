@@ -5,11 +5,11 @@ V této lekci si představíme Jaculus, nainstalujeme si programovací prostřed
 ## Instalace
 
 Na našich deskách poběží Jaculus.
-Tento program nám umožní jednoduše psát instrukce (programy), které nahrajeme do robota.
-Tyto programy budou specifikovat, jak se robot má chovat a umožní nám s ním komunikovat.
+Tento program nám umožní jednoduše psát instrukce (programy), které nahrajeme do Robodecku.
+Tyto programy budou specifikovat, jak se Robodeck má chovat a umožní nám s ním komunikovat.
 Aby nám všechno správně fungovalo, musíme Jacula nejprve nainstalovat, a k němu i několik dalších programů.
 
-<!-- TODO je toto potreba? -->
+<!-- TODO je toto potreba? - ano @C2Coder -->
 !!! note "Na Linuxu je třeba přidat oprávnění udev, [více zde](https://docs.espressif.com/projects/esp-idf/en/v5.2.2/esp32s2/api-guides/dfu.html#udev-rule-linux-only)."
 
 ### Firmware
@@ -18,7 +18,7 @@ Aby nám všechno správně fungovalo, musíme Jacula nejprve nainstalovat, a k 
 
     !!! warning "Pokud by se Saturn sám odpojoval a připojoval, je potřeba ho přepnout do `boot režimu`. Stačí na desce držet tlačítko `BOOT` a zmáčknout tlačítko `EN`"
 
-2. Otevřeme si [Jaculus web installer](https://jacly.jaculus.org/installer) v Chrome, Edge nebo Firefox.
+2. Otevřeme si [Jaculus web installer](https://jacly.jaculus.org/installer) v Chrome, Edge nebo novém Firefoxu.
 
     !!! warning "Instalace nebude fungovat v prohlížečích, které nepodporují rozhraní WebSerial."
 
@@ -52,15 +52,13 @@ Aby nám všechno správně fungovalo, musíme Jacula nejprve nainstalovat, a k 
 
 Node.js je program, který nám umožní nahrávat kód do Jacula a komunikovat s ním.
 
-<!-- TODO update download link -->
-1. Stáhneme si `Node.js` (nejnovější stabilní verzi - LTS) - [Stahuj ZDE pro Windows](http://files.lan/).
+1. Stáhneme si `Node.js` (nejnovější stabilní verzi - LTS) - [Stahuj ZDE pro Windows na táborové wifi](https://files.robotickytabor.cz/node.msi).
 2. Nainstalujeme jej dle výchozího nastavení (není potřeba nic měnit).
 
 ### Visual Studio Code
 
 Visual Studio Code je programovací prostředí, které nám umožní psát kód a s rozšířením nám dovolí nahrávat kód do zařízení.
-<!-- TODO update download link -->
-1. Stáhneme si `Visual Studio Code` (nejnovější stabilní verzi)  - [Stahuj ZDE pro Windows](http://files.lan/). 
+1. Stáhneme si `Visual Studio Code` (nejnovější stabilní verzi)  - [Stahuj ZDE pro Windows na táborové wifi](https://files.robotickytabor.cz/vscode.exe). 
 2. Nainstalujeme jej dle výchozího nastavení (není potřeba nic měnit).
 
 ### Jaculus
