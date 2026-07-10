@@ -1,5 +1,7 @@
 # Tetris
 
+Klasická hra s padajícími díly, kterou určitě všichni zdáte
+
 ![Tetris](assets/tetris.gif)
 
 Odkazy které by se vám mohli hodit:

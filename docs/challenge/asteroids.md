@@ -1,5 +1,7 @@
 # Asteroids
 
+Vektorová vesmírná střílečka s asteroidy a  okraji displeje.
+
 ![Asteroids](assets/asteroids.gif)
 
 Odkazy které by se vám mohli hodit:

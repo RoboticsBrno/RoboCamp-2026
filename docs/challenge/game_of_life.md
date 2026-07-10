@@ -1,5 +1,7 @@
 # Game of life - hra života
 
+Cellular automaton, kde se živé buňky rodí a umírají podle jednoduchých pravidel.
+
 ![Game of Life](assets/game_of_life.gif)
 
 Odkazy které by se vám mohli hodit:
