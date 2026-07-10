@@ -4,12 +4,30 @@ V této lekci si napíšeme své první programy.
 
 Ukážeme si ovládání RGB LED umístěné na ESP32 a práci s událostmi řízenými tlačítkem nebo časem.
 
-TypeScript (JavaScript) je imperativní programovací jazyk. To znamená, že se vykoná vše, co do programu napíšeme,
-v pořadí, v jakém jsme to napsali.
-
 !!! note "Poznámka"
-    V lekci 1. jsme se naučili jak vytvořit nový projekt z odkazu. Teď si tuto znalost ověříme.
+    V lekci 1. jsme se naučili jak vytvořit nový projekt. Teď si tuto znalost ověříme.
 
+=== "Bločky"
+    <!-- TODO new project creation -->
+    <!-- TODO Zadani A -->
+    <!-- TODO Co je to udalost? dava to vubec smysl -->
+    <!-- TODO setInterval -->
+    <!-- TODO make more TODOs :)))))))))))))))))))))))))))))))))))))))))))))))))))))))) -->
+    blocky
+
+=== "TypeScript"
+    <!-- TODO typescript  -->
+    <!-- TODO nekdo musi udelat knihovnu na piny -->
+    <!-- TODO Zadani A -->
+    <!-- TODO Udalost v programovani -->
+    <!-- TODO GPIO -->
+    <!-- TODO Zadani B -->
+    <!-- TODO Zadani C -->
+    <!-- TODO Vystup V1 -->
+    <!-- TODO Vystup V2 -->
+    typescript
+
+<!-- TODO update new project  -->
 Vytvořte si nový projekt z nového odkazu:
 
 === "Odkaz"
@@ -24,9 +42,6 @@ Vytvořte si nový projekt z nového odkazu:
 Nejdříve si zopakujeme předchozí lekci a rozsvítíme RGB LED na Robůtkovi (`robutek.Pins.ILED`) jednou barvou (například červenou).
 
 Na začátku tohoto úkolu si otevřeme nový prázdný projekt. V souboru `index.ts` jsou připraveny `import` příkazy: ty nám umožní využívat funkcionalitu z různých souborů, např. jednoduše ovládat LEDku, nebo využívat nadefinované barvy.
-
-Pásek inicializujeme pomocí `const ledStrip = new SmartLed(robutek.Pins.ILED, 1, LED_WS2812B)`.
-Barvu LED nastavíme pomocí `ledStrip.set(0, colors.<nějaká_barva>)` a zobrazíme pomocí `ledStrip.show()`.
 
 ??? note "Řešení"
 

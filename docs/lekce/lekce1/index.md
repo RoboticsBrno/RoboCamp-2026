@@ -2,9 +2,13 @@
 
 Zde si vyzkoušíme vytvořit první projekt a nahrát jej do Robůtka.
 
-=== "Přes VS Code rozšíření"
+<!-- TODO figure out how this will even be strucutred - will zip be used  -->
+<!-- TODO will need to be changed in other lessons -->
 
-    Odkaz na projekt:
+<!-- TODO final project link-->
+<!-- TODO update extension -->
+
+=== "VS Code rozšíření"
     ```
     https://robutek.robotikabrno.cz/v2/robot/lekce1/example1.tar.gz
     ```
@@ -27,7 +31,8 @@ Zde si vyzkoušíme vytvořit první projekt a nahrát jej do Robůtka.
     10. Dále zvolíme :material-eye:`Monitor`, ten slouží pro komunikaci se zařízením.
 
 
-=== "Ručně ze zipu"
+=== "Ručně ze zipu" 
+    <!-- TODO is this wanted? -->
     [Stáhnout ZIP s prvním projektem](./example1.zip){ .md-button .md-button--primary }
 
     1. V prvním kroku si na počítači nachystáme složku `RoboCamp-2025`, do které si budeme ukládat veškeré projekty.
@@ -41,6 +46,11 @@ Zde si vyzkoušíme vytvořit první projekt a nahrát jej do Robůtka.
             Pokud se nám v nabídce zobrazí více portů, odpojíme Robůtka a zjistíme, který port zmizel. Po připojení Robůtka tento port vybereme.
 
     7. Dále zvolíme :material-eye:`Monitor`, ten slouží pro komunikaci se zařízením.
+
+
+=== "Bločky"
+    <!-- TODO blocky  -->
+    BLOCKY SHIT
 
 ## Nahrání programu
 

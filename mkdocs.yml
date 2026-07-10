@@ -53,6 +53,8 @@ markdown_extensions:
   - attr_list
   - pymdownx.tabbed
   - meta
+  - pymdownx.tabbed:
+      alternate_style: true
   - pymdownx.snippets:
       url_download: True
   - pymdownx.tasklist:
@@ -118,5 +120,16 @@ nav:
       - robodeck/index.md
   - Lekce:
       - lekce/index.md
+      - lekce/faq/index.md
+      - lekce/lekce0/index.md
+      - lekce/lekce1/index.md
+      - lekce/lekce2/index.md
+      - lekce/lekce3/index.md
+      - lekce/lekce4/index.md
+      - lekce/lekce5/index.md
+      - lekce/lekce6/index.md
+      - lekce/lekce7/index.md
+      - lekce/lekce8/index.md
+      - lekce/lekce9/index.md
   - Náš tým:
       - https://robotikabrno.cz/cs/nas-tym/
