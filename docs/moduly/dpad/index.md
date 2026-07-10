@@ -1,4 +1,5 @@
 # DPad
+### Example project
 === "Odkaz"
     Stačí kliknout na odkaz, otevře se nám VSCode a nabídne se nám možnost vytvořit projekt z připraveného balíčku.
 
