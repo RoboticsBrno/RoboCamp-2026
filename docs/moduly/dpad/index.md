@@ -29,7 +29,7 @@ DPad je připojen k PMODu, jeho piny tedy odpovídají pinům PMODu. Můžete si
 
 ```ts
 import { Button } from "button";
-import { SaturnPins} from "saturn"
+import { SaturnPins } from "saturn"
 
 const btn = new Button(SaturnPins.Pmod1.Pin1);
 
