@@ -1,13 +1,15 @@
 # Lekce 2 - RGB LED + tlačítko + události
 
-V této lekci začneme se zajímavějšími programy.
 
-Ukážeme si ovládání RGB LED umístěné na ESP32 a práci s událostmi řízenými tlačítkem nebo časem.
-
-!!! note "Poznámka"
-    V lekci 1 jsme se naučili, jak vytvořit nový projekt. Pokud nevíte, jak na to, podívejte se do lekce 1.
 
 === "Bločky"
+    V této lekci začneme se zajímavějšími programy.
+
+    Ukážeme si ovládání RGB LED umístěné na Saturnu a práci s událostmi řízenými tlačítkem nebo časem.
+
+    !!! note "Poznámka"
+        V lekci 1 jsme se naučili, jak vytvořit nový projekt. Pokud nevíte, jak na to, podívejte se do lekce 1.
+
     ## Zadání A
     Nejprve si ověříme znalosti z minulé lekce. Zkusíme blikat RGB LED na Saturnu (pin 48). Na začátku tohoto úkolu si otevřeme nový prázdný projekt. Můžete se inspirovat projektem z minulé lekce.
 
@@ -66,6 +68,13 @@ Ukážeme si ovládání RGB LED umístěné na ESP32 a práci s událostmi ří
 
 
 === "TypeScript"
+    V této lekci začneme se zajímavějšími programy.
+
+    Ukážeme si ovládání RGB LED umístěné na Saturnu a práci s událostmi řízenými tlačítkem nebo časem.
+
+    !!! note "Poznámka"
+        V lekci 1 jsme se naučili, jak vytvořit nový projekt. Pokud nevíte, jak na to, podívejte se do lekce 1.
+
     <!-- TODO update to use PINS library -->
     === "Odkaz"
         Stačí kliknout na odkaz, otevře se nám VSCode a nabídne se nám možnost vytvořit projekt z připraveného balíčku.
