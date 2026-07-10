@@ -47,4 +47,4 @@ Po zašroubování poslední desky je Robodeck hotový. Gratulujeme!
 ---
 
 [Zpět](../index.md){ .md-button }
-[Na lekce](../../../lekce){ .md-button }
+[Na lekce](../../lekce/index.md){ .md-button }

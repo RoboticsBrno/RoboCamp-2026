@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>64x64 Scene Editor</title>
+    <style>
+        :root {
+            --bg-color: #1e1e1e;
+            --panel-color: #252526;
+            --text-color: #cccccc;
+            --accent-color: #007acc;
+            --border-color: #3e3e42;
+            --input-bg: #3c3c3c;
+            --highlight: #444;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            font-size: 13px;
+        }
+
+        /* --- Layout --- */
+        .sidebar-left,
+        .sidebar-right {
+            width: 280px;
+            min-width: 280px;
+            background-color: var(--panel-color);
+            border-right: 1px solid var(--border-color);
+            border-left: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-area {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #121212;
+            position: relative;
+            overflow-y: auto;
+            padding: 0 4rem;
+        }
+
+        /* --- Components --- */
+        h2 {
+            margin: 10px 15px;
+            font-size: 14px;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .panel-section {
+            padding: 10px 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        button {
+            background-color: var(--input-bg);
+            color: white;
+            border: 1px solid var(--border-color);
+            padding: 6px 12px;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 4px;
+            text-align: left;
+        }
+
+        button:hover {
+            background-color: var(--highlight);
+        }
+
+        button.active {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: default;
+        }
+
+        .row {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .row label {
+            width: 70px;
+        }
+
+        .row input[type="number"],
+        .row input[type="text"] {
+            flex-grow: 1;
+        }
+
+        input,
+        select {
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            color: white;
+            padding: 4px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* --- Layer Tree --- */
+        .layer-list {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 5px 0;
+        }
+
+        .layer-item {
+            padding: 4px 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            user-select: none;
+        }
+
+        .layer-item:hover {
+            background-color: #2a2d2e;
+        }
+
+        .layer-item.selected {
+            background-color: #37373d;
+            border-left: 2px solid var(--accent-color);
+        }
+
+        .indent {
+            width: 15px;
+            height: 1px;
+            display: inline-block;
+        }
+
+        .layer-icon {
+            width: 16px;
+            display: inline-block;
+            text-align: center;
+            margin-right: 5px;
+            opacity: 0.7;
+        }
+
+        /* --- Canvas --- */
+        canvas {
+            margin: auto;
+            width: 512px;
+            height: 512px;
+            image-rendering: pixelated;
+            background-color: #000;
+            border: 1px solid #444;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        }
+
+        /* --- Code Output --- */
+        textarea {
+            width: 100%;
+            height: 200px;
+            background-color: #101010;
+            color: #9cdcfe;
+            border: none;
+            padding: 10px;
+            font-family: 'Consolas', monospace;
+            font-size: 12px;
+            resize: vertical;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar-left">
+        <h2>Tools</h2>
+        <div class="panel-section">
+            <button id="tool-select" onclick="selectTool('select')" class="active">Cursor (Edit/Move)</button>
+            <div style="height: 10px;"></div>
+            <button id="tool-rectangle" onclick="selectTool('rectangle')">Rectangle</button>
+            <button id="tool-circle" onclick="selectTool('circle')">Circle</button>
+            <button id="tool-line" onclick="selectTool('line')">Line Segment</button>
+            <button id="tool-point" onclick="selectTool('point')">Point</button>
+            <button id="tool-regpoly" onclick="selectTool('regularPolygon')">Regular Polygon</button>
+            <button id="tool-poly" onclick="selectTool('polygon')">Polygon (Free)</button>
+        </div>
+
+        <h2>Scene Hierarchy</h2>
+        <div class="panel-section" style="display:flex; gap:5px;">
+            <button onclick="groupSelected()" style="flex:1;">Group (Ctrl+G)</button>
+            <button onclick="deleteSelected()" style="flex:1; background:#822;">Delete</button>
+        </div>
+        <div class="layer-list" id="layer-list">
+        </div>
+    </div>
+
+    <div class="main-area">
+        <canvas id="canvas" width="64" height="64"></canvas>
+        <div style="margin-top: 10px; color: #666;" id="status-bar">X: 0 Y: 0</div>
+    </div>
+
+    <div class="sidebar-right">
+        <h2>Global Settings</h2>
+        <div class="panel-section">
+            <div class="row">
+                <label>Canvas Width</label>
+                <input type="number" id="canvas-width" value="64" onchange="resizeCanvasWidth(this.value)">
+            </div>
+            <div class="row">
+                <label>Canvas Height</label>
+                <input type="number" id="canvas-height" value="64" onchange="resizeCanvasHeight(this.value)">
+            </div>
+        </div>
+        <h2>Properties</h2>
+        <div class="panel-section" id="properties-panel">
+            <p style="color:#666; font-style:italic; text-align:center;">Select an object to edit</p>
+        </div>
+
+        <h2>Export</h2>
+        <div class="panel-section">
+            <button onclick="generateCode()">Generate Code</button>
+            <button onclick="copyToClipboard()">Copy to Clipboard</button>
+        </div>
+        <textarea id="output-code" readonly></textarea>
+    </div>
+
+    <script>
+        // --- DATA STRUCTURES ---
+
+        const uid = () => Date.now().toString(36) + Math.random().toString(36).substr(2);
+
+        const SCENE = {
+            root: {
+                id: 'root',
+                type: 'collection',
+                name: 'Scene',
+                x: 0, y: 0,
+                z: 0,
+                color: '#000000',
+                children: []
+            },
+            objects: {}
+        };
+
+        const STATE = {
+            tool: 'select',
+            selectedIds: [],
+            hoverId: null,
+            dragStart: null,
+            dragOffsets: {},
+            isDragging: false,
+            isDrawing: false,
+            drawStartPos: {x: 0, y: 0},
+            polyVertices: [],
+            defaultColor: '#ffffff',
+            defaultFill: true,
+            currentMouse: {x: 0, y: 0}
+        };
+
+        // --- DOM ELEMENTS ---
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const layerListEl = document.getElementById('layer-list');
+        const propPanelEl = document.getElementById('properties-panel');
+        const codeOutputEl = document.getElementById('output-code');
+        const statusEl = document.getElementById('status-bar');
+
+        // --- CORE FUNCTIONS ---
+        function init() {
+            SCENE.objects['root'] = SCENE.root;
+            renderLayerList();
+            renderCanvas();
+        }
+
+        function resizeCanvasWidth(val) {
+            const size = parseInt(val) || 64;
+            canvas.width = size;
+            canvas.style.width = (size * 8) + 'px';
+            renderCanvas();
+        }
+
+        function resizeCanvasHeight(val) {
+            const size = parseInt(val) || 64;
+            canvas.style.height = (size * 8) + 'px';
+            canvas.height = size;
+            renderCanvas();
+        }
+
+        // --- FACTORY ---
+        function createShape(type, props) {
+            const id = uid();
+            const uniqueSuffix = id.substr(id.length - 3);
+            const shape = {
+                id: id,
+                type: type,
+                name: type + '_' + uniqueSuffix,
+                parent: 'root',
+                rotation: 0,
+                z: 0,
+                hasCollider: false,
+                pivotX: 0,
+                pivotY: 0,
+                ...props
+            };
+            SCENE.objects[id] = shape;
+            SCENE.objects['root'].children.push(id);
+            return shape;
+        }
+
+        function createCollection() {
+            const id = uid();
+            const uniqueSuffix = id.substr(id.length - 3);
+            const col = {
+                id: id,
+                type: 'collection',
+                name: 'Group_' + uniqueSuffix,
+                parent: 'root',
+                x: 0, y: 0,
+                z: 0,
+                color: '#ffffff',
+                rotation: 0,
+                children: []
+            };
+            SCENE.objects[id] = col;
+            return col;
+        }
+
+        // --- SCENE MANAGEMENT ---
+        function groupSelected() {
+            if (STATE.selectedIds.length === 0) return;
+            const group = createCollection();
+            const firstItem = SCENE.objects[STATE.selectedIds[0]];
+            const oldParentId = firstItem.parent;
+            const oldParent = SCENE.objects[oldParentId];
+
+            group.parent = oldParentId;
+            oldParent.children.push(group.id);
+
+            STATE.selectedIds.forEach(id => {
+                const obj = SCENE.objects[id];
+                const currentParent = SCENE.objects[obj.parent];
+                currentParent.children = currentParent.children.filter(childId => childId !== id);
+                group.children.push(id);
+                obj.parent = group.id;
+            });
+
+            STATE.selectedIds = [group.id];
+            renderLayerList();
+            renderCanvas();
+            updatePropertiesPanel();
+        }
+
+        function moveObject(childId, newParentId) {
+            if (!childId || !newParentId || childId === newParentId) return;
+
+            const child = SCENE.objects[childId];
+            const newParent = SCENE.objects[newParentId];
+
+            let temp = newParent;
+            while (temp.parent) {
+                if (temp.parent === childId) {
+                    alert("Cannot move a group inside its own child!");
+                    return;
+                }
+                if (temp.parent === 'root') break;
+                temp = SCENE.objects[temp.parent];
+            }
+
+            if (child.parent) {
+                const oldParent = SCENE.objects[child.parent];
+                oldParent.children = oldParent.children.filter(c => c !== childId);
+            }
+
+            newParent.children.push(childId);
+            child.parent = newParentId;
+
+            renderLayerList();
+            renderCanvas();
+        }
+
+        function deleteSelected() {
+            STATE.selectedIds.forEach(id => {
+                deleteObjectRecursive(id);
+            });
+            STATE.selectedIds = [];
+            renderLayerList();
+            renderCanvas();
+            updatePropertiesPanel();
+        }
+
+        function deleteObjectRecursive(id) {
+            const obj = SCENE.objects[id];
+            if (!obj) return;
+            if (obj.parent && SCENE.objects[obj.parent]) {
+                const parent = SCENE.objects[obj.parent];
+                parent.children = parent.children.filter(cid => cid !== id);
+            }
+            if (obj.children) {
+                [...obj.children].forEach(childId => deleteObjectRecursive(childId));
+            }
+            delete SCENE.objects[id];
+        }
+
+        function getRandomHexColor() {
+            return '#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0');
+        }
+
+        // --- MATRIX HELPERS ---
+        // Basic 2D Affine Matrix Helpers [a, b, c, d, e, f]
+        function invertMatrix(m) {
+            const [a, b, c, d, e, f] = m;
+            const det = a * d - b * c;
+            if (!det) return null;
+            const invDet = 1 / det;
+            return [
+                d * invDet,
+                -b * invDet,
+                -c * invDet,
+                a * invDet,
+                (c * f - d * e) * invDet,
+                (b * e - a * f) * invDet
+            ];
+        }
+
+        function transformPoint(x, y, m) {
+            return {
+                x: x * m[0] + y * m[2] + m[4],
+                y: x * m[1] + y * m[3] + m[5]
+            };
+        }
+
+        function multiplyMatrices(m1, m2) {
+            const [a1, b1, c1, d1, e1, f1] = m1;
+            const [a2, b2, c2, d2, e2, f2] = m2;
+            return [
+                a1 * a2 + c1 * b2,
+                b1 * a2 + d1 * b2,
+                a1 * c2 + c1 * d2,
+                b1 * c2 + d1 * d2,
+                a1 * e2 + c1 * f2 + e1,
+                b1 * e2 + d1 * f2 + f1
+            ];
+        }
+
+        function getObjectMatrix(node) {
+            const rad = (node.rotation || 0) * Math.PI / 180;
+            const c = Math.cos(rad);
+            const s = Math.sin(rad);
+
+            const x = node.x || 0;
+            const y = node.y || 0;
+
+            const px = node.pivotX || 0;
+            const py = node.pivotY || 0;
+
+            return [
+                c,
+                -s,
+                s,
+                c,
+                x + px * (1 - c) - py * s,
+                y + py * (1 - c) + px * s
+            ];
+        }
+
+        // --- RENDERING ---
+        function hexToRgba(hex) {return hex;}
+
+        function renderCanvas() {
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            renderNode(SCENE.root, [1, 0, 0, 1, 0, 0]);
+
+            if (STATE.isDrawing && STATE.tool !== 'select' && STATE.tool !== 'polygon') {
+                renderPreview();
+            }
+            if (STATE.tool === 'polygon' && STATE.polyVertices.length > 0) {
+                renderPolyPreview();
+            }
+
+            drawHighlights();
+        }
+
+        function renderNode(node, parentMat) {
+            if (!node) return;
+
+            const localMat = getObjectMatrix(node);
+            const globalMat = multiplyMatrices(parentMat, localMat);
+
+            if (node.type !== 'collection' && node.id !== 'root') {
+                ctx.save();
+                ctx.transform(...globalMat);
+                drawShapeVisual(node);
+                ctx.restore();
+            }
+
+            if (node.children && node.children.length > 0) {
+                const sortedChildren = [...node.children].sort((a, b) => {
+                    return (SCENE.objects[a].z || 0) - (SCENE.objects[b].z || 0);
+                });
+                sortedChildren.forEach(childId => {
+                    renderNode(SCENE.objects[childId], globalMat);
+                });
+            }
+        }
+
+        function drawShapeVisual(s) {
+            ctx.fillStyle = s.color || '#fff';
+            ctx.strokeStyle = s.color || '#fff';
+            ctx.lineWidth = 1;
+
+            ctx.beginPath();
+
+            if (s.type === 'point') {
+                ctx.fillRect(-0.5, -0.5, 1, 1);
+            }
+            else if (s.type === 'line') {
+                ctx.moveTo(0, 0);
+                ctx.lineTo(s.x2 - s.x, s.y2 - s.y);
+                ctx.stroke();
+            }
+            else if (s.type === 'rectangle') {
+                if (s.fill) ctx.fillRect(0, 0, s.width, s.height);
+                else ctx.strokeRect(0, 0, s.width - 1, s.height - 1);
+            }
+            else if (s.type === 'circle') {
+                ctx.arc(0, 0, s.radius, 0, Math.PI * 2);
+                if (s.fill) ctx.fill(); else ctx.stroke();
+            }
+            else if (s.type === 'regularPolygon') {
+                for (let i = 0; i < s.sides; i++) {
+                    const angle = (i * 2 * Math.PI / s.sides) - (Math.PI / 2);
+                    const px = s.radius * Math.cos(angle);
+                    const py = s.radius * Math.sin(angle);
+                    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+                }
+                ctx.closePath();
+                if (s.fill) ctx.fill(); else ctx.stroke();
+            }
+            else if (s.type === 'polygon') {
+                if (s.vertices && s.vertices.length > 0) {
+                    ctx.moveTo(s.vertices[0][0], s.vertices[0][1]);
+                    for (let i = 1; i < s.vertices.length; i++) {
+                        ctx.lineTo(s.vertices[i][0], s.vertices[i][1]);
+                    }
+                    ctx.closePath();
+                    if (s.fill) ctx.fill('evenodd'); else ctx.stroke();
+                }
+            }
+        }
+
+        // --- HIGHLIGHT SYSTEM (AABB + Pivot) ---
+        function drawHighlights() {
+            if (STATE.selectedIds.length === 0) return;
+
+            const traverse = (node, parentMat) => {
+                const localMat = getObjectMatrix(node);
+                const globalMat = multiplyMatrices(parentMat, localMat);
+
+                if (STATE.selectedIds.includes(node.id)) {
+                    drawSelectionVisuals(node, globalMat);
+                }
+
+                if (node.children) {
+                    node.children.forEach(cid => traverse(SCENE.objects[cid], globalMat));
+                }
+            };
+
+            traverse(SCENE.root, [1, 0, 0, 1, 0, 0]);
+        }
+
+        function drawSelectionVisuals(node, globalMat) {
+            let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+
+            const expand = (pt) => {
+                if (pt.x < minX) minX = pt.x;
+                if (pt.x > maxX) maxX = pt.x;
+                if (pt.y < minY) minY = pt.y;
+                if (pt.y > maxY) maxY = pt.y;
+            };
+
+            const traverseBounds = (currNode, currMat) => {
+
+                const addPoint = (lx, ly) => {
+                    const g = transformPoint(lx, ly, currMat);
+                    expand(g);
+                };
+
+                if (currNode.type === 'rectangle') {
+                    addPoint(0, 0);
+                    addPoint(currNode.width, 0);
+                    addPoint(currNode.width, currNode.height);
+                    addPoint(0, currNode.height);
+                }
+                else if (currNode.type === 'line') {
+                    addPoint(0, 0);
+                    addPoint(currNode.x2 - currNode.x, currNode.y2 - currNode.y);
+                }
+                else if (currNode.type === 'circle') {
+                    const center = transformPoint(0, 0, currMat);
+                    const r = currNode.radius;
+                    expand({x: center.x - r, y: center.y - r});
+                    expand({x: center.x + r, y: center.y + r});
+                }
+                else if (currNode.type === 'point') {
+                    addPoint(0, 0);
+                }
+                else if (currNode.type === 'polygon') {
+                    if (currNode.vertices) currNode.vertices.forEach(v => addPoint(v[0], v[1]));
+                }
+                else if (currNode.type === 'regularPolygon') {
+                    for (let i = 0; i < currNode.sides; i++) {
+                        const angle = (i * 2 * Math.PI / currNode.sides) - (Math.PI / 2);
+                        const px = currNode.radius * Math.cos(angle);
+                        const py = currNode.radius * Math.sin(angle);
+                        addPoint(px, py);
+                    }
+                }
+
+                if (currNode.children && currNode.children.length > 0) {
+                    currNode.children.forEach(childId => {
+                        const child = SCENE.objects[childId];
+                        if (child) {
+                            const childLocalMat = getObjectMatrix(child);
+                            const childGlobalMat = multiplyMatrices(currMat, childLocalMat);
+                            traverseBounds(child, childGlobalMat);
+                        }
+                    });
+                }
+            };
+
+            traverseBounds(node, globalMat);
+
+            if (minX === Infinity) {
+                const origin = transformPoint(0, 0, globalMat);
+                minX = origin.x - 3; maxX = origin.x + 3;
+                minY = origin.y - 3; maxY = origin.y + 3;
+            } else if (minX === maxX && minY === maxY) {
+                minX -= 2; maxX += 2; minY -= 2; maxY += 2;
+            }
+
+            const margin = 2;
+            minX -= margin; minY -= margin;
+            maxX += margin; maxY += margin;
+
+            ctx.save();
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.strokeStyle = '#00ccff';
+            ctx.lineWidth = 1;
+
+            if (minX !== Infinity) {
+                ctx.strokeRect(minX, minY, maxX - minX, maxY - minY);
+            }
+
+            const worldPos = transformPoint(node.pivotX || 0, node.pivotY || 0, globalMat);
+
+            ctx.fillStyle = '#f00';
+            ctx.fillRect(worldPos.x - 0.5, worldPos.y - 0.5, 1, 1);
+            ctx.restore();
+        }
+
+        // --- PREVIEW RENDERING ---
+        function renderPreview() {
+            const s = STATE.drawStartPos;
+            const m = STATE.currentMouse;
+            const color = STATE.defaultColor;
+
+            ctx.strokeStyle = color;
+            ctx.fillStyle = color;
+
+            if (STATE.tool === 'rectangle') {
+                const w = Math.round(Math.abs(m.x - s.x) + 1);
+                const h = Math.round(Math.abs(m.y - s.y) + 1);
+                const x = Math.round(Math.min(m.x, s.x));
+                const y = Math.round(Math.min(m.y, s.y));
+                ctx.strokeRect(x + 0.5, y + 0.5, w - 1, h - 1);
+            }
+            else if (STATE.tool === 'circle') {
+                const r = Math.round(Math.sqrt(Math.pow(m.x - s.x, 2) + Math.pow(m.y - s.y, 2)));
+                ctx.beginPath(); ctx.arc(Math.round(s.x), Math.round(s.y), r, 0, Math.PI * 2); ctx.stroke();
+            }
+            else if (STATE.tool === 'line') {
+                ctx.beginPath();
+                ctx.moveTo(Math.round(s.x), Math.round(s.y));
+                ctx.lineTo(Math.round(m.x), Math.round(m.y));
+                ctx.stroke();
+            }
+            else if (STATE.tool === 'regularPolygon') {
+                const r = Math.round(Math.sqrt(Math.pow(m.x - s.x, 2) + Math.pow(m.y - s.y, 2)));
+                const cx = Math.round(s.x);
+                const cy = Math.round(s.y);
+                const sides = 6;
+                ctx.beginPath();
+                for (let i = 0; i < sides; i++) {
+                    const angle = (i * 2 * Math.PI / sides) - (Math.PI / 2);
+                    const px = cx + r * Math.cos(angle);
+                    const py = cy + r * Math.sin(angle);
+                    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+                }
+                ctx.closePath();
+                ctx.stroke();
+            }
+        }
+
+        function renderPolyPreview() {
+            ctx.fillStyle = '#aaa';
+            STATE.polyVertices.forEach(v => ctx.fillRect(Math.round(v.x), Math.round(v.y), 1, 1));
+            if (STATE.polyVertices.length > 0) {
+                ctx.beginPath();
+                ctx.strokeStyle = '#fff';
+                ctx.moveTo(Math.round(STATE.polyVertices[0].x), Math.round(STATE.polyVertices[0].y));
+                for (let i = 1; i < STATE.polyVertices.length; i++) ctx.lineTo(Math.round(STATE.polyVertices[i].x), Math.round(STATE.polyVertices[i].y));
+                if (STATE.currentMouse) ctx.lineTo(Math.round(STATE.currentMouse.x), Math.round(STATE.currentMouse.y));
+                ctx.stroke();
+            }
+        }
+
+        // --- INTERACTION ---
+        function getMousePos(e) {
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            return {
+                x: (e.clientX - rect.left) * scaleX,
+                y: (e.clientY - rect.top) * scaleY
+            };
+        }
+
+        function hitTest(x, y) {
+            const candidates = [];
+            const traverse = (node, parentMat) => {
+                const localMat = getObjectMatrix(node);
+                const globalMat = multiplyMatrices(parentMat, localMat);
+
+                if (node.id !== 'root') {
+                    const invMat = invertMatrix(globalMat);
+                    if (invMat) {
+                        const loc = transformPoint(x, y, invMat);
+                        if (checkLocalHit(loc.x, loc.y, node)) {
+                            candidates.push({id: node.id, z: node.z || 0});
+                        }
+                    }
+                }
+                if (node.children) node.children.forEach(cid => traverse(SCENE.objects[cid], globalMat));
+            };
+            traverse(SCENE.root, [1, 0, 0, 1, 0, 0]);
+            if (candidates.length > 0) return candidates[candidates.length - 1].id;
+            return null;
+        }
+
+        function checkLocalHit(lx, ly, node) {
+            const t = node.type;
+            const tolerance = 1;
+
+            if (t === 'rectangle') {
+                return lx >= -tolerance && lx <= node.width + tolerance &&
+                    ly >= -tolerance && ly <= node.height + tolerance;
+            }
+            if (t === 'circle' || t === 'regularPolygon') {
+                return (lx * lx + ly * ly) <= Math.pow(node.radius + tolerance, 2);
+            }
+            if (t === 'point') {
+                return Math.abs(lx) <= 2 && Math.abs(ly) <= 2;
+            }
+            if (t === 'line') {
+                const dx = node.x2 - node.x;
+                const dy = node.y2 - node.y;
+                const lenSq = dx * dx + dy * dy;
+                let param = -1;
+                if (lenSq !== 0) param = (lx * dx + ly * dy) / lenSq;
+                let xx, yy;
+                if (param < 0) {xx = 0; yy = 0;}
+                else if (param > 1) {xx = dx; yy = dy;}
+                else {xx = param * dx; yy = param * dy;}
+                const dist = Math.sqrt(Math.pow(lx - xx, 2) + Math.pow(ly - yy, 2));
+                return dist <= 2;
+            }
+            if (t === 'polygon') {
+                let inside = false;
+                const vs = node.vertices;
+                for (let i = 0, j = vs.length - 1; i < vs.length; j = i++) {
+                    const xi = vs[i][0], yi = vs[i][1];
+                    const xj = vs[j][0], yj = vs[j][1];
+                    const intersect = ((yi > ly) !== (yj > ly)) &&
+                        (lx < (xj - xi) * (ly - yi) / (yj - yi) + xi);
+                    if (intersect) inside = !inside;
+                }
+                return inside;
+            }
+            return false;
+        }
+
+        canvas.addEventListener('mousedown', e => {
+            const pos = getMousePos(e);
+            STATE.currentMouse = pos;
+
+            if (STATE.tool === 'select') {
+                const hitId = hitTest(pos.x, pos.y);
+
+                if (hitId) {
+                    let targetId = null;
+
+                    if (STATE.selectedIds.length > 0) {
+                        const selectedAncestor = STATE.selectedIds.find(selId => {
+                            let curr = SCENE.objects[hitId];
+                            while (curr) {
+                                if (curr.id === selId) return true;
+                                if (!curr.parent) break;
+                                curr = SCENE.objects[curr.parent];
+                            }
+                            return false;
+                        });
+
+                        if (selectedAncestor) {
+                            targetId = selectedAncestor;
+                        }
+                    }
+
+                    if (!targetId) {
+                        let curr = SCENE.objects[hitId];
+                        while (curr.parent && curr.parent !== 'root') {
+                            curr = SCENE.objects[curr.parent];
+                        }
+                        targetId = curr.id;
+                    }
+
+                    if (e.ctrlKey) {
+                        if (STATE.selectedIds.includes(targetId)) STATE.selectedIds = STATE.selectedIds.filter(i => i !== targetId);
+                        else STATE.selectedIds.push(targetId);
+                    } else {
+                        if (!STATE.selectedIds.includes(targetId)) {
+                            STATE.selectedIds = [targetId];
+                        }
+                    }
+
+                    STATE.isDragging = true;
+                    STATE.dragStart = pos;
+                    STATE.dragOffsets = {};
+
+                    STATE.selectedIds.forEach(id => {
+                        const o = SCENE.objects[id];
+                        STATE.dragOffsets[id] = {
+                            initialX: o.x,
+                            initialY: o.y,
+                            clickX: pos.x,
+                            clickY: pos.y
+                        };
+                    });
+
+                } else {
+                    if (!e.ctrlKey) STATE.selectedIds = [];
+                }
+                updatePropertiesPanel();
+                renderLayerList();
+                renderCanvas();
+            }
+            else if (STATE.tool === 'polygon') {
+                STATE.polyVertices.push(pos);
+                renderCanvas();
+            }
+            else {
+                STATE.defaultColor = getRandomHexColor();
+                STATE.isDrawing = true;
+                STATE.drawStartPos = pos;
+            }
+        });
+
+        canvas.addEventListener('mousemove', e => {
+            const pos = getMousePos(e);
+            STATE.currentMouse = pos;
+            statusEl.innerText = `X: ${Math.round(pos.x)} Y: ${Math.round(pos.y)}`;
+
+            if (STATE.tool === 'select' && STATE.isDragging) {
+                STATE.selectedIds.forEach(id => {
+                    const off = STATE.dragOffsets[id];
+                    const o = SCENE.objects[id];
+                    o.x = Math.round(off.initialX + (pos.x - off.clickX));
+                    o.y = Math.round(off.initialY + (pos.y - off.clickY));
+                });
+                updatePropertiesPanel();
+                renderCanvas();
+            }
+            else if (STATE.isDrawing || STATE.tool === 'polygon') {
+                renderCanvas();
+            }
+        }); canvas.addEventListener('mousemove', e => {
+            const pos = getMousePos(e);
+            STATE.currentMouse = pos;
+            statusEl.innerText = `X: ${Math.round(pos.x)} Y: ${Math.round(pos.y)}`;
+
+            if (STATE.tool === 'select' && STATE.isDragging) {
+                STATE.selectedIds.forEach(id => {
+                    const off = STATE.dragOffsets[id];
+                    const o = SCENE.objects[id];
+                    o.x = Math.round(off.initialX + (pos.x - off.clickX));
+                    o.y = Math.round(off.initialY + (pos.y - off.clickY));
+                });
+                updatePropertiesPanel();
+                renderCanvas();
+            }
+            else if (STATE.isDrawing || STATE.tool === 'polygon') {
+                renderCanvas();
+            }
+        });
+
+        canvas.addEventListener('mouseup', e => {
+            if (STATE.tool === 'select') {
+                STATE.isDragging = false;
+            }
+            else if (STATE.tool !== 'polygon' && STATE.isDrawing) {
+                finishShape(STATE.currentMouse);
+                STATE.isDrawing = false;
+            }
+        });
+
+        canvas.addEventListener('dblclick', e => {
+            if (STATE.tool === 'polygon') {
+                finishPoly();
+                return;
+            }
+
+            if (STATE.tool === 'select') {
+                const pos = getMousePos(e);
+                const hitId = hitTest(pos.x, pos.y);
+
+                if (hitId) {
+                    let targetId = hitId;
+
+                    if (STATE.selectedIds.length === 1) {
+                        const currentSelId = STATE.selectedIds[0];
+
+                        let ancestorChain = [];
+                        let curr = SCENE.objects[hitId];
+                        let foundCurrent = false;
+
+                        while (curr) {
+                            ancestorChain.push(curr.id);
+                            if (curr.id === currentSelId) {
+                                foundCurrent = true;
+                                break;
+                            }
+                            if (curr.parent === 'root' || !curr.parent) break;
+                            curr = SCENE.objects[curr.parent];
+                        }
+
+                        if (foundCurrent) {
+                            if (ancestorChain.length >= 2) {
+                                targetId = ancestorChain[ancestorChain.length - 2];
+                            } else {
+                                targetId = hitId;
+                            }
+                        } else {
+                            let top = SCENE.objects[hitId];
+                            while (top.parent && top.parent !== 'root') {
+                                top = SCENE.objects[top.parent];
+                            }
+                            targetId = top.id;
+                        }
+                    } else {
+                        let top = SCENE.objects[hitId];
+                        while (top.parent && top.parent !== 'root') {
+                            top = SCENE.objects[top.parent];
+                        }
+                        targetId = top.id;
+                    }
+
+                    STATE.selectedIds = [targetId];
+                    updatePropertiesPanel();
+                    renderLayerList();
+                    renderCanvas();
+                }
+            }
+        });
+        function finishShape(endPos) {
+            const start = STATE.drawStartPos;
+            let props = {
+                x: Math.round(start.x),
+                y: Math.round(start.y),
+                color: STATE.defaultColor,
+                fill: STATE.defaultFill
+            };
+
+            if (STATE.tool === 'rectangle') {
+                props.x = Math.round(Math.min(start.x, endPos.x));
+                props.y = Math.round(Math.min(start.y, endPos.y));
+                props.width = Math.round(Math.abs(endPos.x - start.x) + 1);
+                props.height = Math.round(Math.abs(endPos.y - start.y) + 1);
+            } else if (STATE.tool === 'circle') {
+                props.radius = Math.round(Math.sqrt(Math.pow(endPos.x - start.x, 2) + Math.pow(endPos.y - start.y, 2)));
+            } else if (STATE.tool === 'line') {
+                props.x2 = Math.round(endPos.x);
+                props.y2 = Math.round(endPos.y);
+            } else if (STATE.tool === 'point') {
+                props.x = Math.round(endPos.x);
+                props.y = Math.round(endPos.y);
+            } else if (STATE.tool === 'regularPolygon') {
+                props.radius = Math.round(Math.sqrt(Math.pow(endPos.x - start.x, 2) + Math.pow(endPos.y - start.y, 2)));
+                props.sides = 6;
+            }
+
+            const newShape = createShape(STATE.tool, props);
+            STATE.selectedIds = [newShape.id];
+            renderLayerList();
+            updatePropertiesPanel();
+            renderCanvas();
+            selectTool('select');
+        }
+
+        function finishPoly() {
+            if (STATE.polyVertices.length < 3) return;
+            let minX = 100, minY = 100;
+            STATE.polyVertices.forEach(v => {
+                v.x = Math.round(v.x);
+                v.y = Math.round(v.y);
+                if (v.x < minX) minX = v.x;
+                if (v.y < minY) minY = v.y;
+            });
+
+            const relVerts = STATE.polyVertices.map(v => [v.x - minX, v.y - minY]);
+
+            createShape('polygon', {
+                x: minX, y: minY,
+                vertices: relVerts,
+                color: STATE.defaultColor,
+                fill: STATE.defaultFill
+            });
+
+            STATE.polyVertices = [];
+            renderLayerList();
+            renderCanvas();
+            selectTool('select');
+        }
+
+        // --- UI UPDATES ---
+        function selectTool(t) {
+            STATE.tool = t;
+            STATE.polyVertices = [];
+            document.querySelectorAll('.sidebar-left button').forEach(b => b.classList.remove('active'));
+            let id = 'tool-' + t;
+            if (t === 'regularPolygon') id = 'tool-regpoly';
+            if (t === 'polygon') id = 'tool-poly';
+
+            const btn = document.getElementById(id);
+            if (btn) btn.classList.add('active');
+        }
+
+        let dragSrcId = null;
+
+        function renderLayerList() {
+            layerListEl.innerHTML = '';
+
+            layerListEl.ondragover = (e) => e.preventDefault();
+            layerListEl.ondrop = (e) => {
+                e.preventDefault();
+                moveObject(dragSrcId, 'root');
+            };
+
+            const traverse = (nodeId, depth) => {
+                const node = SCENE.objects[nodeId];
+                if (!node) return;
+
+                const children = [...(node.children || [])];
+                children.sort((a, b) => (SCENE.objects[b].z || 0) - (SCENE.objects[a].z || 0));
+
+                if (nodeId !== 'root') {
+                    const el = document.createElement('div');
+                    el.className = 'layer-item' + (STATE.selectedIds.includes(nodeId) ? ' selected' : '');
+
+                    el.draggable = true;
+                    el.style.cursor = 'grab';
+
+                    el.ondragstart = (e) => {
+                        e.stopPropagation();
+                        dragSrcId = nodeId;
+                        e.dataTransfer.effectAllowed = 'move';
+                        el.style.opacity = '0.5';
+                    };
+
+                    el.ondragend = (e) => {
+                        el.style.opacity = '1';
+                    };
+
+                    el.ondragover = (e) => {
+                        e.preventDefault();
+                        if (SCENE.objects[nodeId].type === 'collection') {
+                            el.style.border = '1px dashed #007acc';
+                        }
+                    };
+
+                    el.ondragleave = (e) => {
+                        el.style.border = 'none';
+                        if (STATE.selectedIds.includes(nodeId)) el.style.borderLeft = '2px solid var(--accent-color)';
+                    };
+
+                    el.ondrop = (e) => {
+                        e.stopPropagation();
+                        el.style.border = 'none';
+                        if (SCENE.objects[nodeId].type === 'collection') {
+                            moveObject(dragSrcId, nodeId);
+                        }
+                    };
+                    // ---------------------------
+
+                    let icon = '⬜';
+                    if (node.type === 'collection') icon = '📁';
+                    else if (node.type === 'circle') icon = '⚪';
+                    else if (node.type === 'point') icon = '·';
+                    else if (node.type === 'line') icon = '/';
+
+                    el.innerHTML = `<span class="indent" style="width:${depth * 15}px"></span><span class="layer-icon">${icon}</span> ${node.name} <span style="font-size:10px; opacity:0.5; margin-left:5px;">(z:${node.z})</span>`;
+
+                    el.onclick = (e) => {
+                        if (e.ctrlKey) {
+                            if (STATE.selectedIds.includes(nodeId)) STATE.selectedIds = STATE.selectedIds.filter(i => i !== nodeId);
+                            else STATE.selectedIds.push(nodeId);
+                        } else {
+                            STATE.selectedIds = [nodeId];
+                        }
+                        updatePropertiesPanel();
+                        renderCanvas();
+                        renderLayerList();
+                    };
+                    layerListEl.appendChild(el);
+                }
+                children.forEach(cid => traverse(cid, nodeId === 'root' ? 0 : depth + 1));
+            };
+            traverse('root', 0);
+        }
+
+        function updatePropertiesPanel() {
+            propPanelEl.innerHTML = '';
+            if (STATE.selectedIds.length !== 1) {
+                if (STATE.selectedIds.length > 1) propPanelEl.innerHTML = '<p style="color:#888; text-align:center">Multiple objects selected</p>';
+                else propPanelEl.innerHTML = '<p style="color:#888; text-align:center">No selection</p>';
+                return;
+            }
+
+            const obj = SCENE.objects[STATE.selectedIds[0]];
+            const createInput = (label, type, val, key, step = 1) => {
+                const div = document.createElement('div');
+                div.className = 'row';
+                div.innerHTML = `<label>${label}</label>`;
+                const inp = document.createElement('input');
+                inp.type = type;
+                if (type === 'checkbox') inp.checked = val;
+                else inp.value = val;
+
+                inp.onchange = (e) => {
+                    if (type === 'number') obj[key] = parseFloat(e.target.value);
+                    else if (type === 'checkbox') obj[key] = e.target.checked;
+                    else obj[key] = e.target.value;
+                    renderCanvas();
+                    renderLayerList();
+                };
+                div.appendChild(inp);
+                propPanelEl.appendChild(div);
+            };
+
+            createInput('Name', 'text', obj.name, 'name');
+            createInput('X', 'number', obj.x, 'x');
+            createInput('Y', 'number', obj.y, 'y');
+            createInput('Z', 'number', obj.z, 'z');
+            createInput('Rotation', 'number', obj.rotation, 'rotation');
+            createInput('Color', 'color', obj.color, 'color');
+            createInput('Pivot X', 'number', obj.pivotX || 0, 'pivotX');
+            createInput('Pivot Y', 'number', obj.pivotY || 0, 'pivotY');
+
+            if (obj.type !== 'collection' && obj.type !== 'line') {
+                createInput('Fill', 'checkbox', obj.fill, 'fill');
+            }
+
+            if (obj.type === 'rectangle') {
+                createInput('Width', 'number', obj.width, 'width');
+                createInput('Height', 'number', obj.height, 'height');
+            } else if (obj.type === 'circle' || obj.type === 'regularPolygon') {
+                createInput('Radius', 'number', obj.radius, 'radius');
+            }
+            if (obj.type === 'regularPolygon') {
+                createInput('Sides', 'number', obj.sides, 'sides');
+            }
+            if (obj.type === 'line') {
+                createInput('X2', 'number', obj.x2, 'x2');
+                createInput('Y2', 'number', obj.y2, 'y2');
+            }
+
+            if (obj.type !== 'collection') {
+                const sep = document.createElement('div');
+                sep.style.borderTop = '1px solid #444';
+                sep.style.margin = '10px 0';
+                propPanelEl.appendChild(sep);
+                createInput('Collider', 'checkbox', obj.hasCollider, 'hasCollider');
+            }
+        }
+
+        function generateCode() {
+            let c = `async function generatedScene() {\n`;
+            c += `\tsetupSpi();\n`;
+            c += `\tconst renderer = new Renderer(64, 64);\n`;
+            c += `\tconst renderBuffer = new ArrayBuffer(64 * 64 * 3);\n`;
+            c += `\tconst syncBuffer = buildSyncBuffer();\n`;
+            c += `\tconst modesetBuffer = buildModesetBuffer(64, Format.RGB_888);`;
+            c += `\tconst scene = new Collection({ x: 0, y: 0, color: [0,0,0,1] });\n\n`;
+
+            const usedNames = new Set();
+
+            const processNode = (nodeId, parentVarName) => {
+                const node = SCENE.objects[nodeId];
+                if (nodeId === 'root') {
+                    node.children.forEach(childId => processNode(childId, 'scene'));
+                    return;
+                }
+
+                let baseName = node.name.replace(/[^a-zA-Z0-9]/g, '_');
+                let safeName = baseName;
+                let counter = 1;
+                while (usedNames.has(safeName)) {
+                    safeName = baseName + '_' + counter;
+                    counter++;
+                }
+                usedNames.add(safeName);
+
+                const colStr = `[${hexToRgbArr(node.color)}]`;
+
+                if (node.type === 'collection') {
+                    c += `\tconst ${safeName} = new Collection({ x: ${node.x}, y: ${node.y}, color: ${colStr}, z: ${node.z} });\n`;
+                    c += `\t${parentVarName}.add(${safeName});\n`;
+                    if (node.rotation) c += `\t${safeName}.rotate(${node.rotation});\n\n`;
+                    if (node.pivotX || node.pivotY) c += `\t${safeName}.setPivot(${node.pivotX || node.x}, ${node.pivotY || node.y});\n`;
+                    if (node.children) {
+                        node.children.forEach(childId => processNode(childId, safeName));
+                    }
+                }
+                else {
+                    let className = '';
+                    let props = `\t\tx: ${node.x}, y: ${node.y},\n`;
+                    props += `\t\tcolor: ${colStr},\n`;
+                    props += `\t\tz: ${node.z},\n`;
+
+                    if (node.type === 'rectangle') {
+                        className = 'Rectangle';
+                        props += `\t\twidth: ${node.width}, height: ${node.height},\n\t\tfill: ${node.fill}`;
+                    } else if (node.type === 'circle') {
+                        className = 'Circle';
+                        props += `\t\tradius: ${node.radius},\n\t\tfill: ${node.fill}`;
+                    } else if (node.type === 'line') {
+                        className = 'LineSegment';
+                        props += `\t\tx2: ${node.x2}, y2: ${node.y2}`;
+                    } else if (node.type === 'point') {
+                        className = 'Point';
+                    } else if (node.type === 'regularPolygon') {
+                        className = 'RegularPolygon';
+                        props += `\t\tradius: ${node.radius}, sides: ${node.sides},\n\t\tfill: ${node.fill}`;
+                    } else if (node.type === 'polygon') {
+                        className = 'Polygon';
+                        props += `\t\tfill: ${node.fill},\n\t\tvertices: ${JSON.stringify(node.vertices)}`;
+                    }
+
+                    c += `\tconst ${safeName} = new ${className}({\n${props}\n  });\n`;
+                    if (node.rotation) c += `\t${safeName}.rotate(${node.rotation});\n`;
+                    if (node.hasCollider) c += `\t${safeName}.addCollider();\n`;
+                    if (node.pivotX || node.pivotY) c += `\t${safeName}.setPivot(${node.pivotX || node.x}, ${node.pivotY || node.y});\n`;
+                    c += `\t${parentVarName}.add(${safeName});\n\n`;
+                }
+            };
+            processNode('root', 'scene');
+            c += `\twhile (true) {\n\t\trenderer.render(scene, renderBuffer, true, Format.RGB_888, -1);\n\t\tsendRpHub75Frame(syncBuffer, modesetBuffer, renderBuffer);\n\t\tawait sleep(100);\n\t}\n}`;
+            codeOutputEl.value = c;
+        }
+
+        function copyToClipboard() {
+            codeOutputEl.select();
+            document.execCommand('copy');
+        }
+
+        function hexToRgbArr(hex) {
+            let c;
+            if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
+                c = hex.substring(1).split('');
+                if (c.length == 3) {
+                    c = [c[0], c[0], c[1], c[1], c[2], c[2]];
+                }
+                c = '0x' + c.join('');
+                return [(c >> 16) & 255, (c >> 8) & 255, c & 255, 1];
+            }
+            return [255, 255, 255, 1];
+        }
+
+        init();
+    </script>
+</body>
+
+</html>
