@@ -2,7 +2,7 @@
 
 
 === "Bločky"
-    V této lekci se naučíme číst hodnoty z joysticku a převádět je na užitečné rozsahy pomocí knihovny `utils`.
+    V této lekci se naučíme číst hodnoty z joysticku a převádět je na užitečné rozsahy pomocí funkce `map`.
 
     Joystick je zařízení, které nám umožňuje ovládat něco pohybem v ploše. Jedná se vlastně o dva potenciometry - jeden pro osu X a druhý pro osu Y. Protože potenciometry vracejí napětí, mikrokontrolér jej převede na číslo v rozsahu 0–1023.
 
@@ -11,7 +11,7 @@
 
     ## Příprava
     Nejprve si vytvoříme nový prázdný projekt. Poté musíme doinstalovat potřebné knihovny:
-    - utils
+    
     - button
     - saturn
     - colors
