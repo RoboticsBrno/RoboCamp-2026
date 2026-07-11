@@ -1,0 +1,168 @@
+{
+  "blocks": {
+    "languageVersion": 0,
+    "blocks": [
+      {
+        "type": "basic_onStart",
+        "id": "N#c!0i;vxI:x1JWmcoX:",
+        "x": 70,
+        "y": 30,
+        "extraState": {
+          "package": "basic"
+        },
+        "inputs": {
+          "CODE": {
+            "block": {
+              "type": "saturn_constructor",
+              "id": "I1KN*yA[UKFO?f0[e{,b",
+              "extraState": {
+                "package": "saturn"
+              },
+              "fields": {
+                "CONSTRUCTED_VAR_NAME": "saturn_0"
+              },
+              "next": {
+                "block": {
+                  "type": "rphub75_fill",
+                  "id": "?i7z*Zkhk2akH1)`(/fi",
+                  "extraState": {
+                    "package": "display",
+                    "instanceNames": {
+                      "DISPLAY_INSTANCE": "saturn_0.display"
+                    }
+                  },
+                  "fields": {
+                    "DISPLAY_INSTANCE": "saturn_0.display"
+                  },
+                  "inputs": {
+                    "COLOR": {
+                      "block": {
+                        "type": "dynamic_color_rgb",
+                        "id": "kel3gBu@WSxWEmL}ra8m",
+                        "extraState": {
+                          "mode": "NAMES",
+                          "colorName": "blue"
+                        },
+                        "fields": {
+                          "MODE": "NAMES",
+                          "COLOR_NAME": "blue"
+                        }
+                      }
+                    }
+                  },
+                  "next": {
+                    "block": {
+                      "type": "rphub75_show",
+                      "id": "HNej{~Pjn57Z9b../2%K",
+                      "extraState": {
+                        "package": "display",
+                        "instanceNames": {
+                          "DISPLAY_INSTANCE": "saturn_0.display"
+                        }
+                      },
+                      "fields": {
+                        "DISPLAY_INSTANCE": "saturn_0.display"
+                      },
+                      "next": {
+                        "block": {
+                          "type": "basic_sleep",
+                          "id": "1Z:?x6o5H}{t}j}(vZ6L",
+                          "extraState": {
+                            "package": "basic"
+                          },
+                          "inputs": {
+                            "TIME": {
+                              "shadow": {
+                                "type": "math_number",
+                                "id": "pknwR{B/Su|2t}KBj%yD",
+                                "fields": {
+                                  "NUM": 2000
+                                }
+                              }
+                            }
+                          },
+                          "next": {
+                            "block": {
+                              "type": "rphub75_fill",
+                              "id": "_9z*ir%5+yV{UP9i.18Q",
+                              "extraState": {
+                                "package": "display",
+                                "instanceNames": {
+                                  "DISPLAY_INSTANCE": "saturn_0.display"
+                                }
+                              },
+                              "fields": {
+                                "DISPLAY_INSTANCE": "saturn_0.display"
+                              },
+                              "inputs": {
+                                "COLOR": {
+                                  "block": {
+                                    "type": "dynamic_color_rgb",
+                                    "id": "8*$pUF62H+y8?*;Cxy+d",
+                                    "extraState": {
+                                      "mode": "NAMES",
+                                      "colorName": "yellow"
+                                    },
+                                    "fields": {
+                                      "MODE": "NAMES",
+                                      "COLOR_NAME": "yellow"
+                                    }
+                                  }
+                                }
+                              },
+                              "next": {
+                                "block": {
+                                  "type": "rphub75_show",
+                                  "id": "FI~kw.y$7,5Ov-w5b4/Z",
+                                  "extraState": {
+                                    "package": "display",
+                                    "instanceNames": {
+                                      "DISPLAY_INSTANCE": "saturn_0.display"
+                                    }
+                                  },
+                                  "fields": {
+                                    "DISPLAY_INSTANCE": "saturn_0.display"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "basic_sleep",
+        "id": "Jjd=2~YF/F1#`AB|3se.",
+        "x": -430,
+        "y": 510,
+        "disabledReasons": [
+          "outside_entry_block"
+        ],
+        "extraState": {
+          "package": "basic"
+        },
+        "inputs": {
+          "TIME": {
+            "shadow": {
+              "type": "math_number",
+              "id": "4v]AblYIKtWOuK|%O=~c",
+              "disabledReasons": [
+                "outside_entry_block"
+              ],
+              "fields": {
+                "NUM": 1000
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}

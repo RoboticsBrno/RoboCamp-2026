@@ -57,11 +57,11 @@ nastavíme barvu pixelu a potvrdíme změny. Příklad:
 
 === "TypeScript"
     ```ts
-    import { Display } from "rphub75";
+    import { createSaturn } from "saturn";
     import * as colors from "colors";
 
     // Tento řádek připraví displej ke kreslení.
-    const display = new Display();
+    const display = createSaturn().display;
 
     // Tento řádek nastaví barvu jediného pixelu.
     // První číslo udává x-ovou souřadnici a druhé y-ovou.
@@ -102,11 +102,10 @@ Nakresli semafor: zelenou, žlutou a červenou tečku vedle sebe.
 Pomocí funkce `#!ts Display.fill` lze jednoduše vyplnit celý displej jednolitou barvou. Hlavním využitím je následující kód který rozsvítí veškeré LEDky na maximum a zajistí tak odvaření displeje.
 === "TypeScript"
     ```ts
-    import { Display } from "rphub75";
+    import { createSaturn } from "saturn";
     import { white } from "colors";
 
-    const display = new Display();
-    display.brightness = 1;
+    const display = createSaturn().display;
     display.fill(white);
     display.show();
     ```
@@ -178,10 +177,10 @@ Vyplň celý displej modrou barvou a pak po dvou vteřinách žlutou.
 ??? note "Řešení"
     === "TypeScript"
         ```ts
-        import { Display } from "rphub75";
+        import { createSaturn } from "saturn";
         import * as colors from "colors";
 
-        const display = new Display();
+        const display = createSaturn().display;
 
         display.fill(colors.blue);
         display.show();

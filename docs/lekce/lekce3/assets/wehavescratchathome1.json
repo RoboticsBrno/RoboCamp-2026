@@ -1,0 +1,76 @@
+{
+  "blocks": {
+    "languageVersion": 0,
+    "blocks": [
+      {
+        "type": "basic_onStart",
+        "id": "N#c!0i;vxI:x1JWmcoX:",
+        "x": 70,
+        "y": 30,
+        "extraState": {
+          "package": "basic"
+        },
+        "inputs": {
+          "CODE": {
+            "block": {
+              "type": "saturn_constructor",
+              "id": "I1KN*yA[UKFO?f0[e{,b",
+              "extraState": {
+                "package": "saturn"
+              },
+              "fields": {
+                "CONSTRUCTED_VAR_NAME": "saturn_0"
+              },
+              "next": {
+                "block": {
+                  "type": "rphub75_fill",
+                  "id": "BBnZQZ{bzh=}N2h:#S=S",
+                  "extraState": {
+                    "package": "display",
+                    "instanceNames": {
+                      "DISPLAY_INSTANCE": "saturn_0.display"
+                    }
+                  },
+                  "fields": {
+                    "DISPLAY_INSTANCE": "saturn_0.display"
+                  },
+                  "inputs": {
+                    "COLOR": {
+                      "block": {
+                        "type": "dynamic_color_rgb",
+                        "id": "5Z7}42c[b3]J2v07QNiv",
+                        "extraState": {
+                          "mode": "NAMES",
+                          "colorName": "white"
+                        },
+                        "fields": {
+                          "MODE": "NAMES",
+                          "COLOR_NAME": "white"
+                        }
+                      }
+                    }
+                  },
+                  "next": {
+                    "block": {
+                      "type": "rphub75_show",
+                      "id": "1RykA4{vB~2kO#lVfTb=",
+                      "extraState": {
+                        "package": "display",
+                        "instanceNames": {
+                          "DISPLAY_INSTANCE": "saturn_0.display"
+                        }
+                      },
+                      "fields": {
+                        "DISPLAY_INSTANCE": "saturn_0.display"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}
