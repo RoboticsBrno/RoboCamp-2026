@@ -85,10 +85,9 @@ Zde si vyzkoušíme vytvořit první projekt a nahrát jej do Saturnu.
         [Zip soubor](https://2026.robotickytabor.cz/lekce/baseExample.zip){.md-button .md-button--primary}
 
     ## Nahrání programu
-    <!-- TODO update for new extension -->
     Teď můžeme zkusit na Saturn nahrát náš první program. Vytvořili jsme si projekt, který obsahuje jednoduchý program, který nám bude vypisovat zprávu do konzole a rozsvítí LEDku na Saturnu. 
 
-    1. Ve VSCode máme otevřený první projekt. V levém `Exploreru` (`Průzkumníku`) vybereme soubor ze  `src` -> `index.ts`. V něm vidíme náš první program.
+    1. Ve VSCode máme otevřený první projekt, který jsme si stáhli. V levém `Exploreru` (`Průzkumníku`) vybereme soubor ze  `src` -> `index.ts`. V něm vidíme náš první program.
 
     2. V levém dolním rohu klikneme na tlačítko `COM` a vybereme port, na kterém je Saturn připojený. Pro zjištění správného portu zkusíme Saturn odpojit a znovu připojit. V seznamu portů by se měl objevit nový port, který je právě Saturn. Ten si zapamatujeme a vybereme.
     ![portSelector](./assets/portSelector.png)
@@ -114,11 +113,12 @@ Zde si vyzkoušíme vytvořit první projekt a nahrát jej do Saturnu.
     5. Pro ukončení terminálu, do něj klikneme a stiskneme ++ctrl+c++.
 
     ## Jak vlastně náš program funguje?
-    Tato část importuje knihovny, které nám umožní ovládat LEDku a používat předem definované barvy a vytváří objekt LEDky, se kterým budeme pracovat. V našem případě je to LEDka na pinu 48, která je typu `LED_WS2812B`. Tato část teď není důležitá, takže ji necháme tak, jak je.
+    Tato část importuje knihovny, které nám umožní ovládat LEDku a používat předem definované barvy a vytváří objekt LEDky, se kterým budeme pracovat. Objekt vytváříme pro specifický pin, který je dán objektem `SaturnPins` (SaturnPins.ILED == 48). LEDka je typu `LED_WS2812B`. Tato část teď pro nás důležitá, takže ji necháme tak, jak je.
     ```ts
     import { SmartLed, LED_WS2812B } from "smartled";
     import * as colors from "colors";
-    const led = new SmartLed(48, 1, LED_WS2812B);
+    import { SaturnPins } from "saturn";
+    const led = new SmartLed(SaturnPins.ILED, 1, LED_WS2812B);
     ```
 
     Tato část nastavuje LEDku na zelenou barvu a zobrazuje ji.
