@@ -73,7 +73,6 @@
     !!! note "Poznámka"
         V lekci 1 jsme se naučili, jak vytvořit nový projekt. Pokud nevíte, jak na to, podívejte se do lekce 1.
 
-    <!-- TODO update to use PINS library -->
     === "Odkaz"
         Stačí kliknout na odkaz, otevře se nám VSCode a nabídne se nám možnost vytvořit projekt z připraveného balíčku.
 
