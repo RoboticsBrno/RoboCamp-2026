@@ -101,7 +101,7 @@ Nakresli semafor: zelenou, žlutou a červenou tečku vedle sebe.
 
 ## Výplň
 
-Pomocí funkce `#!ts Display.fill` lze jednoduše vyplnit celý displej jednolitou barvou. Hlavním využitím je následující kód, který rozsvítí veškeré LEDky na maximum a zajistí tak rozzáření displeje.
+Pomocí funkce `#!ts Display.fill` lze jednoduše vyplnit celý displej jednolitou barvou. Hlavním využitím je následující kód, který rozsvítí veškeré LEDky na maximum a zajistí tak odvaření displeje.
 === "TypeScript"
     ```ts
     import { createSaturn } from "saturn";
