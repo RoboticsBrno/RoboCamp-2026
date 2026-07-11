@@ -72,7 +72,7 @@ nastavíme barvu pixelu a potvrdíme změny. Příklad:
     display.show();
     ```
 === "Bločky"
-    ![](./assets/wehavescratchathome2.png)
+    ![](./assets/wehavescratchathome0.png)
 
 !!! warning "Upozornění"
     Dokud není zavolána funkce `show`, změny se nepropíšou!
@@ -95,7 +95,7 @@ Nakresli semafor: zelenou, žlutou a červenou tečku vedle sebe.
         ```
 
     === "Bločky"
-        ![](./assets/wehavescratchathome1.png)
+        ![](./assets/wehavescratchathome2.png)
 
 ## Výplň
 
@@ -110,7 +110,7 @@ Pomocí funkce `#!ts Display.fill` lze jednoduše vyplnit celý displej jednolit
     display.show();
     ```
 === "Bločky"
-    ![](./assets/wehavescratchathome3.png)
+    ![](./assets/wehavescratchathome1.png)
 
 !!! info
     Pokud chceš vyčistit obrazovku, můžeš použít optimalizovanou funkci `clear`.
@@ -192,7 +192,7 @@ Vyplň celý displej modrou barvou a pak po dvou vteřinách žlutou.
         ```
 
     === "Bločky"
-        ![](./assets/wehavescratchathome0.png)
+        ![](./assets/wehavescratchathome3.png)
 
 ## Zadání výstupního úkolu
 
