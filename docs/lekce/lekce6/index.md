@@ -122,6 +122,7 @@
     ```bash
     jac lib-install rphub75
     jac lib-install colors
+    jac lib-install saturn
     ```
     V této lekci si představíme cykly. Ty nám umožňují opakovat kód podle nějakého pravidla.
     Zatím je využijeme pro kreslení složitějších tvarů na obrazovce.
@@ -183,10 +184,10 @@
 
     ```ts
     import { Button } from "button";
-    // pin kde je zapojené tlačítko, vyměň za číslo pinu na kterém máš svoje tlačítko připojené
-    const BUTTON_PIN = 16; 
+    
+    import { SaturnPins } from "saturn";
 
-    const button = new Button(BUTTON_PIN);
+    const button = new Button(SaturnPins.Pmod1.Pin1); // změň na pin kde máš svoje tlačítko zapojené
     while (!button.isPressed()) {
     // cyklus kontroluje, zdali je tlačítko zmáčknuté (gpio.read() vrací 1, pokud
     // je tlačítko zmáčknuté), dokud není zmáčknuté, vypisuje "NOT PRESSED"
@@ -213,11 +214,15 @@
         Zde příklad jak vytvořit vložené for cykly:
         
         ```ts
+        
+        import { createSaturn } from "saturn";
 
+        const sat = createSaturn();
+        
         // tento for loop prochází řádky, po Y od 0 do 64 (výška displeje)
-        for (let y = 0; y < display.height;y++) { 
+        for (let y = 0; y < sat.display.height;y++) { 
             // tento for loop prochází už každý bod na určeném řádku, po X od 0 do 64 (šířka displeje)
-            for (let x = 0; x <display.width;x++){
+            for (let x = 0; x <sat.display.width;x++){
                 //ZDE vykresluj pixely a vypočítej správné hodnoty barvy
             }
         }
@@ -228,25 +233,26 @@
     ??? note "Řešení"
 
         ```ts
-        import { Display } from "rphub75";
         import { rgb } from "colors";
+        import { createSaturn } from "saturn";
 
-        const display = new Display();
+        const sat = createSaturn();
+
         // tento for loop prochází řádky, po Y od 0 do 64 (výška displeje)
-        for (let y = 0; y < display.height;y++) { 
+        for (let y = 0; y < sat.display.height;y++) { 
             // tento for loop prochází už každý bod na určeném řádku, po X od 0 do 64 (šířka displeje)
-            for (let x = 0; x <display.width;x++){ 
+            for (let x = 0; x <sat.display.width;x++){ 
                 // přepočítáme souřadnici X tak, aby jsme dostali celý rozsah červené
-                let red = (x/display.width)*255;
+                let red = (x/sat.display.width)*255;
                 // přepočítáme souřadnici Y tak, aby jsme dostali celý rozsah modré
-                let blue = (y/display.height)*255;
+                let blue = (y/sat.display.height)*255;
                 
                 // pomocí dříve vypočítaných hodnotách nastavíme barvu na vybraný pixel.
-                display.setPixel(x,y,rgb(red,0,blue));
+                sat.display.setPixel(x,y,rgb(red,0,blue));
             }
         }
         // Nakonec vyzobrazíme všechny pixely na displeji.
-        display.show();
+        sat.display.show();
         ```
 
     ## Zadání výstupního úkolu V1
