@@ -97,6 +97,10 @@ Kolekce jsou speciální grafické prvky, které se vyznačují tím, že můžo
 
 Když jsme zadávali souřadnice geometrických tvarů v předchozích příkladech, tak jsme ve skutečnosti nezadávali konkrétní pozice pixelů na displeji, ale souřadnice relativní vzhledem ke kořenové (root) kolekci, do které jsme museli přidat všechny prvky, které měly být viditelné.
 
+Práci vám ulehčí připravený generátor na scény
+
+[Builder dokumentace](../scene-builder/index.md){.md-button}
+
 ## Úkol A
 Změňte v našem programu parametry root kolekce. Jak se to projeví na výstupu?
 
