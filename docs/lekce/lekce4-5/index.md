@@ -9,7 +9,7 @@
     ## Vytvoření projektu
 
     Otevřeme editor [Jacly](https://jacly.jaculus.org/project) a vytvoříme nový projekt.
-    Typ zvolíme `Jacly bloky projekt` a šablonu `template-jackly`.
+    Typ zvolíme `Jacly bloky projekt` a šablonu `template-jacly-saturn`.
 
     !!! warning "Pokročilá nastavení neměníme."
 

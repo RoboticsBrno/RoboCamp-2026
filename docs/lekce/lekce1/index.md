@@ -16,9 +16,9 @@ Zde si vyzkoušíme vytvořit první projekt a nahrát jej do Saturnu.
     3. Kliknutím na tlačítko `Vytvořit nový projekt` si vytvoříme náš první projekt. 
     ![createProject](./assets/blocksCreateProject.png)
     
-    4. Po kliknutí na tlačítko si musíme projekt pojmenovat, vybrat typ a šablonu. Jméno si vybereme takové, abychom od sebe projekty lehce rozlišili. Typ projektu zvolíme `Jacly bloky projekt` a šablonu `template-jackly`. Pak už stačí kliknout na tlačítko `Vytvořit projekt`.
+    4. Po kliknutí na tlačítko si musíme projekt pojmenovat, vybrat typ a šablonu. Jméno si vybereme takové, abychom od sebe projekty lehce rozlišili. Typ projektu zvolíme `Jacly bloky projekt` a šablonu `template-jacly-saturn`. Pak už stačí kliknout na tlačítko `Vytvořit projekt`.
         ![projectConfig](./assets/blocksProjectConfig.png)
-        <!-- TODO change template-jackly -->
+        <!-- TODO change template-jacly-saturn -->
         
         !!! warning "Pokročilá nastavení neměníme."
 

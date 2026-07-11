@@ -10,7 +10,7 @@
     Pokud víte, jak na to, přeskočte k [Zadání A](#zadanie-a).
     
     1. Otevřeme editor [Jacly](https://jacly.jaculus.org/project) a vytvoříme nový projekt.
-    2. Typ zvolíme `Jacly bloky projekt` a šablonu `template-jackly`.
+    2. Typ zvolíme `Jacly bloky projekt` a šablonu `template-jacly-saturn`.
     3. Před nahráním programu se musíme připojit k Saturnu (viz lekce 1).
     
     !!! warning "Pokročilá nastavení neměníme."

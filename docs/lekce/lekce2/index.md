@@ -10,7 +10,7 @@
     ## Vytvoření projektu
 
     Otevřeme editor [Jacly](https://jacly.jaculus.org/project) a vytvoříme nový projekt. 
-    Typ zvolíme `Jacly bloky projekt` a šablonu `template-jackly`. Před nahráním programu se musíme připojit k Saturnu (viz lekce 1).
+    Typ zvolíme `Jacly bloky projekt` a šablonu `template-jacly-saturn`. Před nahráním programu se musíme připojit k Saturnu (viz lekce 1).
 
     !!! warning "Pokročilá nastavení neměníme."
 
