@@ -1,49 +1,60 @@
-# Lekce 2.1 - Exkurze do GPIO a Button knihovny
-Toto je nepovinná lekce vysvětlující fungování GPIO a Button knihovny. Nebudou prováděny žádné vedené lekce ani úkoly, lekce je zamýšlena pouze jako doplňující materiál pro ty, kteří se chtějí dozvědět více o fungování tlačítek a GPIO.
+# Bonus Lekce 2.1 – Rozhraní GPIO a knihovna Button
+
+!!! warning "Dobrovolná lekce" 
+
+    Tato lekce je volitelná a slouží jako doplňující materiál pro ty, kteří chtějí hlouběji porozumět principům fungování digitálních vstupů a výstupů a obsluze mechanických tlačítek. Neobsahuje žádné povinné úkoly ani praktická cvičení.
 
 ### Co je to GPIO?
-GPIO (General Purpose Input Output) je způsob, jak pracovat s piny, posílat a přijímat signály. Používá se například při ovládání a čtení z periferií, například z PMODu. Naše PMOD moduly GPIO využívají. Tlačítka GPIO používají také, ale práce s nimi s sebou nese unikátní problémy, které řeší knihovna button.
 
-Při většině ostatních použití nás ale problémy s `bounce` a `debounce` nemusí trápit.
+**GPIO (General Purpose Input/Output)** je univerzální rozhraní mikrokontroléru, které umožňuje konfigurovat jednotlivé piny pro příjem nebo odesílání digitálních signálů. GPIO se běžně využívá k řízení periferních zařízení a ke čtení dat z nich (například u PMOD modulů). 
 
-Toto je mimo jiné „low level" způsob, jak získávat input z tlačítek.
+Přestože rozhraní GPIO využívají i běžná tlačítka, jejich přímá obsluha přináší specifická úskalí spojená s mechanickými vlastnostmi spínačů. Tyto komplikace za nás na softwarové úrovni řeší knihovna `button`. U většiny ostatních periferních zařízení se však s těmito problémy (označovanými jako *bounce* a *debounce*) setkat nemusíme.
 
-Příklad s naším vestavěným BOOT tlačítkem na Saturnu (`SaturnPins.BootBtn`):
+Přímé použití knihovny `gpio` představuje nízkoúrovňový (*low-level*) způsob, jak získávat data z tlačítek.
+
+#### Příklad použití s vestavěným tlačítkem BOOT na desce Saturn (`SaturnPins.BootBtn`):
 
 ```ts
 import * as gpio from "gpio";
 import { SaturnPins } from "saturn";
 
-// nastaví pin 0 jako vstup
+// Nastavení pinu jako vstupního
 gpio.pinMode(SaturnPins.BootBtn, gpio.PinMode.INPUT);
 
-// událost, která proběhne při stisknutí tlačítka
+// Událost vyvolaná při sestupné hraně signálu (stisknutí tlačítka)
 gpio.on("falling", SaturnPins.BootBtn, () => { 
-    console.log("falling")
+    console.log("falling");
 });
 
-// událost, která proběhne při puštění tlačítka
+// Událost vyvolaná při vzestupné hraně signálu (uvolnění tlačítka)
 gpio.on("rising", SaturnPins.BootBtn, () => { 
-    console.log("rising")
+    console.log("rising");
 });
 
-// jednou za 100ms přečteme a vypíšeme hodnotu pinu (hodnota je digitální, tedy je buď 1, nebo 0)
-setInterval(()=>{
+// Pravidelné čtení a výpis digitální hodnoty pinu (0 nebo 1) každých 100 ms
+setInterval(() => {
     console.log(gpio.read(SaturnPins.BootBtn)); 
 }, 100);
 ```
 
-Jak jste si mohli všimnout, s knihovnou gpio se pracuje docela podobně jako s knihovnou button. Knihovna button je totiž postavená na GPIO, ale má několik vylepšení, které se hodí při práci s tlačítky.
+Z kódu je patrné, že práce s knihovnou `gpio` je velmi podobná práci s knihovnou `button`. Knihovna `button` je totiž na rozhraní GPIO přímo postavena, doplňuje však další mechanismy, které usnadňují obsluhu tlačítek v reálných podmínkách. 
 
-Pokud už máte modul D-pad, můžeme si demonstrovat proč.
+Proč je tato vrstva navíc potřebná, si můžeme demonstrovat, pokud máte k dispozici modul DPad.
+
+---
 
 ### Tlačítka, bounce a debounce
-Vyzkoušíme si stejný příklad, ale s tlačítkem z D-padu. Změníme tedy nastavení z `SaturnPins.BootBtn` na PMOD pin, na kterém je připojený DPad. Může to být například `SaturnPins.Pmod1.Pin1`.
 
-Pokud vše proběhlo správně, měli byste v konzoli vidět „falling" a „rising" vícekrát pro jedno stisknutí tlačítka. Tomuto jevu se říká `bounce` (zákmit). 
+Vyzkoušejme si stejný příklad, ale tentokrát s tlačítkem na externím modulu DPad. V kódu změňte pin `SaturnPins.BootBtn` na pin, ke kterému je připojen DPad (například `SaturnPins.Pmod1.Pin1`).
 
-`Bounce` je způsoben konstrukcí tlačítka. Je totiž založeno na kovové pružině, která se při stisknutí tlačítka několikrát odrazí. Tím tlačítko několikrát sepne a rozepne obvod, což způsobí, že se v konzoli objeví více „falling" a „rising" událostí. Míra `bounce` je závislá na konstrukci tlačítka a jeho stáří. Tlačítko `boot` má konstrukci, která bounce minimalizuje, takže se nám v konzoli typicky objeví jen jedna „falling" a „rising" událost. Tlačítko z D-padu je k `bounce` mnohem náchylnější, takže se bez `debounce` neobejdeme.
+Při stisku tlačítka si v konzoli pravděpodobně všimnete, že se výpisy „falling“ a „rising“ objeví pro jedno stisknutí hned několikrát. Tento nežádoucí jev se nazývá **zákmit (bounce)**.
 
-Knihovna button má už vestavěný `debounce` a události `click` a `doubleClick`, proto ji používáme místo čistého `GPIO`.
+#### Proč k zákmitům dochází?
+Zákmit je způsoben fyzikální konstrukcí mechanického tlačítka. To uvnitř obsahuje kovové kontakty, které se při stisku vlivem pružnosti materiálu od sebe několikrát mikroskopicky odrazí, než se pevně spojí. Během tohoto velmi krátkého okamžiku (v řádu milisekund) se elektrický obvod opakovaně rozpojí a spojí, což mikrokontrolér zaznamená jako sérii rychlých stisknutí a uvolnění.
 
+Náchylnost k zákmitům se liší podle konstrukce a opotřebení tlačítka:
+*   **Vestavěné tlačítko BOOT** na desce Saturn má konstrukci, která zákmity minimalizuje. V konzoli proto obvykle uvidíte pouze jednu čistou událost „falling“ a „rising“.
+*   **Tlačítka na modulu DPad** jsou k zákmitům náchylnější a bez dodatečného ošetření se neobejdou.
 
+#### Jak pomáhá knihovna `button`?
+Knihovna `button` v sobě má implementované softwarové ošetření zákmitů, takzvaný **debounce** (odrušení). Ten krátké a rychlé změny stavu způsobené odrazy kontaktů odfiltruje a aplikaci předá až stabilní stav. Navíc nabízí podporu pro pokročilejší události, jako je kliknutí (`click`) nebo dvojklik (`doubleClick`). Z toho důvodu je pro běžný vývoj pohodlnější a bezpečnější používat knihovnu `button` namísto přímého přístupu přes rozhraní `gpio`.
