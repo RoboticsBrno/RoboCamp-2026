@@ -52,6 +52,8 @@ Pokud tyto nestačí, knihovna `colors` obsahuje také předdefinovanou kolekci 
 
 ## Jednoduché kreslení
 
+K displeji se dostaneme přes objekt Saturn, který získéme zavoláním funkce `createSaturn`.
+Poté na něm můžeme volat různé metody. Nejdůležitější jsou `setPixel` a `show`, které teď použijeme.
 Začneme kreslením jediné tečky. Nejdříve naimportujeme potřebné knihovny, připravíme displej,
 nastavíme barvu pixelu a potvrdíme změny. Příklad:
 
