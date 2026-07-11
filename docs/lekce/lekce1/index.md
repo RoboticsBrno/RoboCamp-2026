@@ -27,7 +27,9 @@ Zde si vyzkoušíme vytvořit první projekt a nahrát jej do Saturnu.
     ## Práce s prostředím
     V Jacly je spousta tlačítek a kategorií, pro nás je zatím důležitých jen několik. 
     
-    Na levé straně máme výběr bločků. Prozatím nás zajímají kategorie `Základní` a `SmartLed`. 
+    Když si na levé straně rozklikneme kategorii `Balíčky`, otevře se nám správce balíčků/knihoven. Balíček je sada rozšiřujících funkcí, které můžeme použít v našem programu. 
+   
+    Vedle správce balíčků máme výběr bločků. Bločky jsou rozděleny do kategorií podle toho, co dělají. Například v kategorii `Základní` najdeme bločky, které nám umožní vykonávat základní operace, jako je například čekání nebo vypisování zpráv do konzole. 
     
     V pravém horním rohu vidíme tlačítko `Připojit`. Před nahráním programu se musíme k Saturnu připojit. Připojení probíhá stejně jako při flashování firmware v minulé lekci. 
     
@@ -35,10 +37,10 @@ Zde si vyzkoušíme vytvořit první projekt a nahrát jej do Saturnu.
 
     Uprostřed máme programovací plochu, kde budeme bločky skládat dohromady.
     ![jaclyUI](./assets/jaclyUI.png)
-    <!-- TODO blocky  -->
 
     ## Náš první projekt
-    1. Zkusíme si poskládat a nahrát do Saturnu náš první projekt. Prozatím si poskládáme bločky podle obrázku.
+    1. Zkusíme si poskládat a nahrát do Saturnu náš první projekt. Prozatím si poskládáme bločky podle obrázku. Narazíte ale na problém. Nepodaří se vám totiž najít bloček `Saturn pin`, ten je totiž z rozšiřujícího balíčku `saturn`. Budete si ho tedy muset ve správci balíčků nainstalovat. Klikneme na tlačítko `Balíčky` a v sekci `Přidat nový balíček` vyhledáme `saturn`, vybereme verzi balíčku a klikneme na tlačítko `Přidat vybraný balíček`.
+    ![blocksAddNewPackage](./assets/blocksAddNewPackage.png)
     ![firstProject](./assets/blocksFirstProject.png)
 
     2. Po poskládání bločků klikneme na tlačítko `Připojit` a vybereme port, na kterém je Robodeck připojený. Poté klikneme na tlačítko `Sestavit a nahrát`. Pokud jsme vše udělali správně, měla by se nám na Saturnu rozsvítit LEDka červeně a v konzoli by se nám mělo vypisovat `Ahojky svete`.
