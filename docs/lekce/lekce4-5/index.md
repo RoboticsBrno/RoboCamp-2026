@@ -6,18 +6,21 @@
 
     Joystick je zařízení, které nám umožňuje ovládat něco pohybem v ploše. Jedná se vlastně o dva potenciometry - jeden pro osu X a druhý pro osu Y. Protože potenciometry vracejí napětí, mikrokontrolér jej převede na číslo v rozsahu 0–1023.
 
-    !!! note "Poznámka"
-        V lekci 1 jsme se naučili, jak vytvořit nový projekt. Pokud nevíte, jak na to, podívejte se do lekce 1.
+    ## Vytvoření projektu
 
-    ## Příprava
-    Nejprve si vytvoříme nový prázdný projekt. Poté musíme doinstalovat potřebné knihovny:
-    
-    - button
-    - saturn
-    - colors
+    Otevřeme editor [Jacly](https://jacly.jaculus.org/project) a vytvoříme nový projekt.
+    Typ zvolíme `Jacly bloky projekt` a šablonu `template-jackly`.
+
+    !!! warning "Pokročilá nastavení neměníme."
+
+    ## Instalace knihoven
+
+    Do nového projektu nainstalujeme potřebné knihovny:
+
+    - `utils`
+    - `button`
 
     ## Snímaní pozice joysticku
-    Joystick je připojen k PMODu na Saturnu. Osa X je na pinu 1, osa Y na pinu 2 a tlačítko na pinu 4.
     
     ![](./assets/joystick-init.png)
     
@@ -67,36 +70,21 @@
 === "TypeScript"
     V této lekci se naučíme číst hodnoty z joysticku a převádět je na užitečné rozsahy pomocí knihovny `utils`.
 
-    !!! note "Poznámka"
-        V lekci 1 jsme se naučili, jak vytvořit nový projekt. Pokud nevíte, jak na to, podívejte se do lekce 1.
-
     === "Odkaz"
         Stačí kliknout na odkaz, otevře se nám VSCode a nabídne se nám možnost vytvořit projekt z připraveného balíčku.
 
-        [Create project]( vscode://cubicap.jaculus/import?uri=https://2026.robotickytabor.cz/lekce/baseExample.tar.gz){.md-button .md-button--primary}
-    === "VSCode extension"
-        Otevřeme VSCode, v levém exploreru kliknema na extension `Jaculus` a tlačítko `Create Project`. Vybereme adresář, kde chceme mít projekt uložený a zadáme název projektu. Poté v menu vybereme možnost `Custom package URL` a zadáme toto URL: 
-        
-        `https://2026.robotickytabor.cz/lekce/baseExample.tar.gz`.
+        [Vytvořit projekt]( vscode://cubicap.jaculus/import?uri=https://2026.robotickytabor.cz/lekce/baseExample.tar.gz){.md-button .md-button--primary}
     === "Command line"
         Tento příkaz stačí zadat do terminálu v adresáři, kde chceme mít projekt uložený. Změníme `<PROJECT_NAME>` na název projektu, který chceme vytvořit.
         
         ```bash
         jac project-create --package https://2026.robotickytabor.cz/lekce/baseExample.tar.gz <PROJECT_NAME>
         ```
-    === "Zip"
-        Stáhneme si tento zip soubor, rozbalíme jej a otevřeme ve VSCode.
-        
-        [Zip soubor](https://2026.robotickytabor.cz/lekce/baseExample.zip){.md-button .md-button--primary}
 
     Do nového projektu nainstalujeme potřebné knihovny:
 
-    ```bash
-    jac lib-install utils
-    jac lib-install button
-    jac lib-install saturn
-    jac lib-install colors
-    ```
+    - `utils`
+    - `button`
 
     ## Joystick
 
@@ -261,10 +249,6 @@
         });
         ```
 
-    ## Výstupní úkol V1 - Sledování pozice
-
-    Vypisuj souřadnice joysticku v konzole průběžně.
-
-    ## Výstupní úkol V2 - Barevný joystick
+    ## Výstupní úkol V1 - Barevný joystick
 
     Nastav barvu v závislosti na pozici joysticku - čím více doprava, tím více červené, čím více nahoru, tím více modré.

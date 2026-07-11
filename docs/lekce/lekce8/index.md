@@ -56,7 +56,26 @@ function greetName(name: string) : void {
 }
 ```
 
-Na dnešní cvičení si opět můžeme stáhnout [zip](./project8.zip).
+## Vytvoření projektu
+
+Tato lekce používá základní projekt pro Saturn.
+
+=== "Odkaz"
+    Stačí kliknout na odkaz, otevře se nám VSCode a nabídne se nám možnost vytvořit projekt z připraveného balíčku.
+
+    [Vytvořit projekt]( vscode://cubicap.jaculus/import?uri=https://2026.robotickytabor.cz/lekce/baseExample.tar.gz){.md-button .md-button--primary}
+=== "Command line"
+    Tento příkaz stačí zadat do terminálu v adresáři, kde chceme mít projekt uložený. Změníme `<PROJECT_NAME>` na název projektu, který chceme vytvořit.
+    
+    ```bash
+    jac project-create --package https://2026.robotickytabor.cz/lekce/baseExample.tar.gz <PROJECT_NAME>
+    ```
+
+## Instalace knihoven
+
+Do nového projektu nainstalujeme potřebné knihovny:
+
+- `utils`
 
 ## Zadání A
 
@@ -65,28 +84,22 @@ Tato funkce bere jako argument řetězec; pokud argument není řetězec, přede
 
 Jako první úkol si vyzkoušíme spojit řetězec a číslo s tím, co už známe:
 
-Napíšeme program, který při stisku tlačítka vypíše na výstup `"Senzor naměřil X."`, kde X je aktuální hodnota naměřená z ADC převodníku.
+Napíšeme program, který bude číst hodnoty z joysticku a vypisuje je do konzole ve formátu `X: 123, Y: 456` každých 50 ms.
 
 ??? note "Řešení"
     ```ts
-    import { createRobutek } from "./libs/robutek.js";
-    import * as gpio from "gpio";
     import * as adc from "adc";
+    import * as utils from "utils";
+    import { SaturnPins } from "saturn";
 
-    const robutek = createRobutek("V2");
+    adc.configure(SaturnPins.Pmod1.Pin1);
+    adc.configure(SaturnPins.Pmod1.Pin2);
 
-    gpio.pinMode(robutek.Pins.ButtonLeft, gpio.PinMode.INPUT);
-
-    adc.configure(robutek.Pins.Sens1);
-
-    gpio.pinMode(robutek.Pins.StatusLED, gpio.PinMode.OUTPUT);
-    gpio.write(robutek.Pins.StatusLED, 1);
-
-    console.log("Pro vypsání hodnoty na senzoru zmáčkněte levé tlačítko na robůtkovi."); // vypíšeme výzvu
-
-    gpio.on("falling", robutek.Pins.ButtonLeft, () => { // vždy, když zmáčkneme tlačítko, vypíšeme naměřenou hodnotu na senzoru
-        console.log("Senzor naměřil " + robutek.readSensor("LineFL") + ".");
-    });
+    setInterval(() => {
+        let x = adc.read(SaturnPins.Pmod1.Pin1);
+        let y = adc.read(SaturnPins.Pmod1.Pin2);
+        console.log("X: " + x + ", Y: " + y);
+    }, 50);
     ```
 
 ### Čtení ze vstupu

@@ -5,7 +5,15 @@
     V bločkovém programování si držíme stav pomocí **proměnných**. Proměnné jsou pojmenované hodnoty,
     které můžeme měnit a opakovaně používat v různých částech kódu.
 
-    Proměnnou vytvoříme pomocí rozkliknutí kategorie "Proměnné" a zmáčknutím tlačítka pro vytvoření proměnné, kterou si pojmenujeme.
+    ## Vytvoření projektu
+    
+    Pokud víte, jak na to, přeskočte k [Zadání A](#zadanie-a).
+    
+    1. Otevřeme editor [Jacly](https://jacly.jaculus.org/project) a vytvoříme nový projekt.
+    2. Typ zvolíme `Jacly bloky projekt` a šablonu `template-jackly`.
+    3. Před nahráním programu se musíme připojit k Saturnu (viz lekce 1).
+    
+    !!! warning "Pokročilá nastavení neměníme."
 
     Hodnoty přiřazujeme do proměnných pomocí bloku `nastavit <název proměnné> na`.
 
@@ -87,7 +95,6 @@
         ![Řešení zadání B](./assets/blocksB.png)
 
     ## Zadání C
-    <!-- TODO instalace knihovny button -->
 
     Tentokrát budeme reagovat na stisk tlačítka.
 
@@ -114,10 +121,25 @@
         - Jezdec může zanechávat stopu: barva nezmizí hned, ale až s odstupem. Barva může "mizet" postupně: intenzita stopy se časem snižuje.
 
 === "TypeScript"
-    <!-- TODO typescript  -->
-    <!-- TODO new project creation -->
-    <!-- TODO instalace knihovny rphub75 -->
-    <!-- TODO instalace knihovny button -->
+    ## Vytvoření projektu
+
+    === "Odkaz"
+        Stačí kliknout na odkaz, otevře se nám VSCode a nabídne se nám možnost vytvořit projekt z připraveného balíčku.
+
+        [Vytvořit projekt]( vscode://cubicap.jaculus/import?uri=https://2026.robotickytabor.cz/lekce/baseExample.tar.gz){.md-button .md-button--primary}
+    === "Command line"
+        Tento příkaz stačí zadat do terminálu v adresáři, kde chceme mít projekt uložený. Změníme `<PROJECT_NAME>` na název projektu, který chceme vytvořit.
+        
+        ```bash
+        jac project-create --package https://2026.robotickytabor.cz/lekce/baseExample.tar.gz <PROJECT_NAME>
+        ```
+
+    ## Instalace knihoven
+
+    Do nového projektu nainstalujeme potřebné knihovny:
+
+    - `button`
+
     V imperativním programování si držíme stav pomocí **proměnných**. Proměnné jsou pojmenované hodnoty,
     které můžeme měnit a opakovaně používat v různých částech kódu.
 
@@ -223,17 +245,6 @@
     display.show();
     ```
 
-    <!-- TODO update new project creation -->
-    Vytvoříme si nový projekt z odkazu:
-
-    === "Odkaz"
-        ```
-        https://robutek.robotikabrno.cz/v2/robot/lekce4/project4.tar.gz
-        ```
-    === "Zip"
-        [Stáhnout ZIP](./project4.zip){ .md-button .md-button--primary }
-
-
     ## Zadání A
 
     Pomocí jedné proměnné se stavem a podmínky každou sekundu buď rozsvítíme, nebo zhasneme LEDku na displeji.
@@ -242,9 +253,11 @@
 
         ```ts
         import * as colors from "colors";
-        import { Display } from "rphub75";
+        import { createSaturn } from "saturn";
 
-        let display: Display = new Display(); // Vytvoření speciální proměnné display
+        const saturn = createSaturn();
+        const display = saturn.display;
+    const display = saturn.display; // Vytvoření speciální proměnné display
 
         let on: boolean = false; // LED je vypnutá
 
@@ -272,9 +285,11 @@
 
         ```ts
         import * as colors from "colors";
-        import { Display } from "rphub75";
+        import { createSaturn } from "saturn";
 
-        let display: Display = new Display(); // Vytvoření speciální proměnné display
+        const saturn = createSaturn();
+        const display = saturn.display;
+    const display = saturn.display; // Vytvoření speciální proměnné display
 
         let shade = 0; // Držíme si stav s aktuálním odstínem
 
@@ -299,12 +314,15 @@
 
         ```ts
         import * as colors from "colors";
-        import { Display } from "rphub75";
+        import { createSaturn } from "saturn";
         import { Button } from "button";
+        import { SaturnPins } from "saturn";
 
-        let display: Display = new Display(); // Vytvoření speciální proměnné display
+        const saturn = createSaturn();
+        const display = saturn.display;
+    const display = saturn.display; // Vytvoření speciální proměnné display
 
-        let button: Button = new Button(0); // Vytvoření speciální proměnné button s vstupem 0, což je číslo pinu BOOT tlačítka na Saturnu
+        let button: Button = new Button(SaturnPins.BootBtn); // Vytvoření speciální proměnné button s pinem BOOT tlačítka na Saturnu
 
         let index: number = 0;
         let color: colors.Rgb = colors.light_blue; // Vybereme si barvu

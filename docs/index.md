@@ -12,11 +12,11 @@ Robodeck je modulární platforma sloužící k výuce základů programování 
 
 Postup výroby Robodecku najdete v návodu "Robodeck".
 
-[Robodeck](/robodeck){ .md-button }
+[Robodeck](/robodeck/index.md){ .md-button }
 
 Po úspěšném sestavení si můžete vyzkoušet programování a hraní her připravených v lekcích.
 
-[Lekce](/lekce){ .md-button }
+[Lekce](/lekce/index.md){ .md-button }
 
 Po dokončení základních lekcí můžete Robodeck rozšiřovat o další moduly.
 
@@ -24,7 +24,7 @@ Po dokončení základních lekcí můžete Robodeck rozšiřovat o další modu
 
 Pokud si nevíte rady, zkuste některou z připravených výzev. Jde o jednoduché projekty, které vám pomohou rozkoukat se a naučit se něco nového.
 
-[Výzvy](/challenge){ .md-button }
+[Výzvy](/challenge/index.md){ .md-button }
 
 Programujeme v TypeScriptu s pomocí Jaculus ([jaculus.org](https://jaculus.org)), stejně jako v předchozích letech. Letos nově nabízíme také **blokové** i **textové** programování ve webovém prostředí pomocí [**JacLy**](https://jacly.jaculus.org).
 

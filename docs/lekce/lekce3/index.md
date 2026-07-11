@@ -2,36 +2,21 @@
 
 Saturn má k dispozici 64x64 barevný displej, který se v této lekci naučíme ovládat.
 
-## Příprava projektu
+## Vytvoření projektu
 
 Jak jsme se učili v první lekci, vytvoříme si nový projekt. Máme několik možností, jak to udělat:
 === "Odkaz"
     Stačí kliknout na odkaz, otevře se nám VSCode a nabídne se nám možnost vytvořit projekt z připraveného balíčku.
 
-    [Create project]( vscode://cubicap.jaculus/import?uri=https://2026.robotickytabor.cz/lekce/baseExample.tar.gz){.md-button .md-button--primary}
-=== "VSCode extension"
-    Otevřeme VSCode, v levém exploreru kliknema na extension `Jaculus` a tlačítko `Create Project`. Vybereme adresář, kde chceme mít projekt uložený a zadáme název projektu. Poté v menu vybereme možnost `Custom package URL` a zadáme toto URL: 
-        
-    `https://2026.robotickytabor.cz/lekce/baseExample.tar.gz`.
+    [Vytvořit projekt]( vscode://cubicap.jaculus/import?uri=https://2026.robotickytabor.cz/lekce/baseExample.tar.gz){.md-button .md-button--primary}
 === "Command line"
     Tento příkaz stačí zadat do terminálu v adresáři, kde chceme mít projekt uložený. Změníme `<PROJECT_NAME>` na název projektu, který chceme vytvořit.
         
     ```bash
     jac project-create --package https://2026.robotickytabor.cz/lekce/baseExample.tar.gz <PROJECT_NAME>
     ```
-=== "Zip"
-    Stáhneme si tento zip soubor, rozbalíme jej a otevřeme ve VSCode.
-        
-    [Zip soubor](https://2026.robotickytabor.cz/lekce/baseExample.zip){.md-button .md-button--primary}
 
-
-K práci s displejem si stáhneme příslušné knihovny pomocí následujících příkazů terminálu:
-```bash
-jac lib-install rphub75
-jac lib-install colors
-```
-
-## Barvičky
+K displeji se dostaneme přes objekt Saturn, který získéme zavoláním funkce `createSaturn`.
 
 Barevné světlo vytváříme ze tří základních barev: červená (RED), zelená (GREEN), a modrá (BLUE).
 Tyto barvy pomocí funkce `colors.rgb` mícháme v různých poměrech od 0 do 255, a vytváříme tak různé barvy:
@@ -63,7 +48,8 @@ nastavíme barvu pixelu a potvrdíme změny. Příklad:
     import * as colors from "colors";
 
     // Tento řádek připraví displej ke kreslení.
-    const display = createSaturn().display;
+    const saturn = createSaturn();
+    const display = saturn.display;
 
     // Tento řádek nastaví barvu jediného pixelu.
     // První číslo udává x-ovou souřadnici a druhé y-ovou.
@@ -86,10 +72,11 @@ Nakresli semafor: zelenou, žlutou a červenou tečku vedle sebe.
 ??? note "Řešení"
     === "TypeScript"
         ```ts
-        import { Display } from "rphub75";
+        import { createSaturn } from "saturn";
         import * as colors from "colors";
 
-        const display = new Display();
+        const saturn = createSaturn();
+        const display = saturn.display;
         display.setPixel(31, 32, colors.green);
         display.setPixel(32, 32, colors.yellow);
         display.setPixel(33, 32, colors.red);
@@ -107,7 +94,8 @@ Pomocí funkce `#!ts Display.fill` lze jednoduše vyplnit celý displej jednolit
     import { createSaturn } from "saturn";
     import { white } from "colors";
 
-    const display = createSaturn().display;
+    const saturn = createSaturn();
+    const display = saturn.display;
     display.fill(white);
     display.show();
     ```
@@ -182,7 +170,8 @@ Vyplň celý displej modrou barvou a pak po dvou vteřinách žlutou.
         import { createSaturn } from "saturn";
         import * as colors from "colors";
 
-        const display = createSaturn().display;
+        const saturn = createSaturn();
+    const display = saturn.display;
 
         display.fill(colors.blue);
         display.show();

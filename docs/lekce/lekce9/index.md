@@ -1,6 +1,28 @@
 # Lekce 9 - Radio
 
-Na Robůtkovi je k dispozici jednoduchá bezdrátová komunikace na vzdálenost jednotek metrů.
+Na Saturnu je k dispozici jednoduchá bezdrátová komunikace na vzdálenost jednotek metrů.
+
+## Vytvoření projektu
+
+Tato lekce používá základní projekt pro Saturn.
+
+=== "Odkaz"
+    Stačí kliknout na odkaz, otevře se nám VSCode a nabídne se nám možnost vytvořit projekt z připraveného balíčku.
+
+    [Vytvořit projekt]( vscode://cubicap.jaculus/import?uri=https://2026.robotickytabor.cz/lekce/baseExample.tar.gz){.md-button .md-button--primary}
+=== "Command line"
+    Tento příkaz stačí zadat do terminálu v adresáři, kde chceme mít projekt uložený. Změníme `<PROJECT_NAME>` na název projektu, který chceme vytvořit.
+    
+    ```bash
+    jac project-create --package https://2026.robotickytabor.cz/lekce/baseExample.tar.gz <PROJECT_NAME>
+    ```
+
+## Instalace knihoven
+
+Do nového projektu nainstalujeme potřebné knihovny:
+
+- `simpleradio`
+- `button`
 
 - Až 16 "skupin", všechny desky ve stejné skupině přijmají zprávy od všech ostatních zároveň
 - Podporuje tři datové typy:
@@ -160,45 +182,36 @@ Najděte kamaráda, abyste si mohli navzájem zkusit, zda program funguje (jeden
 
     ```ts
     import * as radio from "simpleradio";
-    import * as gpio from "gpio";
+    import { Button } from "button";
     import { SmartLed, LED_WS2812B } from "smartled";
-    import * as colors from "./libs/colors.js";
-    import { createRobutek } from "./libs/robutek.js"
-    const robutek = createRobutek("V2");
+    import * as colors from "colors";
+    import { SaturnPins } from "saturn";
 
     radio.begin(5); // skupina 5
 
-    // nastavíme pásek
-    const ledStrip = new SmartLed(robutek.Pins.ILEDConnector, 8, LED_WS2812B)
+    const ledStrip = new SmartLed(SaturnPins.ILEDConnector, 2, LED_WS2812B);
+    const btnLeft = new Button(SaturnPins.BootBtn);
+    const btnRight = new Button(SaturnPins.Pmod1.Pin4);
 
-    // Nastavíme tlačítka jako vstupy
-    gpio.pinMode(robutek.Pins.ButtonLeft, gpio.PinMode.INPUT);
-    gpio.pinMode(robutek.Pins.ButtonRight, gpio.PinMode.INPUT);
-
-    gpio.on("falling", robutek.Pins.ButtonLeft, () => {
-        // Při stisknutí levého tlačítka
-        radio.sendKeyValue("LEFT", 1); // odešleme hodnotu 1 s klíčem LEFT
+    btnLeft.on("press", () => {
+        radio.sendKeyValue("LEFT", 1);
     });
-    gpio.on("rising", robutek.Pins.ButtonLeft, () => {
-        // Při uvolnění levého tlačítka
-        radio.sendKeyValue("LEFT", 0); // odešleme hodnotu 0 s klíčem LEFT
+    btnLeft.on("release", () => {
+        radio.sendKeyValue("LEFT", 0);
     });
 
-    gpio.on("falling", robutek.Pins.ButtonRight, () => {
-        // Při stisknutí pravého tlačítka
-        radio.sendKeyValue("RIGHT", 1); // odešleme hodnotu 1 s klíčem RIGHT
+    btnRight.on("press", () => {
+        radio.sendKeyValue("RIGHT", 1);
     });
-    gpio.on("rising", robutek.Pins.ButtonRight, () => {
-        // Při uvolnění pravého tlačítka
-        radio.sendKeyValue("RIGHT", 0); // odešleme hodnotu 0 s klíčem RIGHT
+    btnRight.on("release", () => {
+        radio.sendKeyValue("RIGHT", 0);
     });
 
-    // Zpracování příchozích správ
     radio.on("keyvalue", (klic, hodnota, info) => {
         if (klic === "RIGHT") {
-            ledStrip.set(0, colors.rainbow(0, hodnota * 10))
+            ledStrip.set(0, hodnota > 0 ? colors.red : colors.off);
         } else if (klic === "LEFT") {
-            ledStrip.set(1, colors.rainbow(150, hodnota * 10))
+            ledStrip.set(1, hodnota > 0 ? colors.blue : colors.off);
         }
         ledStrip.show();
     });
@@ -206,4 +219,4 @@ Najděte kamaráda, abyste si mohli navzájem zkusit, zda program funguje (jeden
 
 ## Výchozí úkol V1
 
-Změňte program ze zadání A tak, aby místo tlačítek vyčítal čárový senzor. Na LED pásku se bude zobrazovat hodnota senzoru jako jas bílé barvy LED. Pro popis barvy použijte funkci `colors.rgb(RED, GREEN, BLUE)`. Pokud jsou hodnoty `RED`, `GREEN`, `BLUE` stejné, smíchají se do bílého světla. Jas pak určí velikost hodnoty, tedy při hodnotě 0 bude LED vypnutá, při hodnotě 255 bude svítit maximálně.
+Změňte program ze zadání A tak, aby místo tlačítek vyčítal hodnoty z joysticku. Na LED pásku se bude zobrazovat hodnota osy Y jako jas bílé barvy LED. Pro popis barvy použijte funkci `colors.rgb(RED, GREEN, BLUE)`. Pokud jsou hodnoty `RED`, `GREEN`, `BLUE` stejné, smíchají se do bílého světla. Jas pak určí velikost hodnoty, tedy při hodnotě 0 bude LED vypnutá, při hodnotě 255 bude svítit maximálně.

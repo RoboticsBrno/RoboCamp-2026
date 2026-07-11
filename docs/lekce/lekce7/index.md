@@ -1,35 +1,49 @@
 # Lekce 7 - Funkce
 
-Z předchozích lekcí už umíme kreslit jednoduché tvary. Co když jich však chceme nakreslit více?
+Z předchozích lekcí už umíme kreslit jednoduché tvary na displeji. Co když jich však chceme nakreslit více?
+
+## Vytvoření projektu
+
+=== "Odkaz"
+    Stačí kliknout na odkaz, otevře se nám VSCode a nabídne se nám možnost vytvořit projekt z připraveného balíčku.
+
+    [Vytvořit projekt]( vscode://cubicap.jaculus/import?uri=https://2026.robotickytabor.cz/lekce/baseExample.tar.gz){.md-button .md-button--primary}
+=== "Command line"
+    Tento příkaz stačí zadat do terminálu v adresáři, kde chceme mít projekt uložený. Změníme `<PROJECT_NAME>` na název projektu, který chceme vytvořit.
+    
+    ```bash
+    jac project-create --package https://2026.robotickytabor.cz/lekce/baseExample.tar.gz <PROJECT_NAME>
+    ```
+
+## Instalace knihoven
+
+Do nového projektu nainstalujeme potřebné knihovny:
+
+- `renderer`
+- `shapes`
 
 Pokud chceme nakreslit 2 čtverce vedle sebe, můžeme zkopírovat kód a mezitím se posunout:
 
 ```ts
-import { createRobutek } from "./libs/robutek.js";
-import { Servo } from "./libs/servo.js";
+import { createSaturn } from "saturn";
+import * as colors from "colors";
 
-const robutek = createRobutek("V2");
+const saturn = createSaturn();
+    const display = saturn.display;
 
-const pen = new Servo(robutek.Pins.Servo2, 1, 4);
-robutek.setSpeed(100);
+display.setPixel(10, 10, colors.red);
+display.setPixel(11, 10, colors.red);
+display.setPixel(10, 11, colors.red);
+display.setPixel(11, 11, colors.red);
 
-pen.write(robutek.PenPos.Down); // dáme dolů tužku
+display.show();
 
-// chování opakujeme 4x, pro každou stěnu čtverce
-for (let i: number = 0; i < 4; i++) {
-    await robutek.move(0, { distance: 100 }); // posun dopředu o 10 cm
-    await robutek.rotate(90); // rotace doprava o 90 stupňů
-}
-pen.write(robutek.PenPos.Up); // dáme nahoru
+display.setPixel(20, 10, colors.blue);
+display.setPixel(21, 10, colors.blue);
+display.setPixel(20, 11, colors.blue);
+display.setPixel(21, 11, colors.blue);
 
-await robutek.move(0, { distance: 300 });
-
-pen.write(robutek.PenPos.Down);
-for (let i: number = 0; i < 4; i++) {
-    await robutek.move(0, { distance: 100 });
-    await robutek.rotate(90);
-}
-pen.write(robutek.PenPos.Up);
+display.show();
 ```
 
 To se ještě dá zvládnout, ale pokud bychom to udělali ještě párkrát, kód by se stával hůře čitelným.
@@ -38,23 +52,23 @@ Pokud bychom se pak rozhodli změnit např. velikost nakreslených čtverců, mu
 Můžeme si pomoct tím, co už známe: vnořeným `for` cyklem. Pokud chceme nakreslit např. 4 čtverce za sebou, můžeme to napsat takto:
 
 ```ts
-import { createRobutek } from "./libs/robutek.js";
-import { Servo } from "./libs/servo.js";
+import { createSaturn } from "saturn";
+import * as colors from "colors";
 
-const robutek = createRobutek("V2");
+const saturn = createSaturn();
+    const display = saturn.display;
 
-const pen = new Servo(robutek.Pins.Servo2, 1, 4);
-robutek.setSpeed(100);
-
-for (let square: number = 0; square < 4; square++) {
-    pen.write(robutek.PenPos.Down);
-    for (let i: number = 0; i < 4; i++) {
-        await robutek.move(0, { distance: 100 });
-        await robutek.rotate(90);
+function drawSquare(x: number, y: number, size: number, color: number): void {
+    for (let py = y; py < y + size; py++) {
+        for (let px = x; px < x + size; px++) {
+            display.setPixel(px, py, color);
+        }
     }
+    display.show();
+}
 
-    pen.write(robutek.PenPos.Up);
-    await robutek.move(0, { distance: 150 });
+for (let i: number = 0; i < 4; i++) {
+    drawSquare(i * 15, 20, 10, colors.red);
 }
 ```
 
@@ -67,20 +81,19 @@ Funkce je pojmenovaný kus kódu. Tento kus kódu jednou napíšeme a poté ho z
 V programu rozlišujeme mezi definicí funkce a jejím voláním. Definice vypadá následovně:
 
 ```ts
-import { Servo } from "./libs/servo.js";
-import { createRobutek } from "./libs/robutek.js";
-const robutek = createRobutek("V2");
+import { createSaturn } from "saturn";
+import * as colors from "colors";
 
-const pen = new Servo(robutek.Pins.Servo2, 1, 4);
-robutek.setSpeed(100);
+const saturn = createSaturn();
+    const display = saturn.display;
 
-async function draw_square(): Promise<void> {
-    pen.write(robutek.PenPos.Down);
-    for (let i: number = 0; i < 4; i++) {
-        await robutek.move(0, { distance: 100 });
-        await robutek.rotate(90);
+async function drawSquare(x: number, y: number, size: number, color: number): Promise<void> {
+    for (let py = y; py < y + size; py++) {
+        for (let px = x; px < x + size; px++) {
+            display.setPixel(px, py, color);
+        }
     }
-    pen.write(robutek.PenPos.Up);
+    display.show();
 }
 ```
 
@@ -91,8 +104,6 @@ Definice funkce se skládá z:
 - seznamu argumentů `(ARGUMENTS...)`
 - návratového typu
 - těla funkce (ve složených závorkách)
-
-<!-- TODO toto neni asi uplne pravda, treba rozhodnout jestli to je akceptovatelna lez -->
 
 Protože v těle funkce používáme klíčové slovo `await`, je potřeba aby funkce byla označena jako `async`. Znamená to, že je tzv. asynchronní a během konání se mohou plnit další úkoly. Návratový typ asynchroních funkcí musí být obalen do `Promis<RETURN_TYPE>`, kde `RETURN_TYPE` je typ, který chceme, aby funkce vracela. Datový typ `void` říká programu, že funkce nemá nic vracet.
 
@@ -105,26 +116,23 @@ Když spustíme tento kód, nic se nestane. Chybí nám totiž funkci **zavolat*
 Nakreslení dvou čtverců může tedy vypadat takto:
 
 ```ts
-import { Servo } from "./libs/servo.js";
-import { createRobutek } from "./libs/robutek.js";
+import { createSaturn } from "saturn";
+import * as colors from "colors";
 
-const robutek = createRobutek("V2");
+const saturn = createSaturn();
+    const display = saturn.display;
 
-const pen = new Servo(robutek.Pins.Servo2, 1, 4);
-robutek.setSpeed(100);
-
-async function draw_square(): Promise<void> {
-    pen.write(robutek.PenPos.Down);
-    for (let i: number = 0; i < 4; i++) {
-        await robutek.move(0, { distance: 100 });
-        await robutek.rotate(90);
+async function drawSquare(x: number, y: number, size: number, color: number): Promise<void> {
+    for (let py = y; py < y + size; py++) {
+        for (let px = x; px < x + size; px++) {
+            display.setPixel(px, py, color);
+        }
     }
-    pen.write(robutek.PenPos.Up);
+    display.show();
 }
 
-await draw_square();
-await robutek.move(0, { distance: 150 });
-await draw_square();
+await drawSquare(10, 20, 10, colors.red);
+await drawSquare(30, 20, 15, colors.blue);
 ```
 
 Program nám nakreslí 2 čtverce, a přinesli jsme si tím následující výhody:
@@ -133,66 +141,58 @@ Program nám nakreslí 2 čtverce, a přinesli jsme si tím následující výho
 - když se rozhodneme, že čtverce mají mít jinou velikost, stačí udělat změnu na jednom místě
 
 !!! warning "Pozor na `async`"
-Nezapomínejte při volání funkcí obsahujících pohyb na `async`
-Pokud bychom v předchozím příkladu funkce volali bez `async`, příkazy by se mezi se mezi sebou "pobily" a robot by udělal ve výsledku nesmyslný pohyb.
+Nezapomínejte při volání funkcí obsahujících `display.show()` na `async`. Bez `await` by se změny neprojevily ve správném pořadí.
 
-Na tak malém příkladu to možná není zjevné, ale i `motors.move()`, které jsme používali doteď, není nic jiného než funkce, která v sobě skrývá nějaký složitější výpočet. Funkce tedy můžeme propojovat různými způsoby, a tvořit tak programy, které toho dělají čím dál více.
+Na tak malém příkladu to možná není zjevné, ale i `display.setPixel()`, které jsme používali doteď, není nic jiného než funkce, která v sobě skrývá nějaký složitější výpočet. Funkce tedy můžeme propojovat různými způsoby, a tvořit tak programy, které toho dělají čím dál více.
 
 Program však neřeší případ, kdy chceme aby každý čtverec měl jinou velikost. V tu chvíli nám pomůžou **argumenty**, které do funkce umíme předat. Jde o proměnné, které existují v dané funkci, a my jim při volání funkce přiřadíme konkrétní hodnotu.
 
 ```ts
-import { Servo } from "./libs/servo.js";
-import { createRobutek } from "./libs/robutek.js";
+import { createSaturn } from "saturn";
+import * as colors from "colors";
 
-const robutek = createRobutek("V2");
+const saturn = createSaturn();
+    const display = saturn.display;
 
-const pen = new Servo(robutek.Pins.Servo2, 1, 4);
-robutek.setSpeed(100);
-
-async function draw_square(size: number): Promise<void> {
-    pen.write(robutek.PenPos.Down);
-    for (let i: number = 0; i < 4; i++) {
-        await robutek.move(0, { distance: size });
-        await robutek.rotate(90);
+async function drawSquare(x: number, y: number, size: number, color: number): Promise<void> {
+    for (let py = y; py < y + size; py++) {
+        for (let px = x; px < x + size; px++) {
+            display.setPixel(px, py, color);
+        }
     }
-    pen.write(robutek.PenPos.Up);
+    display.show();
 }
 
-await draw_square(100);
-await robutek.move(0, { distance: 150 });
-await draw_square(150);
+await drawSquare(10, 20, 10, colors.red);
+await drawSquare(30, 20, 15, colors.blue);
 ```
 
-Ve funkci používáme argument `size` značící velikost čtverce, který můžeme při volání nastavit na jakoukoliv hodnotu. Program tedy vykreslí jeden čtverec o délce strany 100mm, popojede, a vykreslí čtverec o délce strany 150mm.
+Ve funkci používáme argument `size` značící velikost čtverce, který můžeme při volání nastavit na jakoukoliv hodnotu. Program tedy vykreslí jeden čtverec o délce strany 10, popojede, a vykreslí čtverec o délce strany 15.
 
 ## Zadání A
 
 Vytvořte funkci, která bere 2 argumenty, a nakreslí obdélník daných rozměrů. Zkuste ji zavolat s rúznými argumenty.
 
-??? note "Řešení"
+??? tip "Řešení"
 
     ```ts
-    import { Servo } from "./libs/servo.js";
-    import { createRobutek } from "./libs/robutek.js";
+    import { createSaturn } from "saturn";
+    import * as colors from "colors";
 
-    const robutek = createRobutek("V2");
+    const saturn = createSaturn();
+    const display = saturn.display;
 
-    let pen = new Servo(robutek.Pins.Servo2, 1, 4);
-    robutek.setSpeed(100);
-
-    async function draw_rectangle(sizeA: number, sizeB: number): Promise<void> {
-        pen.write(robutek.PenPos.Down);
-        for (let i: number = 0; i < 2; i++) {
-            await robutek.move(0, { distance: sizeA });
-            await robutek.rotate(90);
-            await robutek.move(0, { distance: sizeB });
-            await robutek.rotate(90);
+    async function drawRectangle(x: number, y: number, width: number, height: number, color: number): Promise<void> {
+        for (let py = y; py < y + height; py++) {
+            for (let px = x; px < x + width; px++) {
+                display.setPixel(px, py, color);
+            }
         }
-        pen.write(robutek.PenPos.Up);
+        display.show();
     }
 
-    await draw_rectangle(50, 200);
-    await draw_rectangle(200, 50);
+    await drawRectangle(10, 20, 20, 10, colors.green);
+    await drawRectangle(40, 20, 10, 20, colors.yellow);
     ```
 
 ## Vracení hodnot
@@ -238,36 +238,35 @@ console.log(`dvanáctiúhelník: ${polygonAngle(12)}°`);
 
 Napište funkci `drawPolygon()`, která vezme 2 argumenty: počet stran a délku každé strany. Na výpočet úhlu zatočení použijte pomocnou funkci, která spočítá, jak moc je potřeba zatočit. S drobnou úpravou můžete využít funkci `polygonAngle` z předchozího příkladu.
 
-??? note "Řešení"
+??? tip "Řešení"
 
     ```ts
-    import { Servo } from "./libs/servo.js";
-    import { createRobutek } from "./libs/robutek.js";
+    import { createSaturn } from "saturn";
+    import * as colors from "colors";
+    import { SaturnPins } from "saturn";
 
-    const robutek = createRobutek("V2");
-
-    let pen = new Servo(robutek.Pins.Servo2, 1, 4);
-    robutek.setSpeed(100);
+    const saturn = createSaturn();
+    const display = saturn.display;
 
     function turnAngle(sides: number): number {
-    const polygonAngle = (1 - 2 / sides) * 180; // velikost úlhlu v n-úhelníku
-
-    // odečteme od 180°, abychom dostali potřebný úhel otočení
-    return 180 - polygonAngle;
+        const polygonAngle = (1 - 2 / sides) * 180;
+        return 180 - polygonAngle;
     }
 
     async function drawPolygon(sides: number, size: number): Promise<void> {
-        pen.write(robutek.PenPos.Down);
+        let x = 32;
+        let y = 32;
         for (let side: number = 0; side < sides; side++) {
-            await robutek.move(0, { distance: size });
-            await robutek.rotate(turnAngle(sides));
+            for (let i: number = 0; i < size; i++) {
+                display.setPixel(x, y, colors.white);
+                x += Math.cos(turnAngle(sides) * Math.PI / 180);
+                y += Math.sin(turnAngle(sides) * Math.PI / 180);
+            }
         }
-        pen.write(robutek.PenPos.Up);
+        display.show();
     }
 
-    await drawPolygon(5, 100); // pětiúhelník
-    await robutek.move(0, { distance: 250 });
-    await drawPolygon(8, 100); // osmiúhelník
+    await drawPolygon(5, 10);
     ```
 
 ## Výstupní úkol V1
