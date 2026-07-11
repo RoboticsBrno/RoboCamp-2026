@@ -24,6 +24,9 @@
     ## Tlačítko joysticku
     Tlačítko na joysticku je připojeno také na PMOD a pracuje s ním stejně jako jakékoli jiné tlačítko pomocí knihovny `button`.
 
+    ## DPad
+    DPad je jednoduchý modul se čtyřmi tlačítky (nahoru, dolů, vlevo, vpravo), který se používá například pro ovládání nebo navigaci. S tlačítky pracujeme pomocí stejné knihovny `button` jako u jakéhokoliv jiného tlačítka.
+
     ## Zadání A
     Přečti hodnoty X a Y osy joysticku a vypiš je do konzole každých 50 ms.
 
@@ -119,6 +122,36 @@
 
     btn.on("release", () => {
         console.log("Button released");
+    });
+    ```
+
+    ## DPad
+
+    DPad je modul se čtyřmi tlačítky (nahoru, dolů, vlevo, vpravo). Pro práci s nimi používáme stejnou knihovnu `button` jako u tlačítka na joysticku. Například:
+
+    ```ts
+    import { Button } from "button";
+    import { SaturnPins } from "saturn";
+
+    const btnUp = new Button(SaturnPins.Pmod1.Pin1);
+    const btnDown = new Button(SaturnPins.Pmod1.Pin2);
+    const btnLeft = new Button(SaturnPins.Pmod1.Pin3);
+    const btnRight = new Button(SaturnPins.Pmod1.Pin4);
+
+    btnUp.on("click", () => {
+        console.log("Up");
+    });
+
+    btnDown.on("click", () => {
+        console.log("Down");
+    });
+
+    btnLeft.on("click", () => {
+        console.log("Left");
+    });
+
+    btnRight.on("click", () => {
+        console.log("Right");
     });
     ```
 
