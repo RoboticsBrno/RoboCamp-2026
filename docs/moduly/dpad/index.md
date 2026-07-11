@@ -27,6 +27,8 @@ DPad je velmi jednoduchý modul, který se skládá ze čtyř tlačítek (nahoru
 
 DPad je připojen k PMODu, jeho piny tedy odpovídají pinům PMODu. Můžete si je buď vyčíst z popisků na Saturnu, nebo z objektu `SaturnPins` z knihovny `saturn`, například `SaturnPins.Pmod1.Pin1`.
 
+Je potřeba nainstalovat knihovnu `button`.
+
 ```ts
 import { Button } from "button";
 import { SaturnPins } from "saturn"
