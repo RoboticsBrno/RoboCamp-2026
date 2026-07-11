@@ -43,7 +43,7 @@ V tomto příkladu použijeme vestavěnou metodu `playScale()` a zároveň si uk
 import { SaturnPins } from "saturn";
 import { PIEZO } from "piezo";
 
-let piezo: PIEZO = new PIEZO(SaturnPins.Pmod1.Pin1);
+const piezo: PIEZO = new PIEZO(SaturnPins.Pmod1.Pin1);
 console.log("Piezo vytvořeno!");
 
 await piezo.playScale();
@@ -58,7 +58,7 @@ Demonstrace přehrání efektu z vestavěné knihovny efektů.
 import { SaturnPins } from "saturn";
 import { PIEZO, Effects } from "piezo"; // všimněte si, že potřebujeme přidat do projektu nejen piezo, ale i efekty
 
-let piezo: PIEZO = new PIEZO(SaturnPins.Pmod1.Pin1);
+const piezo = new PIEZO(SaturnPins.Pmod1.Pin1);
 console.log("Piezo vytvořeno!");
 
 await piezo.playSong(Effects.win);
@@ -89,7 +89,7 @@ Nota se skládá z frekvence a délky.
 import { SaturnPins } from "saturn";
 import { PIEZO, Tones, Note } from "piezo"; // pro tento příklad potřebujeme přidat Tones, Note
 
-let piezo: PIEZO = new PIEZO(SaturnPins.Pmod1.Pin1);
+const piezo = new PIEZO(SaturnPins.Pmod1.Pin1);
 console.log("Piezo vytvořeno!");
 
 let note: Note = [Tones.A, 1000] // můžeme využít Tones.<nota> // 1000 je délka v milisekundách
@@ -109,7 +109,7 @@ Ukážeme si, jak zreplikovat vítězný sound efekt z knihovny efektů, abychom
 import { SaturnPins } from "saturn";
 import { PIEZO, Song, Tones} from "piezo"; // přidáme Song a Tones
 
-let piezo: PIEZO = new PIEZO(SaturnPins.Pmod1.Pin1);
+const piezo = new PIEZO(SaturnPins.Pmod1.Pin1);
 console.log("Piezo vytvořeno!");
 
 let ourWin: Song = [  // skladba je jenom pole not
@@ -137,7 +137,7 @@ Ukážeme si, jak vyluzovat tóny.
 import { SaturnPins } from "saturn";
 import { PIEZO, Tones } from "piezo";
 
-let piezo: PIEZO = new PIEZO(SaturnPins.Pmod1.Pin1);
+const piezo = new PIEZO(SaturnPins.Pmod1.Pin1);
 console.log("Piezo vytvořeno!");
 
 piezo.playTone(Tones.A); // můžeme využít Tones.<nota>
@@ -163,7 +163,7 @@ Asi je vám jasné, že hlasitost, kterou si momentálně pípáme, není nejvě
 import { SaturnPins } from "saturn";
 import { PIEZO, Effects, Volume } from "piezo"; // nutno přidat Volume
 
-let piezo: PIEZO = new PIEZO(SaturnPins.Pmod1.Pin1, Volume.LOW);
+const piezo = new PIEZO(SaturnPins.Pmod1.Pin1, Volume.LOW);
 console.log("Piezo s nízkou hlasitostí vytvořeno!");
 
 await piezo.playSong(Effects.win);
