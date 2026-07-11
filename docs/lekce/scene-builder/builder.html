@@ -283,10 +283,25 @@
             <button id="tool-poly" onclick="selectTool('polygon')"><span>⬠</span> Mnohoúhelník (volný)</button>
         </div>
 
+        <details class="panel-section">
+            <summary style="cursor:pointer; color:#fff; font-weight:bold;">❓ Nápověda k ovládání</summary>
+            <ul style="margin:8px 0 0; padding-left:18px; line-height:1.6; color:#aaa; font-size:12px;">
+                <li>Kreslení tvaru: vyberte nástroj vlevo, klikněte a tažením myši ho nakreslete na plátně.</li>
+                <li>Volný mnohoúhelník: klikáním přidávejte body, dvojklikem tvar dokončíte.</li>
+                <li>Výběr a přesun: nástrojem Kurzor klikněte na objekt a táhněte ho po plátně.</li>
+                <li>Změna velikosti: táhněte za barevné úchyty na rozích, koncích úsečky nebo vrcholech mnohoúhelníku vybraného objektu.</li>
+                <li>Úprava mnohoúhelníku: dvojklik na jeho hranu přidá nový vrchol, klik pravým tlačítkem na vrchol ho smaže.</li>
+                <li>Seskupení: vyberte objekty a stiskněte Shift+G, nebo použijte tlačítko Seskupit.</li>
+                <li>Smazání: vyberte objekt a stiskněte D, nebo použijte tlačítko Smazat.</li>
+                <li>Vlastnosti vybraného objektu upravíte v panelu vpravo.</li>
+                <li>Export: tlačítkem "Vygenerovat kód" vytvoříte JS kód scény ke zkopírování.</li>
+            </ul>
+        </details>
+
         <h2>🗂️ Hierarchie scény</h2>
         <div class="panel-section" style="display:flex; gap:5px;">
             <button onclick="groupSelected()" style="flex:1;">📁 Seskupit (Shift+G)</button>
-            <button onclick="deleteSelected()" style="flex:1; background:#5c2323; border-color:#7a2e2e;">🗑 Smazat</button>
+            <button onclick="deleteSelected()" style="flex:1; background:#5c2323; border-color:#7a2e2e;">🗑 Smazat (D)</button>
         </div>
         <div class="layer-list" id="layer-list">
         </div>
@@ -578,6 +593,8 @@
             return mat;
         }
 
+        // Local-space corner points used as resize handles. Only shapes with a
+        // simple size parameter (width/height or radius) get handles.
         function getResizeHandles(node) {
             if (node.type === 'rectangle') {
                 const w = node.width, h = node.height;
@@ -614,11 +631,14 @@
             return null;
         }
 
+        // Local corner coordinates of the rectangle opposite the given corner index.
         function oppositeRectCorner(cornerIndex, width, height) {
             const corners = [{x: 0, y: 0}, {x: width, y: 0}, {x: width, y: height}, {x: 0, y: height}];
             return corners[(cornerIndex + 2) % 4];
         }
 
+        // Finds the closest polygon edge to a canvas point and where along it to
+        // insert a new vertex. Returns null if no edge is within tolerance.
         function hitTestPolygonEdge(node, globalMat, pos) {
             const invMat = invertMatrix(globalMat);
             if (!invMat || !node.vertices) return null;
@@ -1019,9 +1039,15 @@
         }
 
         document.addEventListener('keydown', e => {
+            const typingInField = ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName);
+            if (typingInField) return;
+
             if (e.shiftKey && e.key.toLowerCase() === 'g') {
                 e.preventDefault();
                 groupSelected();
+            } else if (e.key.toLowerCase() === 'd') {
+                e.preventDefault();
+                deleteSelected();
             }
         });
 
@@ -1170,8 +1196,11 @@
                     node.y = Math.round(rs.anchorGlobal.y - anchorF.y);
                 } else if (node.type === 'circle' || node.type === 'regularPolygon') {
                     const local = transformPoint(pos.x, pos.y, STATE.resizeInvMat);
+                    // Handles sit at the bounding square's corners (distance r*sqrt2 from
+                    // the center), so divide out that factor to avoid a jump on grab.
                     node.radius = Math.max(1, Math.round(Math.sqrt(local.x * local.x + local.y * local.y) / Math.SQRT2));
                 } else if (node.type === 'line') {
+                    // Same opposite-endpoint-anchored approach as the rectangle case.
                     const v = transformPoint(pos.x - rs.anchorGlobal.x, pos.y - rs.anchorGlobal.y, rs.invRotMat);
                     if (rs.corner === 1) {
                         node.x2 = Math.round(rs.x + v.x);
@@ -1185,6 +1214,7 @@
                         node.y2 = Math.round(node.y + lNew.y);
                     }
                 } else if (node.type === 'polygon') {
+                    // Each vertex is independent local geometry, no anchor needed.
                     const local = transformPoint(pos.x, pos.y, STATE.resizeInvMat);
                     node.vertices[rs.vertexIndex] = [Math.round(local.x), Math.round(local.y)];
                 }
@@ -1229,6 +1259,8 @@
 
         canvas.addEventListener('dblclick', e => {
             if (STATE.tool === 'polygon') {
+                // A double-click fires two mousedowns, each pushing a vertex at
+                // (almost) the same spot - drop the duplicate before finishing.
                 STATE.polyVertices.pop();
                 finishPoly();
                 return;
