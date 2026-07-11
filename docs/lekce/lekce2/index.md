@@ -7,8 +7,18 @@
 
     Ukážeme si ovládání RGB LED umístěné na Saturnu a práci s událostmi řízenými tlačítkem nebo časem.
 
-    !!! note "Poznámka"
-        V lekci 1 jsme se naučili, jak vytvořit nový projekt. Pokud nevíte, jak na to, podívejte se do lekce 1.
+    ## Vytvoření projektu
+
+    Otevřeme editor [Jacly](https://jacly.jaculus.org/project) a vytvoříme nový projekt. 
+    Typ zvolíme `Jacly bloky projekt` a šablonu `template-jackly`. Před nahráním programu se musíme připojit k Saturnu (viz lekce 1).
+
+    !!! warning "Pokročilá nastavení neměníme."
+
+    ## Instalace knihoven
+
+    Do nového projektu nainstalujeme potřebné knihovny:
+
+    - `button`
 
     ## Zadání A
     Nejprve si ověříme znalosti z minulé lekce. Zkusíme blikat LED na Saturnu (ILED). Na začátku tohoto úkolu si otevřeme nový prázdný projekt. Můžete se inspirovat projektem z minulé lekce.
@@ -70,28 +80,25 @@
 
     Ukážeme si ovládání RGB LED umístěné na Saturnu a práci s událostmi řízenými tlačítkem nebo časem.
 
-    !!! note "Poznámka"
-        V lekci 1 jsme se naučili, jak vytvořit nový projekt. Pokud nevíte, jak na to, podívejte se do lekce 1.
+    ## Vytvoření projektu
 
     === "Odkaz"
         Stačí kliknout na odkaz, otevře se nám VSCode a nabídne se nám možnost vytvořit projekt z připraveného balíčku.
 
-        [Create project]( vscode://cubicap.jaculus/import?uri=https://2026.robotickytabor.cz/lekce/baseExample.tar.gz){.md-button .md-button--primary}
-    === "VSCode extension"
-        Otevřeme VSCode, v levém exploreru kliknema na extension `Jaculus` a tlačítko `Create Project`. Vybereme adresář, kde chceme mít projekt uložený a zadáme název projektu. Poté v menu vybereme možnost `Custom package URL` a zadáme toto URL: 
-        
-        `https://2026.robotickytabor.cz/lekce/baseExample.tar.gz`.
+        [Vytvořit projekt]( vscode://cubicap.jaculus/import?uri=https://2026.robotickytabor.cz/lekce/baseExample.tar.gz){.md-button .md-button--primary}
     === "Command line"
         Tento příkaz stačí zadat do terminálu v adresáři, kde chceme mít projekt uložený. Změníme `<PROJECT_NAME>` na název projektu, který chceme vytvořit.
         
         ```bash
         jac project-create --package https://2026.robotickytabor.cz/lekce/baseExample.tar.gz <PROJECT_NAME>
         ```
-    === "Zip"
-        Stáhneme si tento zip soubor, rozbalíme jej a otevřeme ve VSCode.
-        
-        [Zip soubor](https://2026.robotickytabor.cz/lekce/baseExample.zip){.md-button .md-button--primary}
-    
+
+    ## Instalace knihoven
+
+    Do nového projektu nainstalujeme potřebné knihovny:
+
+    - `button`
+
     ## Zadání A
 
     Nejprve si ověříme znalosti z minulé lekce. Zkusíme blikat RGB LED na Saturnu (pin 48). Na začátku tohoto úkolu si otevřeme nový prázdný projekt. Můžete se inspirovat projektem z minulé lekce. Budete si muset nainstalovat balíček `basic`, pokud ho nemáte.

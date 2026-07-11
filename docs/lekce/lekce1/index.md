@@ -2,8 +2,6 @@
 
 Zde si vyzkoušíme vytvořit první projekt a nahrát jej do Saturnu.
 
-<!-- TODO will need to be changed in other lessons -->
-
 
 === "Bločky"
     Bločky jsou vizuální programovací jazyk, který je vhodný pro začátečníky. Program se skládá z jednotlivých bloků, které se skládají dohromady. Každý blok má svůj význam a program se vykonává postupně odshora dolů. 
@@ -65,24 +63,18 @@ Zde si vyzkoušíme vytvořit první projekt a nahrát jej do Saturnu.
 
 === "TypeScript"
     Nejprve si vytvoříme nový projekt a zkusíme ho nahrát, abychom otestovali, jestli vše funguje.
-    === "Odkaz"
+    === "VSCode link"
         Stačí kliknout na odkaz, otevře se nám VSCode a nabídne se nám možnost vytvořit projekt z připraveného balíčku.
 
-        [Create project]( vscode://cubicap.jaculus/import?uri=https://2026.robotickytabor.cz/lekce/baseExample.tar.gz){.md-button .md-button--primary}
-    === "VSCode extension"
-        Otevřeme VSCode, v levém exploreru kliknema na extension `Jaculus` a tlačítko `Create Project`. Vybereme adresář, kde chceme mít projekt uložený a zadáme název projektu. Poté v menu vybereme možnost `Custom package URL` a zadáme toto URL: 
-        
-        `https://2026.robotickytabor.cz/lekce/baseExample.tar.gz`.
+        [Vytvořit projekt]( vscode://cubicap.jaculus/import?uri=https://2026.robotickytabor.cz/lekce/baseExample.tar.gz){.md-button .md-button--primary}
+    
     === "Command line"
         Tento příkaz stačí zadat do terminálu v adresáři, kde chceme mít projekt uložený. Změníme `<PROJECT_NAME>` na název projektu, který chceme vytvořit.
         
         ```bash
         jac project-create --package https://2026.robotickytabor.cz/lekce/baseExample.tar.gz <PROJECT_NAME>
         ```
-    === "Zip"
-        Stáhneme si tento zip soubor, rozbalíme jej a otevřeme ve VSCode.
-        
-        [Zip soubor](https://2026.robotickytabor.cz/lekce/baseExample.zip){.md-button .md-button--primary}
+    
 
     ## Nahrání programu
     Teď můžeme zkusit na Saturn nahrát náš první program. Vytvořili jsme si projekt, který obsahuje jednoduchý program, který nám bude vypisovat zprávu do konzole a rozsvítí LEDku na Saturnu. 

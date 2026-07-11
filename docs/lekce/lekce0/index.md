@@ -48,18 +48,72 @@ Aby nám všechno správně fungovalo, musíme Jacula nejprve nainstalovat, a k 
 
     Po stáhnutí programů (například Node.js a Visual Studio Code) je potřeba je i nainstalovat. K tomu slouží instalační soubor. Měl by se nacházet ve složce `Download`. Jméno souboru by mělo být podobné názvu programu.
 
-### Node.js
-
-Node.js je program, který nám umožní nahrávat kód do Jacula a komunikovat s ním.
-
-1. Stáhneme si `Node.js` (nejnovější stabilní verzi - LTS) - [Stahuj ZDE pro Windows na táborové wifi](https://files.robotickytabor.cz/node.msi).
-2. Nainstalujeme jej dle výchozího nastavení (není potřeba nic měnit).
+---
 
 ### Visual Studio Code
 
 Visual Studio Code je programovací prostředí, které nám umožní psát kód a s rozšířením nám dovolí nahrávat kód do zařízení.
 
-1. Stáhneme si `Visual Studio Code` (nejnovější stabilní verzi)  - [Stahuj ZDE pro Windows na táborové wifi](https://files.robotickytabor.cz/vscode.exe).
+1. Stáhneme si `Visual Studio Code`
+    
+    [Stáhnout](https://files.robotickytabor.cz/vscode.exe){.md-button .md-button--primary}
+
+2. Nainstalujeme jej dle výchozího nastavení (není potřeba nic měnit).
+
+---
+
+### Jaculus VSCode rozšíření
+
+1. Stáhneme instalační soubor
+
+    [Stáhnout](https://files.robotickytabor.cz/cubicap.jaculus-0.1.3.vsix){.md-button .md-button--primary}
+
+2. Otevřeme si panel rozšíření
+
+    ![Panel rozšíření](./assets/extension_bar.png)
+
+3. Klikneme na tři tečky
+
+    ![Tři tečky](./assets/three_dots.png)
+
+4. Zvolíme `Install from VSIX...`
+
+    ![Instal VSIX](./assets/install_vsix.png)
+
+5. Najdeme ten náš stažený soubor `cubicap.jaculus-0.1.3.vsix`
+
+6. Hurá, rozšíření je nainstalované
+
+---
+
+### Používání Jaculus rozšíření
+
+<!-- TODO picture:Extensions tab showing Jaculus installed -->
+Po otevření projektu by se vám ve spodní liště měly objevit oranžové ikonky. 
+
+<!-- TODO picture: Status bar showing the orange Jaculus icons -->
+V boční liště by se měla objevit záložka Jaculus, přes kterou můžete vytvořit projekt a následně spouštět Jaculus příkazy.
+
+- Po otevření projektu by se vám ve spodní liště měly objevit oranžové ikonky Jacula. 
+
+    ![Rozšíření bar](./assets/bar.png)
+
+- V boční liště by se měla objevit záložka Jaculus, přes kterou můžete vytvořit projekt a následně spouštět Jaculus příkazy.
+
+    ![jacSidebar](./assets/jacSidebar.png)
+
+
+!!! tip "Něco ti nefunguje?"
+    Podívej se na [Často kladené dotazy](../faq/index.md)
+
+
+## Advanced install
+
+### Node.js
+
+Node.js je program, který nám umožní nahrávat kód do Jacula a komunikovat s ním.
+
+1. Stáhneme si `Node.js` (nejnovější stabilní verzi - LTS) - [Stahuj ZDE pro Windows na táborové wifi](https://files.robotickytabor.cz/node.msi).
 2. Nainstalujeme jej dle výchozího nastavení (není potřeba nic měnit).
 
 ### Jaculus
@@ -135,23 +189,3 @@ Nyní už se můžeme vrhnout na samotnou instalaci [Jaculus](https://jaculus.or
         --baudrate    Baudrate to use (default: 921600)              
         --socket      host:port to use
         ```
-
-### Jaculus VSCode rozšíření
-<!-- TODO do later -->
-Rozšíření pro VSCode nám umožní jednoduše nahrávat kód do Jacula pomocí ikonek a klávesových zkratek.
-
-1. V levém menu VSCode vyberte záložku `Extensions` a vyhledejte `Jaculus`.
-    ![Rozšíření](./assets/extension.png)
-2. Zvolte `Install`.
-3. Používání Jaculu
-
-    - Po otevření projektu by se vám ve spodní liště měly objevit oranžové ikonky Jacula. 
-    ![Rozšíření bar](./assets/bar.png)
-
-    - V boční liště by se měla objevit záložka Jaculus, přes kterou můžete vytvořit projekt a následně spouštět Jaculus příkazy.
-
-    ![jacSidebar](./assets/jacSidebar.png)
-
-
-!!! tip "Něco ti nefunguje?"
-    Podívej se na [Často kladené dotazy](../faq/index.md)
