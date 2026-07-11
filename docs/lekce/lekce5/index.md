@@ -5,10 +5,9 @@ V přechozích lekcích jsme viděli, jak ovládat jednotlivé pixely displeje. 
 
 Ještě než začneme s vykreslováním jednoduchých tvarů, je potřeba si připravit kostru projektu:
 
-=== "Typescript"
+=== "TypeScript"
     ```ts
     import { Display } from "rphub75";
-    import { rgb } from "colors";
     import * as colors from "colors";
     import { Renderer, Format, Font, Texture } from "renderer";
     import { Circle, Rectangle, Point, LineSegment, Collection } from "shapes";
@@ -51,7 +50,6 @@ Vyzkoušíme si ještě rotace. Před prováděním rotací je dobré nastavit s
 Celý dosavadní kód by měl vypadat nějak takto:
 ```ts
 import { Display } from "rphub75";
-import { rgb } from "colors";
 import * as colors from "colors";
 import { Renderer, Format, Font, Texture } from "renderer";
 import { Circle, Rectangle, Point, LineSegment, Collection } from "shapes";

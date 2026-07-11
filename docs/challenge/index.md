@@ -1,6 +1,6 @@
 # Výzvy
 
-Místo komplexních úkolů u lekcí máme návrhy na projeky, a těšíme se co vše vymyslíte.
+Místo komplexních úkolů u lekcí máme návrhy na projekty, a těšíme se co vše vymyslíte.
 
 - [Snake - had](snake.md)
 - [Tetris](tetris.md)

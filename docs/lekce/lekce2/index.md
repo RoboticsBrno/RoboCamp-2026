@@ -26,7 +26,7 @@
     Tlačítko si nejprve musíme vytvořit bločkem `vytvořit tlačítko`. Políčko `limit dvojkliku` určuje, jak blízko musí být dvě kliknutí k sobě, aby byly považovány za dvojklik. 
     ![blocksCreateButton](./assets/blocksCreateButton.png)
 
-    Na událost na tlačítku pak můžeme navázat blok kódu pomocí bloků `při kliknutí` a `při stisknutí/puštění/dvojití kliknutí`. Událost kliknutí nastane při stisknutí i puštění tlačítka, událost stisknutí při stisknutí tlačítka, událost puštění při puštění tlačítka a událost dvojitého kliknutí při dvojím kliknutí na tlačítko v daném časovém limitu. Bloček `při kliknutí` nám navíc dáva informaci o délce stisknutí.
+    Na událost na tlačítku pak můžeme navázat blok kódu pomocí bloků `při kliknutí` a `při stisknutí/puštění/dvojití kliknutí`. Událost kliknutí nastane při stisknutí i puštění tlačítka, událost stisknutí při stisknutí tlačítka, událost puštění při puštění tlačítka a událost dvojitého kliknutí při dvojím kliknutí na tlačítko v daném časovém limitu. Bloček `při kliknutí` nám navíc dává informaci o délce stisknutí.
     ![blocksOnClick](./assets/blocksOnClick.png)
 
     ## Zadání B
@@ -37,7 +37,7 @@
         ![blockSolutionB](./assets/blocksSolutionB.png)
 
     ### Časové události
-    Události řízene časem můžeme ovládat pomocí bločků z kategorie `Základní`. Jsou zde 2 typy událostí: `Intervaly` a `Časovače`. 
+    Události řízené časem můžeme ovládat pomocí bločků z kategorie `Základní`. Jsou zde 2 typy událostí: `Intervaly` a `Časovače`. 
 
     #### Interval    
     Událost `Intervaly` nám umožní opakovaně spouštět kód každých `X` milisekund. Tento kód bude každou vteřinu vypisovat zprávu do konzole. Všimněme si, že čas se udává v milisekundách, takže 1000 ms je 1 sekunda.
@@ -55,7 +55,7 @@
 
     ## Zadání C
     <!-- TODO update to use isPressed from Button lib -->
-    Desetkrát za sekundu vypíšeme stav zmáčknutí tlačítka (0 nebo 1). Stav daného tlačítka získáme pomocí bloku `přečti digitální hodnotu z pinu` z kategorie `GPIO`. Opakování dosáhneme pomocí `Intervalů`, a informaci vypíšeme pomocí bloku `konzole`. Všimněme si, že blok na čtení digitální hodnoty má narozdíl od ostatních bloků kulatý tvar, tedy se dá vložit do kulatých míst v jiných blocích. Můžeme ho tedy vložit do bloku `konzole`. Pokud je tlačítko stisknuté, blok pro čtení nám dá `0`, pokud stisknuté není, dá nám `1`.
+    Desetkrát za sekundu vypíšeme stav zmáčknutí tlačítka (0 nebo 1). Stav daného tlačítka získáme pomocí bloku `přečti digitální hodnotu z pinu` z kategorie `GPIO`. Opakování dosáhneme pomocí `Intervalů`, a informaci vypíšeme pomocí bloku `konzole`. Všimněme si, že blok na čtení digitální hodnoty má na rozdíl od ostatních bloků kulatý tvar, tedy se dá vložit do kulatých míst v jiných blocích. Můžeme ho tedy vložit do bloku `konzole`. Pokud je tlačítko stisknuté, blok pro čtení nám dá `0`, pokud stisknuté není, dá nám `1`.
 
     ??? tip "Řešení"
         ![blockSolutionC](./assets/blocksSolutionC.png)
@@ -262,7 +262,7 @@
 
     ## Zadání C
 
-    Desetkrát za sekundu vypíšeme stav zmáčknutí tlačítka (Zmackuto: false/true). Stav daného tlačítka získáme pomocí příkazu `button.isPressed()`  Opakování dosáhneme pomocí `setInterval`.
+    Desetkrát za sekundu vypíšeme stav zmáčknutí tlačítka (Zmáčknuto: false/true). Stav daného tlačítka získáme pomocí příkazu `button.isPressed()`  Opakování dosáhneme pomocí `setInterval`.
 
     ??? tip "Řešení"
 

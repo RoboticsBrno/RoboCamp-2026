@@ -19,4 +19,4 @@ Každá buňka má 8 sousedů. A každá buňka se rozhoduje podle těchto pravi
 
 **tip**: místo rychlosti celé simulace můžeš mít jen dvě generace pro porovnání <br>
 **bonus**: barevný věk buněk, vzory (glider, pulsar, gosper gun), detekce stability <br>
-**velký bonus**: spojit okraje, interaktivní uvládání (zoom, pauza, pokládání buňek..)
+**velký bonus**: spojit okraje, interaktivní ovládání (zoom, pauza, pokládání buňek..)

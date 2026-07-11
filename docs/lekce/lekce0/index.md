@@ -63,7 +63,7 @@ Visual Studio Code je programovací prostředí, které nám umožní psát kód
 
 ### Jaculus
 
-Nyní už se můžeme vrhnout na samotnou instalaci [`Jacula`](https://jaculus.org/getting-started/).
+Nyní už se můžeme vrhnout na samotnou instalaci [Jaculus](https://jaculus.org/getting-started/).
 
 1. Po instalaci `Node.js` **restartujeme** aplikaci Visual Studio Code.
 2. V horním menu VSCode vybereme záložku `Terminal` a zvolíme `New Terminal`.
@@ -147,7 +147,7 @@ Rozšíření pro VSCode nám umožní jednoduše nahrávat kód do Jacula pomoc
     - Po otevření projektu by se vám ve spodní liště měly objevit oranžové ikonky Jacula. 
     ![Rozšíření bar](./assets/bar.png)
 
-    - V boční liště by se měla objevit záložka Jaculus, přes kterou můžete vytovřit projekt a následně spouštět Jaculus příkazy.
+    - V boční liště by se měla objevit záložka Jaculus, přes kterou můžete vytvořit projekt a následně spouštět Jaculus příkazy.
 
     ![jacSidebar](./assets/jacSidebar.png)
 

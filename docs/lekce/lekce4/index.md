@@ -2,13 +2,12 @@
 
 === "Bločky"
     <!-- TODO blocky  -->
-    V i v bločkovém programování si držíme stav pomocí **proměnných**. Proměnné jsou pojmenované hodnoty,
+    V bločkovém programování si držíme stav pomocí **proměnných**. Proměnné jsou pojmenované hodnoty,
     které můžeme měnit a opakovaně používat v různých částech kódu.
 
-    Proměnná má svůj typ, který určuje, jaké hodnoty může proměnná mít. Proměnnou vytvoříme pomocí
-    rozkliknutí kategorie "Proměnné" a zmáčkneme tlačítko vytvořit proměnnou a nazveme si ji.
+    Proměnnou vytvoříme pomocí rozkliknutí kategorie "Proměnné" a zmáčknutím tlačítka pro vytvoření proměnné, kterou si pojmenujeme.
 
-    Hodnoty přiřazujeme do proměnných pomocí bločku, nastavit <název proměnné> na 
+    Hodnoty přiřazujeme do proměnných pomocí bloku `nastavit <název proměnné> na`.
 
     ![První proměnné s bločky](./assets/blocksFirst.png)
 
@@ -44,7 +43,7 @@
     - `≤` a `≥` zjistí, jestli je menší/rovno nebo větší/rovno
 
     Pokud chceme, aby se podle podmínky vykonal jeden nebo druhý kus kódu, použijeme `pokud ... jinak`.
-    To uděláme, tak že klikneme na nastavovací tlačítko bločku pokud a v nově otevřeném okně si za bloček pokud přidáme bloček jinak.
+    To uděláme tak, že klikneme na nastavovací tlačítko bloku `pokud` a v nově otevřeném okně si za blok `pokud` přidáme blok `jinak`.
     
     ![pokud jinak s bločky](./assets/blocksIfElse.png)
 
@@ -72,8 +71,7 @@
 
     ## Zadání A
 
-    <!-- TODO instalace knihovny rphub75 -->
-    Pomocí jedné proměnné se stavem a podmínky každou sekundu buď rozsvítíme, nebo zhasneme LED na displayi.
+    Pomocí jedné proměnné se stavem a podmínky každou sekundu buď rozsvítíme, nebo zhasneme LEDku na displeji.
 
     
     ??? note "Řešení"
@@ -238,8 +236,7 @@
 
     ## Zadání A
 
-    <!-- TODO instalace knihovny rphub75 -->
-    Pomocí jedné proměnné se stavem a podmínky každou sekundu buď rozsvítíme, nebo zhasneme LED na displayi.
+    Pomocí jedné proměnné se stavem a podmínky každou sekundu buď rozsvítíme, nebo zhasneme LEDku na displeji.
 
     ??? note "Řešení"
 
@@ -247,7 +244,7 @@
         import * as colors from "colors";
         import { Display } from "rphub75";
 
-        let display: Display = new Display(); // Vytvoření speciální promněné display
+        let display: Display = new Display(); // Vytvoření speciální proměnné display
 
         let on: boolean = false; // LED je vypnutá
 
@@ -277,7 +274,7 @@
         import * as colors from "colors";
         import { Display } from "rphub75";
 
-        let display: Display = new Display(); // Vytvoření speciální promněné display
+        let display: Display = new Display(); // Vytvoření speciální proměnné display
 
         let shade = 0; // Držíme si stav s aktuálním odstínem
 
@@ -292,7 +289,6 @@
         ```
 
     ## Zadání C
-    <!-- TODO instalace knihovny button -->
 
     Tentokrát budeme reagovat na stisk tlačítka.
 
@@ -306,9 +302,9 @@
         import { Display } from "rphub75";
         import { Button } from "button";
 
-        let display: Display = new Display(); // Vytvoření speciální promněné display
+        let display: Display = new Display(); // Vytvoření speciální proměnné display
 
-        let button: Button = new Button(0); // Vytvoření speciální promněné button s vstupem 0, což je číslo pinu BOOT tlačítka na Saturnu
+        let button: Button = new Button(0); // Vytvoření speciální proměnné button s vstupem 0, což je číslo pinu BOOT tlačítka na Saturnu
 
         let index: number = 0;
         let color: colors.Rgb = colors.light_blue; // Vybereme si barvu

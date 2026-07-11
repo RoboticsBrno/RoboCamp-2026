@@ -12,7 +12,9 @@
     ## Příprava
     Nejprve si vytvoříme nový prázdný projekt. Poté musíme doinstalovat potřebné knihovny:
     - utils
-    - 
+    - button
+    - saturn
+    - colors
 
     ## Snímaní pozice joysticku
     Joystick je připojen k PMODu na Saturnu. Osa X je na pinu 1, osa Y na pinu 2 a tlačítko na pinu 4.

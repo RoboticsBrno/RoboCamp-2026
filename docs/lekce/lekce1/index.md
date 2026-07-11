@@ -15,7 +15,7 @@ Zde si vyzkoušíme vytvořit první projekt a nahrát jej do Saturnu.
     2. V pravém horním rohu si můžeme zvolit jazyk. 
     ![changeLanguage](./assets/changeLanguage.png)
 
-    3. Kliknutím na tlačítko `Vytvořit nový projekt` si vytvoříme nás první projekt. 
+    3. Kliknutím na tlačítko `Vytvořit nový projekt` si vytvoříme náš první projekt. 
     ![createProject](./assets/blocksCreateProject.png)
     
     4. Po kliknutí na tlačítko si musíme projekt pojmenovat, vybrat typ a šablonu. Jméno si vybereme takové, abychom od sebe projekty lehce rozlišili. Typ projektu zvolíme `Jacly bloky projekt` a šablonu `template-jackly`. Pak už stačí kliknout na tlačítko `Vytvořit projekt`.
@@ -31,7 +31,7 @@ Zde si vyzkoušíme vytvořit první projekt a nahrát jej do Saturnu.
     
     V pravém horním rohu vidíme tlačítko `Připojit`. Před nahráním programu se musíme k Saturnu připojit. Připojení probíhá stejně jako při flashování firmware v minulé lekci. 
     
-    Na pravé straně si rozklikneme kateogrii Konzole, ve které uvidíme, co nám Saturn posílá.
+    Na pravé straně si rozklikneme kategorii Konzole, ve které uvidíme, co nám Saturn posílá.
 
     Uprostřed máme programovací plochu, kde budeme bločky skládat dohromady.
     ![jaclyUI](./assets/jaclyUI.png)
@@ -56,7 +56,7 @@ Zde si vyzkoušíme vytvořit první projekt a nahrát jej do Saturnu.
     Jakmile nám funguje úvodní program, zkusíme si ho trochu upravit. Zkusme si změnit barvu LED, vypisovanou zprávu a dobu čekání mezi výpisy. 
     !!! warning "Po každé změně je potřeba program znovu nahrát."
 
-    ## Výsupní úkol V1
+    ## Výstupní úkol V1
     Udělejte program který bude střídavě blikat LEDkou červeně a do konzole vypisovat `Nazdar svete`.  
 
 
