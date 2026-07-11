@@ -77,6 +77,7 @@ Nakresli semafor: zelenou, žlutou a červenou tečku vedle sebe.
 
         const saturn = createSaturn();
         const display = saturn.display;
+
         display.setPixel(31, 32, colors.green);
         display.setPixel(32, 32, colors.yellow);
         display.setPixel(33, 32, colors.red);
@@ -96,6 +97,7 @@ Pomocí funkce `#!ts Display.fill` lze jednoduše vyplnit celý displej jednolit
 
     const saturn = createSaturn();
     const display = saturn.display;
+
     display.fill(white);
     display.show();
     ```
@@ -171,7 +173,7 @@ Vyplň celý displej modrou barvou a pak po dvou vteřinách žlutou.
         import * as colors from "colors";
 
         const saturn = createSaturn();
-    const display = saturn.display;
+        const display = saturn.display;
 
         display.fill(colors.blue);
         display.show();
@@ -191,5 +193,3 @@ Nakresli smajlík :-) Čím hezčí, tím víc bodů*
 
 ??? abstract "Poznámka"
     \* Body mají čistě symbolickou hodnotu. Organizátoři neručí za férovost jejich udělování.
-
-    \** Mračící smajlíky jsou protizákonné. Mezi možné tresty patří odnětí večeře.

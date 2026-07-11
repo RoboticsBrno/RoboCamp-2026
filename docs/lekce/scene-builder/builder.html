@@ -433,7 +433,6 @@
                 parent: 'root',
                 x: 0, y: 0,
                 z: 0,
-                color: '#ffffff',
                 rotation: 0,
                 children: []
             };
@@ -1563,7 +1562,7 @@
         }
 
         function generateCode() {
-            let c = `const scene = new Collection({ x: 0, y: 0, color: ${hexToRgbCall(SCENE.root.color)}, z: 0 });\n\n`;
+            let c = `const scene = new Collection({ x: 0, y: 0, z: 0 });\n\n`;
 
             const usedNames = new Set();
 
@@ -1586,7 +1585,7 @@
                 const colStr = hexToRgbCall(node.color);
 
                 if (node.type === 'collection') {
-                    c += `const ${safeName} = new Collection({ x: ${node.x}, y: ${node.y}, color: ${colStr}, z: ${node.z} });\n`;
+                    c += `const ${safeName} = new Collection({ x: ${node.x}, y: ${node.y}, z: ${node.z} });\n`;
                     c += `${parentVarName}.add(${safeName});\n`;
                     if (node.rotation) c += `${safeName}.setRotationAngle(${node.rotation});\n`;
                     if (node.pivotX || node.pivotY) c += `${safeName}.setPivot(${node.pivotX || 0}, ${node.pivotY || 0});\n`;
@@ -1630,7 +1629,7 @@
             c += `return scene;\n`;
 
             const indented = c.split('\n').map(line => line ? '\t' + line : line).join('\n');
-            codeOutputEl.value = `async function generateScene() {\n${indented}}\n`;
+            codeOutputEl.value = `function generateScene() {\n${indented}}\n`;
         }
 
         function hexToRgbCall(hex) {
