@@ -44,9 +44,9 @@ Tyto barvy pomocí funkce `colors.rgb` mícháme v různých poměrech od 0 do 2
 
 Zde je pár praktických příkladů:
 
- - lososová: `#!ts colors.rgb(245, 125, 165)`
- - obsidianová: `#!ts colors.rgb(42, 31, 59)`
- - mátozubňopastová: `#!ts colors.rgb(185, 250, 217)`
+ - lososová: `#!ts colors.rgb(245, 125, 165)` <div style="outline: 1px solid white;display: inline-block; margin-bottom: -.2em; background: rgb(245, 125, 165); width: 1em; height: 1em"></div>
+ - obsidianová: `#!ts colors.rgb(42, 31, 59)` <div style="outline: 1px solid white;display: inline-block; margin-bottom: -.2em; background: rgb(42, 31, 59); width: 1em; height: 1em"></div>
+ - mátozubňopastová: `#!ts colors.rgb(185, 250, 217)` <div style="outline: 1px solid white; display: inline-block; margin-bottom: -.2em; background: rgb(185, 250, 217); width: 1em; height: 1em"></div>
 
 Pokud tyto nestačí, knihovna `colors` obsahuje také předdefinovanou kolekci vzácnějších barev, jako jsou `#!ts colors.red`, `#!ts colors.yellow`, `#!ts colors.white`, ...
 
