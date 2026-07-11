@@ -99,7 +99,7 @@ Nakresli semafor: zelenou, žlutou a červenou tečku vedle sebe.
 
 ## Výplň
 
-Pomocí funkce `#!ts Display.fill` lze jednoduše vyplnit celý displej jednolitou barvou. Hlavním využitím je následující kód který rozsvítí veškeré LEDky na maximum a zajistí tak odvaření displeje.
+Pomocí funkce `#!ts Display.fill` lze jednoduše vyplnit celý displej jednolitou barvou. Hlavním využitím je následující kód, který rozsvítí veškeré LEDky na maximum a zajistí tak rozzáření displeje.
 === "TypeScript"
     ```ts
     import { Display } from "rphub75";
@@ -197,7 +197,7 @@ Vyplň celý displej modrou barvou a pak po dvou vteřinách žlutou.
 
 ## Zadání výstupního úkolu
 
-Nakresli smajlík :-) Ćím hezčí, tím víc bodů*
+Nakresli smajlík :-) Čím hezčí, tím víc bodů*
 
 ??? abstract "Poznámka"
     \* Body mají čistě symbolickou hodnotu. Organizátoři neručí za férovost jejich udělování.

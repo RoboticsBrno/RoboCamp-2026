@@ -1,6 +1,6 @@
 # Snake - had
 
-Většina z vás hada někdy ve svěm životě hrála, ale zkoušeli jste si ho někdy vytvořit?
+Většina z vás hada někdy ve svém životě hrála, ale zkoušeli jste si ho někdy vytvořit?
 
 ![Snake](assets/snake.gif)
 

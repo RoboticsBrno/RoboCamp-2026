@@ -45,7 +45,7 @@
 ### Enkodér
 
 [Stavba](https://pmod.robotikabrno.cz/r-encoder/){ .md-button }
-[Použití](encoder/index.md){ .md-button }
+[Použití](enkoder/index.md){ .md-button }
 
 ---
 
@@ -66,4 +66,4 @@
 ### Teplota
 
 [Stavba](https://pmod.robotikabrno.cz/thermometer/){ .md-button }
-[Použití](temperature/index.md){ .md-button }
+[Použití](teplota/index.md){ .md-button }
