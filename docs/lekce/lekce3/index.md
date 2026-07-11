@@ -42,6 +42,9 @@ Poté na něm můžeme volat různé metody. Nejdůležitější jsou `setPixel`
 Začneme kreslením jediné tečky. Nejdříve naimportujeme potřebné knihovny, připravíme displej,
 nastavíme barvu pixelu a potvrdíme změny. Příklad:
 
+=== "Bločky"
+    ![](./assets/wehavescratchathome0.png)
+
 === "TypeScript"
     ```ts
     import { createSaturn } from "saturn";
@@ -59,8 +62,6 @@ nastavíme barvu pixelu a potvrdíme změny. Příklad:
     // Tento řádek propíše provedené změny do displeje.
     display.show();
     ```
-=== "Bločky"
-    ![](./assets/wehavescratchathome0.png)
 
 !!! warning "Upozornění"
     Dokud není zavolána funkce `show`, změny se nepropíšou!
@@ -70,6 +71,9 @@ nastavíme barvu pixelu a potvrdíme změny. Příklad:
 Nakresli semafor: zelenou, žlutou a červenou tečku vedle sebe.
 
 ??? note "Řešení"
+    === "Bločky"
+        ![](./assets/wehavescratchathome2.png)
+
     === "TypeScript"
         ```ts
         import { createSaturn } from "saturn";
@@ -84,12 +88,12 @@ Nakresli semafor: zelenou, žlutou a červenou tečku vedle sebe.
         display.show();
         ```
 
-    === "Bločky"
-        ![](./assets/wehavescratchathome2.png)
-
 ## Výplň
 
 Pomocí funkce `#!ts Display.fill` lze jednoduše vyplnit celý displej jednolitou barvou. Hlavním využitím je následující kód, který rozsvítí veškeré LEDky na maximum a zajistí tak odvaření displeje.
+=== "Bločky"
+    ![](./assets/wehavescratchathome1.png)
+    
 === "TypeScript"
     ```ts
     import { createSaturn } from "saturn";
@@ -101,8 +105,6 @@ Pomocí funkce `#!ts Display.fill` lze jednoduše vyplnit celý displej jednolit
     display.fill(white);
     display.show();
     ```
-=== "Bločky"
-    ![](./assets/wehavescratchathome1.png)
 
 !!! info
     Pokud chceš vyčistit obrazovku, můžeš použít optimalizovanou funkci `clear`.
@@ -167,6 +169,9 @@ Vyplň celý displej modrou barvou a pak po dvou vteřinách žlutou.
                         <iframe src="https://nickarocho.github.io/minesweeper/" title="Minesweeper" width="600" height="800"></iframe>
 
 ??? note "Řešení"
+    === "Bločky"
+        ![](./assets/wehavescratchathome3.png)
+
     === "TypeScript"
         ```ts
         import { createSaturn } from "saturn";
@@ -184,8 +189,6 @@ Vyplň celý displej modrou barvou a pak po dvou vteřinách žlutou.
         display.show();
         ```
 
-    === "Bločky"
-        ![](./assets/wehavescratchathome3.png)
 
 ## Zadání výstupního úkolu
 
