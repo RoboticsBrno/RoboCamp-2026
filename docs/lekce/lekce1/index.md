@@ -27,7 +27,9 @@ Zde si vyzkoušíme vytvořit první projekt a nahrát jej do Saturnu.
     ## Práce s prostředím
     V Jacly je spousta tlačítek a kategorií, pro nás je zatím důležitých jen několik. 
     
-    Na levé straně máme výběr bločků. Prozatím nás zajímají kategorie `Základní` a `SmartLed`. 
+    Když si na levé straně rozklikneme kategorii `Balíčky`, otevře se nám správce balíčků/knihoven. Balíček je sada rozšiřujících funkcí, které můžeme použít v našem programu. 
+   
+    Vedle správce balíčků máme výběr bločků. Bločky jsou rozděleny do kategorií podle toho, co dělají. Například v kategorii `Základní` najdeme bločky, které nám umožní vykonávat základní operace, jako je například čekání nebo vypisování zpráv do konzole. 
     
     V pravém horním rohu vidíme tlačítko `Připojit`. Před nahráním programu se musíme k Saturnu připojit. Připojení probíhá stejně jako při flashování firmware v minulé lekci. 
     
@@ -35,10 +37,10 @@ Zde si vyzkoušíme vytvořit první projekt a nahrát jej do Saturnu.
 
     Uprostřed máme programovací plochu, kde budeme bločky skládat dohromady.
     ![jaclyUI](./assets/jaclyUI.png)
-    <!-- TODO blocky  -->
 
     ## Náš první projekt
-    1. Zkusíme si poskládat a nahrát do Saturnu náš první projekt. Prozatím si poskládáme bločky podle obrázku.
+    1. Zkusíme si poskládat a nahrát do Saturnu náš první projekt. Prozatím si poskládáme bločky podle obrázku. Narazíte ale na problém. Nepodaří se vám totiž najít bloček `Saturn pin`, ten je totiž z rozšiřujícího balíčku `saturn`. Budete si ho tedy muset ve správci balíčků nainstalovat. Klikneme na tlačítko `Balíčky` a v sekci `Přidat nový balíček` vyhledáme `saturn`, vybereme verzi balíčku a klikneme na tlačítko `Přidat vybraný balíček`.
+    ![blocksAddNewPackage](./assets/blocksAddNewPackage.png)
     ![firstProject](./assets/blocksFirstProject.png)
 
     2. Po poskládání bločků klikneme na tlačítko `Připojit` a vybereme port, na kterém je Robodeck připojený. Poté klikneme na tlačítko `Sestavit a nahrát`. Pokud jsme vše udělali správně, měla by se nám na Saturnu rozsvítit LEDka červeně a v konzoli by se nám mělo vypisovat `Ahojky svete`.
@@ -83,10 +85,9 @@ Zde si vyzkoušíme vytvořit první projekt a nahrát jej do Saturnu.
         [Zip soubor](https://2026.robotickytabor.cz/lekce/baseExample.zip){.md-button .md-button--primary}
 
     ## Nahrání programu
-    <!-- TODO update for new extension -->
     Teď můžeme zkusit na Saturn nahrát náš první program. Vytvořili jsme si projekt, který obsahuje jednoduchý program, který nám bude vypisovat zprávu do konzole a rozsvítí LEDku na Saturnu. 
 
-    1. Ve VSCode máme otevřený první projekt. V levém `Exploreru` (`Průzkumníku`) vybereme soubor ze  `src` -> `index.ts`. V něm vidíme náš první program.
+    1. Ve VSCode máme otevřený první projekt, který jsme si stáhli. V levém `Exploreru` (`Průzkumníku`) vybereme soubor ze  `src` -> `index.ts`. V něm vidíme náš první program.
 
     2. V levém dolním rohu klikneme na tlačítko `COM` a vybereme port, na kterém je Saturn připojený. Pro zjištění správného portu zkusíme Saturn odpojit a znovu připojit. V seznamu portů by se měl objevit nový port, který je právě Saturn. Ten si zapamatujeme a vybereme.
     ![portSelector](./assets/portSelector.png)
@@ -112,11 +113,12 @@ Zde si vyzkoušíme vytvořit první projekt a nahrát jej do Saturnu.
     5. Pro ukončení terminálu, do něj klikneme a stiskneme ++ctrl+c++.
 
     ## Jak vlastně náš program funguje?
-    Tato část importuje knihovny, které nám umožní ovládat LEDku a používat předem definované barvy a vytváří objekt LEDky, se kterým budeme pracovat. V našem případě je to LEDka na pinu 48, která je typu `LED_WS2812B`. Tato část teď není důležitá, takže ji necháme tak, jak je.
+    Tato část importuje knihovny, které nám umožní ovládat LEDku a používat předem definované barvy a vytváří objekt LEDky, se kterým budeme pracovat. Objekt vytváříme pro specifický pin, který je dán objektem `SaturnPins` (SaturnPins.ILED == 48). LEDka je typu `LED_WS2812B`. Tato část teď pro nás důležitá, takže ji necháme tak, jak je.
     ```ts
     import { SmartLed, LED_WS2812B } from "smartled";
     import * as colors from "colors";
-    const led = new SmartLed(48, 1, LED_WS2812B);
+    import { SaturnPins } from "saturn";
+    const led = new SmartLed(SaturnPins.ILED, 1, LED_WS2812B);
     ```
 
     Tato část nastavuje LEDku na zelenou barvu a zobrazuje ji.
