@@ -58,7 +58,8 @@ Node.js je program, který nám umožní nahrávat kód do Jacula a komunikovat 
 ### Visual Studio Code
 
 Visual Studio Code je programovací prostředí, které nám umožní psát kód a s rozšířením nám dovolí nahrávat kód do zařízení.
-1. Stáhneme si `Visual Studio Code` (nejnovější stabilní verzi)  - [Stahuj ZDE pro Windows na táborové wifi](https://files.robotickytabor.cz/vscode.exe). 
+
+1. Stáhneme si `Visual Studio Code` (nejnovější stabilní verzi)  - [Stahuj ZDE pro Windows na táborové wifi](https://files.robotickytabor.cz/vscode.exe).
 2. Nainstalujeme jej dle výchozího nastavení (není potřeba nic měnit).
 
 ### Jaculus
