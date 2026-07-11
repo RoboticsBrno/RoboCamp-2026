@@ -11,7 +11,7 @@
         V lekci 1 jsme se naučili, jak vytvořit nový projekt. Pokud nevíte, jak na to, podívejte se do lekce 1.
 
     ## Zadání A
-    Nejprve si ověříme znalosti z minulé lekce. Zkusíme blikat RGB LED na Saturnu (pin 48). Na začátku tohoto úkolu si otevřeme nový prázdný projekt. Můžete se inspirovat projektem z minulé lekce.
+    Nejprve si ověříme znalosti z minulé lekce. Zkusíme blikat LED na Saturnu (ILED). Na začátku tohoto úkolu si otevřeme nový prázdný projekt. Můžete se inspirovat projektem z minulé lekce.
 
     ??? tip "Řešení"
         ![blockSolutionA](./assets/blocksSolutionA.png)
@@ -19,11 +19,10 @@
     ## Co je to událost v programování?
     Událost je situace, kterou program rozpozná (například stisknutí nebo puštění tlačítka, uplynutí určitého času). Po zaznamenání události se vykoná kód, který je k této události přiřazen. Událostí může být například stisknutí tlačítka nebo uplynutí určitého času. 
 
-    <!--TODO change all GPIO to buttons   -->
     ### Tlačítko
-    Události řízené stiskem tlačítka můžeme ovládat pomocí bločků z podkategorie `Tlačítko` z kategorie `Periferie`.
+    Události řízené stiskem tlačítka můžeme ovládat pomocí bločků z podkategorie `Tlačítko` z kategorie `Periferie`. Abychom měli k této kategorii přístup, musíme si ji nejprve nainstalovat do našeho projektu pomocí správce balíčků. Hledejte balíček `button`.
 
-    Tlačítko si nejprve musíme vytvořit bločkem `vytvořit tlačítko`. Políčko `limit dvojkliku` určuje, jak blízko musí být dvě kliknutí k sobě, aby byly považovány za dvojklik. 
+    Tlačítko si nejprve musíme vytvořit bločkem `vytvořit tlačítko`. Políčka limit `dvojskoku`, `odskok` a `invertované` neměníme. Pin nastavíme na `boot tlačítko` na Saturnu.
     ![blocksCreateButton](./assets/blocksCreateButton.png)
 
     Na událost na tlačítku pak můžeme navázat blok kódu pomocí bloků `při kliknutí` a `při stisknutí/puštění/dvojití kliknutí`. Událost kliknutí nastane při stisknutí i puštění tlačítka, událost stisknutí při stisknutí tlačítka, událost puštění při puštění tlačítka a událost dvojitého kliknutí při dvojím kliknutí na tlačítko v daném časovém limitu. Bloček `při kliknutí` nám navíc dává informaci o délce stisknutí.
@@ -31,7 +30,7 @@
 
     ## Zadání B
     <!-- TODO change pins to use lib -->
-    Pomocí událostí rozsvítíme při stisknutí tlačítka LEDku na Saturnu a při puštění ji zhasneme. Tlačítko je na pinu `0`, LEDka na pinu `48`. Je důležité nezapomenout nastavit na začátku tlačítko a LEDku jako v předchozích úkolech.
+    Pomocí událostí rozsvítíme při stisknutí tlačítka LEDku na Saturnu a při puštění ji zhasneme. Použijte `boot tlačítko`, a ledku `ILED`. Je důležité nezapomenout nastavit na začátku tlačítko a LEDku jako v předchozích úkolech.
 
     ??? tip "Řešení"
         ![blockSolutionB](./assets/blocksSolutionB.png)
@@ -54,8 +53,7 @@
     ![clearTimeout](./assets/blocksClearTimeout.png)
 
     ## Zadání C
-    <!-- TODO update to use isPressed from Button lib -->
-    Desetkrát za sekundu vypíšeme stav zmáčknutí tlačítka (0 nebo 1). Stav daného tlačítka získáme pomocí bloku `přečti digitální hodnotu z pinu` z kategorie `GPIO`. Opakování dosáhneme pomocí `Intervalů`, a informaci vypíšeme pomocí bloku `konzole`. Všimněme si, že blok na čtení digitální hodnoty má na rozdíl od ostatních bloků kulatý tvar, tedy se dá vložit do kulatých míst v jiných blocích. Můžeme ho tedy vložit do bloku `konzole`. Pokud je tlačítko stisknuté, blok pro čtení nám dá `0`, pokud stisknuté není, dá nám `1`.
+    Desetkrát za sekundu vypíšeme stav zmáčknutí tlačítka (true/false). Stav daného tlačítka získáme pomocí bloku `tlačítko je stisknuté` z kategorie `Button`. Opakování dosáhneme pomocí `Intervalů`, a informaci vypíšeme pomocí bloku `konzole`.
 
     ??? tip "Řešení"
         ![blockSolutionC](./assets/blocksSolutionC.png)
@@ -97,17 +95,17 @@
     
     ## Zadání A
 
-    Nejprve si ověříme znalosti z minulé lekce. Zkusíme blikat RGB LED na Saturnu (pin 48). Na začátku tohoto úkolu si otevřeme nový prázdný projekt. Můžete se inspirovat projektem z minulé lekce.
+    Nejprve si ověříme znalosti z minulé lekce. Zkusíme blikat RGB LED na Saturnu (pin 48). Na začátku tohoto úkolu si otevřeme nový prázdný projekt. Můžete se inspirovat projektem z minulé lekce. Budete si muset nainstalovat balíček `basic`, pokud ho nemáte.
 
-    <!-- TODO propably use gameloop shit? -->
     ??? tip "Řešení"
     
         ```ts
         import * as basic from "basic";
         import { SmartLed, LED_WS2812B } from "smartled";
         import * as colors from "colors";
+        import { SaturnPins } from "saturn";
 
-        const led = new SmartLed(48, 1, LED_WS2812B);
+        const led = new SmartLed(SaturnPins.ILED, 1, LED_WS2812B);
 
         basic.forever(async () => {
             led.set(0, colors.red);
@@ -129,7 +127,7 @@
     ```
     Nejprve musíme tlačítko vytvořit pomocí příkazu `const button = new Button(PIN)`, kde `PIN` je číslo pinu.
     ```ts
-    const buttonA = new Button(0)
+    const buttonA = new Button(SaturnPins.BootBtn)
     ```
 
     Poté si můžeme připojit k dané události blok kódu pomocí příkazu `button.on(EVENT, () => {...})`. Argument `EVENT` může být hodnota `"press"`, `"release"`, `"click"` a `"doubleClick"`. Událost `"press"` nastane při stisknutí tlačítka, `"release"` při puštění tlačítka, `"click"` při jednom stisknutí a `"doubleClick"` při dvojitém stisknutí tlačítka. Argument `() => {...}` je kód, který se vykoná při dané události.
@@ -154,8 +152,9 @@
     Když vše spojíme dohromady, můžeme při stisknutí tlačítka vypisovat zprávy do konzole.
     ```ts
     import { Button } from "button";
+    import { SaturnPins } from "saturn";
 
-    const buttonA = new Button(0);
+    const buttonA = new Button(SaturnPins.BootBtn);
 
     buttonA.on("press", () => {
         console.log("Button pressed");
@@ -176,22 +175,24 @@
 
     ## LEDka pořádně
 
-    Na desce Saturn je pouze jedna LEDka, se kterou budeme pracovat (pin 48). Pro práci s ní musíme nejprve importovat knihovnu.
+    Na desce Saturn je pouze jedna LEDka, se kterou budeme pracovat (SaturnPins.ILED). Pro práci s ní musíme nejprve importovat knihovnu.
     ```ts
     import { SmartLed, LED_WS2812B } from "smartled";
+    import { SaturnPins } from "saturn";
     ```
 
-    Pak musíme LEDku vytvořit pomocí příkazu `const led = new SmartLed(PIN, COUNT, TYPE)`, kde `PIN` je číslo pinu, `COUNT` je počet LEDek a `TYPE` je typ LEDky. LEDka je připojena na `PIN` 48. Jelikož máme pouze jednu ledku, `COUNT` bude 1. Typ LEDky je `LED_WS2812B`, proto ho spolu s `SmarLed` importujeme.
+    Pak musíme LEDku vytvořit pomocí příkazu `const led = new SmartLed(PIN, COUNT, TYPE)`, kde `PIN` je číslo pinu, `COUNT` je počet LEDek a `TYPE` je typ LEDky. LEDka je připojena na pin `SaturnPins.ILED`. Jelikož máme pouze jednu ledku, `COUNT` bude 1. Typ LEDky je `LED_WS2812B`, proto ho spolu s `SmarLed` importujeme.
     ```ts
-    const led = new SmartLed(48, 1, LED_WS2812B);
+    const led = new SmartLed(SaturnPins.ILED, 1, LED_WS2812B);
     ```
 
     Pak už můžeme s LEDkou pracovat. K tomu nám slouží příkazy `led.set(INDEX, COLOR)` a `led.show()`. Příkaz `led.set(INDEX, COLOR)` nastaví barvu LEDky na daném indexu. Jelikož máme pouze jednu LEDku, `INDEX` bude 0. Barvu můžeme nastavit pomocí knihovny `colors`, kterou musíme také importovat. Příkaz `led.show()` zobrazí nastavenou barvu na LEDce. 
     ```ts
     import { SmartLed, LED_WS2812B } from "smartled";
+    import { SaturnPins } from "saturn";
     import * as colors from "colors";
 
-    const led = new SmartLed(48, 1, LED_WS2812B);
+    const led = new SmartLed(SaturnPins.ILED, 1, LED_WS2812B);
 
     led.set(0, colors.green);
     led.show();
@@ -200,16 +201,18 @@
     !!! warning "Po každém nastavení barvy je potřeba zavolat příkaz `led.show()`, jinak se barva nezobrazí."
 
     ## Zadání B
-    Pomocí událostí rozsvítíme při stisknutí tlačítka LEDku na Saturnu a při puštění ji zhasneme. Tlačítko je na pinu `0`, LEDka na pinu `48`. Je důležité nezapomenout nastavit na začátku tlačítko a LEDku jako v předchozích úkolech.
+    Pomocí událostí rozsvítíme při stisknutí tlačítka LEDku na Saturnu a při puštění ji zhasneme. Tlačítko je na pinu `SaturnPins.BootBtn`, LEDka na pinu `SaturnPins.ILED`. Je důležité nezapomenout nastavit na začátku tlačítko a LEDku jako v předchozích úkolech.
 
     ??? tip "Řešení"
         ```ts
         import { Button } from "button";
         import { SmartLed, LED_WS2812B } from "smartled";
+        import { SaturnPins } from "saturn";
         import * as colors from "colors";
 
-        const buttonA = new Button(0);
-        const led = new SmartLed(48, 1, LED_WS2812B);
+        const buttonA = new Button(SaturnPins.BootBtn);
+        const led = new SmartLed(SaturnPins.ILED, 1, LED_WS2812B);
+
 
         buttonA.on("press", () => {
             led.set(0, colors.red)
@@ -268,8 +271,9 @@
 
         ```ts
         import { Button } from "button";
+        import { SaturnPins } from "saturn";
 
-        const button = new Button(0);
+        const button = new Button(SaturnPins.BootBtn);
 
         setInterval(() => {
             console.log(button.isPressed());
@@ -278,8 +282,8 @@
 
     ## Výstupní úkol V1 - Pozdrav
 
-    Při stisknutí (pin `0`) vypíšeme pozdrav.
+    Při stisknutí tlačítka (pin `SaturnPins.BootBtn`) vypíšeme pozdrav.
 
     ## Výstupní úkol V2 - Změna barvy
 
-    Při stisknutí tlačítka (pin `0`) rozsvítíme LED (pin `48`) jednou barvou a při puštění barvu jinou barvou.
+    Při stisknutí tlačítka (pin `SaturnPins.BootBtn`) rozsvítíme LED (pin `SaturnPins.ILED`) jednou barvou a při puštění barvu jinou barvou.
