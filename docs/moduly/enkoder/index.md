@@ -41,7 +41,7 @@ const encoderBtn = new Button(SaturnPins.Pmod1.Pin3);
 
 setInterval(() => {
     console.log("pos: " + encoder.read());
-}, 5);
+}, 20);
 
 encoderBtn.on("click", () => {
     console.log("Clearing encoder value");
