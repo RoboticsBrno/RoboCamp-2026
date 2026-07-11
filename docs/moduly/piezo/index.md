@@ -43,7 +43,7 @@ V tomto příkladu použijeme vestavěnou metodu `playScale()` a zároveň si uk
 import { SaturnPins } from "saturn";
 import { PIEZO } from "piezo";
 
-const piezo: PIEZO = new PIEZO(SaturnPins.Pmod1.Pin1);
+const piezo = new PIEZO(SaturnPins.Pmod1.Pin1);
 console.log("Piezo vytvořeno!");
 
 await piezo.playScale();
