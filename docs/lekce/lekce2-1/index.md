@@ -2,9 +2,9 @@
 Toto je nepovinná lekce vysvětlující fungování GPIO a Button knihovny. Nebudou prováděny žádné vedené lekce ani úkoly, lekce je zamýšlena pouze jako doplňující materiál pro ty, kteří se chtějí dozvědět více o fungování tlačítek a GPIO.
 
 ### Co je to GPIO?
-GPIO (General Purpose Input Output) je způsob, jak pracovat s piny, posílat a přijímat signály. Používá se například při ovládání a čtení z periferií, například z PMODu. Naše PMOD moduly GPIO využívají. Tlačítka GPIO používají také, ale mají unikátní problémy, které ostatní periferie 
+GPIO (General Purpose Input Output) je způsob, jak pracovat s piny, posílat a přijímat signály. Používá se například při ovládání a čtení z periferií, například z PMODu. Naše PMOD moduly GPIO využívají. Tlačítka GPIO používají také, ale práce s nimi s sebou nese unikátní problémy, které řeší knihovna button.
 
-.  Při většině ostatních použití nás ale problémy s `bounce` a `debounce` nemusí trápit.
+Při většině ostatních použití nás ale problémy s `bounce` a `debounce` nemusí trápit.
 
 Toto je mimo jiné „low level" způsob, jak získávat input z tlačítek.
 

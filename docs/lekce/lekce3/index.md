@@ -24,13 +24,6 @@ Jak jsme se učili v první lekci, vytvoříme si nový projekt. Máme několik 
         
     [Zip soubor](https://2026.robotickytabor.cz/lekce/baseExample.zip){.md-button .md-button--primary}
 
-
-K práci s displejem si stáhneme příslušné knihovny pomocí následujících příkazů terminálu:
-```bash
-jac lib-install rphub75
-jac lib-install colors
-```
-
 ## Barvičky
 
 Barevné světlo vytváříme ze tří základních barev: červená (RED), zelená (GREEN), a modrá (BLUE).
@@ -62,8 +55,9 @@ nastavíme barvu pixelu a potvrdíme změny. Příklad:
     import { createSaturn } from "saturn";
     import * as colors from "colors";
 
-    // Tento řádek připraví displej ke kreslení.
-    const display = createSaturn().display;
+    // Příprava displeje ke kreslení.
+    const saturn = createSaturn();
+    const display = saturn.display;
 
     // Tento řádek nastaví barvu jediného pixelu.
     // První číslo udává x-ovou souřadnici a druhé y-ovou.
@@ -86,10 +80,12 @@ Nakresli semafor: zelenou, žlutou a červenou tečku vedle sebe.
 ??? note "Řešení"
     === "TypeScript"
         ```ts
-        import { Display } from "rphub75";
+        import { createSaturn } from "saturn";
         import * as colors from "colors";
 
-        const display = new Display();
+        const saturn = createSaturn();
+        const display = saturn.display;
+
         display.setPixel(31, 32, colors.green);
         display.setPixel(32, 32, colors.yellow);
         display.setPixel(33, 32, colors.red);
@@ -107,7 +103,9 @@ Pomocí funkce `#!ts Display.fill` lze jednoduše vyplnit celý displej jednolit
     import { createSaturn } from "saturn";
     import { white } from "colors";
 
-    const display = createSaturn().display;
+    const saturn = createSaturn();
+    const display = saturn.display;
+
     display.fill(white);
     display.show();
     ```
@@ -182,7 +180,8 @@ Vyplň celý displej modrou barvou a pak po dvou vteřinách žlutou.
         import { createSaturn } from "saturn";
         import * as colors from "colors";
 
-        const display = createSaturn().display;
+        const saturn = createSaturn();
+        const display = saturn.display;
 
         display.fill(colors.blue);
         display.show();
@@ -202,5 +201,3 @@ Nakresli smajlík :-) Čím hezčí, tím víc bodů*
 
 ??? abstract "Poznámka"
     \* Body mají čistě symbolickou hodnotu. Organizátoři neručí za férovost jejich udělování.
-
-    \** Mračící smajlíky jsou protizákonné. Mezi možné tresty patří odnětí večeře.
