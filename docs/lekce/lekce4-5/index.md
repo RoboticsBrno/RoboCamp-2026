@@ -2,7 +2,7 @@
 
 
 === "Bločky"
-    V této lekci se naučíme číst hodnoty z joysticku a převádět je na užitečné rozsahy pomocí knihovny `utils`.
+    V této lekci se naučíme číst hodnoty z joysticku a převádět je na užitečné rozsahy pomocí funkce `map`.
 
     Joystick je zařízení, které nám umožňuje ovládat něco pohybem v ploše. Jedná se vlastně o dva potenciometry - jeden pro osu X a druhý pro osu Y. Protože potenciometry vracejí napětí, mikrokontrolér jej převede na číslo v rozsahu 0–1023.
 
@@ -11,31 +11,52 @@
 
     ## Příprava
     Nejprve si vytvoříme nový prázdný projekt. Poté musíme doinstalovat potřebné knihovny:
-    - utils
+    
     - button
     - saturn
     - colors
 
     ## Snímaní pozice joysticku
     Joystick je připojen k PMODu na Saturnu. Osa X je na pinu 1, osa Y na pinu 2 a tlačítko na pinu 4.
+    
+    ![](./assets/joystick-init.png)
+    
+    Hodnotu z joysticku můžeme převést na jiný rozsah pomocí funkce `map` v záložce `Math`. Například pokud chceme pohybovat pixelem na displeji 64×64, potřebujeme rozsah 0–63.
 
-    Hodnotu z joysticku můžeme převést na jiný rozsah pomocí funkce `map` z knihovny `utils`. Například pokud chceme pohybovat pixelém na displeji 64×64, potřebujeme rozsah 0–63.
-
+    ![](./assets/map-value.png)
+    
     ## Tlačítko joysticku
     Tlačítko na joysticku je připojeno také na PMOD a pracuje s ním stejně jako jakékoli jiné tlačítko pomocí knihovny `button`.
-
+    
+    ![](./assets/button-joystick.png)
+    
     ## DPad
     DPad je jednoduchý modul se čtyřmi tlačítky (nahoru, dolů, vlevo, vpravo), který se používá například pro ovládání nebo navigaci. S tlačítky pracujeme pomocí stejné knihovny `button` jako u jakéhokoliv jiného tlačítka.
-
+    
+    ![](./assets/dpad-example.png)
+    
     ## Zadání A
     Přečti hodnoty X a Y osy joysticku a vypiš je do konzole každých 50 ms.
-
+    
+    ??? note "Řešení"
+        ![](./assets/zadaniA1.png)
+    
     ## Zadání B
-    Pomocí `utils.map` převeď hodnoty joysticku na souřadnice displeje 0–63 a zobraz jediný pixel na displeji.
-
+    Pomocí `map` převeď hodnoty joysticku na souřadnice displeje 0–63 a zobraz jediný pixel na displeji.
+    
+    ??? note "Řešení"
+        ![](./assets/zadaniB1.png)
+        
+        ![](./assets/zadaniB2.png)
+    
     ## Zadání C
     Přidej reakci na tlačítko joysticku - při stisknutí rozsvít pixel na aktuální pozici, při puštění zhasni.
-
+    
+    ??? note "Řešení"
+        ![](./assets/zadaniC1.png)
+        
+        ![](./assets/zadaniC2.png)
+    
     ## Výstupní úkol V1 - Sledování pozice
     Vypisuj souřadnice joysticku v konzole průběžně.
 
