@@ -97,12 +97,12 @@ Pomocí funkce `#!ts Display.fill` lze jednoduše vyplnit celý displej jednolit
 === "TypeScript"
     ```ts
     import { createSaturn } from "saturn";
-    import { white } from "colors";
+    import * as colors from "colors";
 
     const saturn = createSaturn();
     const display = saturn.display;
 
-    display.fill(white);
+    display.fill(colors.white);
     display.show();
     ```
 
