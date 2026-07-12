@@ -36,8 +36,10 @@ Na desku dáme distanční sloupky (dlouhé bílé roury).
 
 Po distančních sloupcích umístíme poslední dřevěnou desku a připevníme ji šrouby.
 
-!!! danger "Upozornění"
-    Při šroubování poslední desky dej pozor, aby nehezká strana šla dovnitř a hezká ven, aby to vypadalo dobře.
+!!! danger "Šroubky dotahujte lehce jinak hrozí, že praskne deska nebo část displeje"
+
+!!! warning "Při šroubování poslední desky dej pozor, aby nehezká strana šla dovnitř a hezká ven, aby to vypadalo dobře."
+
 
 ![Připevnění poslední dřevěné desky](assets/foto27.jpg)
 
