@@ -12,11 +12,11 @@ Robodeck je modulární platforma sloužící k výuce základů programování 
 
 Postup výroby Robodecku najdete v návodu "Robodeck".
 
-[Robodeck](/robodeck/index.md){ .md-button }
+[Robodeck](/robodeck/){ .md-button }
 
 Po úspěšném sestavení si můžete vyzkoušet programování a hraní her připravených v lekcích.
 
-[Lekce](/lekce/index.md){ .md-button }
+[Lekce](/lekce/){ .md-button }
 
 Po dokončení základních lekcí můžete Robodeck rozšiřovat o další moduly.
 
