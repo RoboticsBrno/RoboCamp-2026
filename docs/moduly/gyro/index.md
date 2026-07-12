@@ -1,40 +1,47 @@
-# Gyro
+# Akcelerometr a gyroskop
 
-!!! danger "Našli jsme chyby, nepoužívat!!!"
+Jeden z modulů, které si můžeme připojit k RoboDecku je MPU6050 -- Integrovaný gyroskop a akcelerometr v jednom pouzdru. 
 
-Gyroskop měří úhel natočení v 3 osách. Umožňuje detekci otáčení, naklonění a pohybu robota.
+## Akcelerometr
 
-## Vytvoření projektu
+Akcelerometr měří zrychlení (změnu v rychlosti v čase). Poku si ho dáme do auta, bude nám například schopen říct, jak prudce jsme zabrzdili. Akcelerometr dokáže měřit taky gravitační zrychlení, a může nám proto říct "kde je dole", toho využívají například mobily, aby mohly přecházet mezi režimy "na výšku" a "na šířku" podle toho, jak je mobil natočený. Tady toto měření orientace vůči Zemi je sice užitečné, ale má svá omezení: Pokud se otočí akcelerometr kolem svislé osy, tak si toho téměř nevšimne.
 
-=== "Odkaz"
-    Stačí kliknout na odkaz, otevře se nám VSCode a nabídne se nám možnost vytvořit projekt z připraveného balíčku.
+## Gyroskop
 
-    [Vytvořit projekt]( vscode://cubicap.jaculus/import?uri=https://2026.robotickytabor.cz/moduly/gyro/gyro-example.tar.gz){.md-button .md-button--primary}
-=== "Command line"
-    Tento příkaz stačí zadat do terminálu v adresáři, kde chceme mít projekt uložený. Změníme `<PROJECT_NAME>` na název projektu, který chceme vytvořit.
-    
-    ```bash
-    jac project-create --package https://2026.robotickytabor.cz/moduly/gyro/gyro-example.tar.gz <PROJECT_NAME>
-    ```
+Gyroskop nám řekne, jak rychle, a kolem které osy se otáčí. Jelikož není ovlivněný gravitací, tak je schopný detekovat i otočení kolem svislé osy. Gyroskopy se často používají k odhadování orientace podobně jako akcelerometry. Pokud známe výchozí orientaci a rychlost a směr otáčení, můžeme postupným sčítáním spočítat současnou pozici. Je ale potřeba si pohlídat tzv. drift. Gyroskop zaznamenává pomalé otáčení i když se ve skutečnosti nehýbe a postupně se tak vzdaluje od skutečné orientace. Toto můžeme řešit použitím nějakého referenčního senzoru, například kompasu, nebo akcelerometru.
 
 ## Instalace knihoven
 
-Do nového projektu nainstalujeme potřebné knihovny:
+Do projektu je potřeba nainstalovat:
 
-- `gyro`
+`mpu6050`
 
-## Použití
+## Jak to použít
 
-Gyroskop je připojen k PMODu na Saturnu. Můžete si jeho piny vyčíst z popisků na Saturnu, nebo z objektu `SaturnPins` z knihovny `saturn`, například `SaturnPins.Pmod1.Pin1`.
+=== "Bločky"
+    Stejnou věc můžeme sestavit i v bločkách. Nejprve si v kategorii `mpu6050` vytvoříme I2C sběrnici a na ní pak senzor MPU6050 na výchozí adrese `0x68`. V nekonečné smyčce pak z něj přečteme zrychlení a jednotlivé osy X, Y, Z vypíšeme do konzole.
 
-```ts
-import { Gyro } from "gyro";
-import { SaturnPins } from "saturn";
+    ![Ukázka bloků pro čtení zrychlení z MPU6050](./assets/blocky.png)
 
-const gyro = new Gyro(SaturnPins.Pmod1.Pin1, SaturnPins.Pmod1.Pin2, SaturnPins.Pmod1.Pin3);
+    Blok `konzole klíč` posílá hodnotu do konzole pod daným klíčem (`X`, `Y`, `Z`), díky čemuž je Jacly umí zobrazit jako tři barevné křivky v `Grafu`.
 
-setInterval(() => {
-    const data = gyro.read();
-    console.log(`X: ${data.x}, Y: ${data.y}, Z: ${data.z}`);
-}, 100);
-```
+    ![Zrychlení X, Y, Z zobrazené v Plotteru](./assets/plotter.png)
+
+=== "TypeScript"
+    Senzor používá ke komunikaci sběrnici I2C a musíme ji proto inicializovat před použitím
+
+    ```ts
+    I2C1.setup({scl: 17, sda: 18})
+    const sensor = new MPU6050(I2C1)
+    ```
+
+    Zrychlení a rotaci pak můžeme získat zavoláním následujících funkcí:
+
+    ```ts
+    let [accX, accY, accZ] = sensor.getAcceleration();
+    let [rotX, rotY, rotZ] = sensor.getAngularVelocity();
+    ```
+
+    Zrychlení je udávané v násobcích zemské gravitace. Pokud naměříme akcelerometrem v nějaké ose hodnotu 2, tak to znamená že na něj v té dané ose působí zrychlení 2G, dvojnásobek zemské gravitace.
+
+    Rychlost otáčení se udává ve stupních za sekundu.
