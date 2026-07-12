@@ -83,14 +83,15 @@ Celý dosavadní kód by měl vypadat nějak takto:
     obdelnik.setPivot(0, 0)
     obdelnik.rotate(45)
     ```
-!!! note "Všiměte si, že nastavení pivotu na souřadnice 0, 0 vede k rotaci okolo rohu čtverce, ne okolo pixelu se souřadnicemi 0, 0. Jak bychom to museli udělat, kdybychom chtěli více tvarů otáčet kolem jednoho středu?"
+!!! note "Význam souřadnic pivota"
+    Všiměte si, že nastavení pivotu na souřadnice (0, 0) vede k rotaci okolo rohu čtverce, ne okolo pixelu se souřadnicemi (0, 0). Je to proto, že souřadnice pivota se berou vzhledem k výchozímu bodu geometrického tvaru, kterému jsou nastavené.
 
 Abyste nemuseli vlastnoručně psát kód pro každý tvar. Připravili jsme vám Návrhář.
 
 [Návrhář - dokumentace](../scene-builder/index.md){.md-button}
 
 ## Zadání A -- Osmiúhelník
-Podívejte se co všechno vám kategorie bločků pro vykreslování geometrických tvarů nabízí. Najděte způsob jak osmiúhelník na obrazovku.
+Podívejte se co všechno vám kategorie bločků pro vykreslování geometrických tvarů nabízí. Najděte způsob jak nakreslit osmiúhelník.
 
 ??? note "Řešení"
     === "Bločky"
