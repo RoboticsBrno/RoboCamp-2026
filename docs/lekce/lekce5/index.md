@@ -27,19 +27,13 @@ Ještě než začneme s vykreslováním jednoduchých tvarů, je potřeba si př
     ![](./assets/stub.png)
 === "TypeScript"
     ```ts
-    import { createSaturn } from "saturn";
+    import { createSaturn, SaturnPins } from "saturn";
+    import { GameLoop } from "game-loop"
     import * as colors from "colors";
-    import { Renderer, Format, Font, Texture } from "renderer";
-    import { Circle, Rectangle, Point, LineSegment, Collection } from "shapes";
+    import { Circle, Rectangle} from "shapes";
 
-    const root = new Collection({ x: 0, y: 0, z: 0 });
-
-    // Sem vepisujte vlastní kod
-    const saturn = createSaturn();
-    const display = saturn.display;
-    const renderer = new Renderer(display.width, display.height);
-    renderer.render(root, display.frame, true, Format.RGB_888);
-    display.show();
+    const saturn = createSaturn()
+    const game_loop = new GameLoop(saturn.display)
     ```
 
 Nejdříve si vykreslíme jednoduchý prázdný čtverec a vyplněný kruh:
@@ -54,7 +48,7 @@ Nejdříve si vykreslíme jednoduchý prázdný čtverec a vyplněný kruh:
     root.add(kruh)
     ```
 
-!!! warning "Každý tvar musíme přidat do kolekce, kterou poté renderer vykresluje, nebo do nějaké její podkolekce" 
+!!! warning "Každý tvar musíme přidat do game loopu aby se nám zobrazil." 
 
 ### Rotace
 Vyzkoušíme si ještě rotace. Před prováděním rotací je dobré nastavit si bod (pivot), kolem kterého se bude tvar otáčet
@@ -68,42 +62,63 @@ Vyzkoušíme si ještě rotace. Před prováděním rotací je dobré nastavit s
     ```
 Celý dosavadní kód by měl vypadat nějak takto:
 ```ts
-import { createSaturn } from "saturn";
+import { createSaturn, SaturnPins } from "saturn";
+import { GameLoop } from "game-loop"
 import * as colors from "colors";
-import { Renderer, Format, Font, Texture } from "renderer";
-import { Circle, Rectangle, Point, LineSegment, Collection } from "shapes";
+import { Circle, Rectangle} from "shapes";
 
-const saturn = createSaturn();
-const display = saturn.display;
-const root = new Collection({ x: 0, y: 0, z: 0 });
+const saturn = createSaturn()
+const game_loop = new GameLoop(saturn.display)
 
 const obdelnik = new Rectangle({x: 10, y: 10, width: 10, height:20, color: colors.yellow})
-root.add(obdelnik)
+game_loop.addShape(obdelnik)
+const kruh = new Circle({x: 32, y: 32, radius: 5, color: colors.green, fill: true})
+game_loop.addShape(kruh)
+
 obdelnik.setPivot(0, 0)
 obdelnik.rotate(45)
-
-const kruh = new Circle({x: 32, y: 32, radius: 5, color: colors.green, fill: true})
-root.add(kruh)
-
-const renderer = new Renderer(display.width, display.height);
-renderer.render(root, display.frame, true, Format.RGB_888);
-display.show();
 ```
 !!! note "Všiměte si, že nastavení pivota na souřadnice 0, 0 vede k rotaci okolo rohu čtverce, ne okolo pixelu se souřadnicemi 0, 0. Jak bychom to museli udělat, kdybychom chtěli více tvarů otáčet kolem jednoho středu?"
-
-## Kolekce
-
-Kolekce jsou speciální grafické prvky, které se vyznačují tím, že můžou obsahovat jiné grafické prvky, včetně kolekcí. Když provedeme posunutí, škálování, nebo rotaci kolekce, tak se tato operace projeví na všech členech této kolekce.
-
-Když jsme zadávali souřadnice geometrických tvarů v předchozích příkladech, tak jsme ve skutečnosti nezadávali konkrétní pozice pixelů na displeji, ale souřadnice relativní vzhledem ke kořenové (root) kolekci, do které jsme museli přidat všechny prvky, které měly být viditelné.
 
 Práci vám ulehčí připravený generátor na scény
 
 [Builder dokumentace](../scene-builder/index.md){.md-button}
 
-## Úkol A
-Změňte v našem programu parametry root kolekce. Jak se to projeví na výstupu?
+## Zadání A -- Osmiúhelník
+Podívejte se co všechno vám kategorie bločků pro vykreslování geometrických tvarů nabízí. Najděte způsob jak osmiúhelník na obrazovku.
 
+??? note "Řešení"
+    import { createSaturn, SaturnPins } from "saturn";
+    import { GameLoop } from "game-loop"
+    import * as colors from "colors";
+    import {RegularPolygon} from "shapes";
+
+    const saturn = createSaturn()
+    const game_loop = new GameLoop(saturn.display)
+
+    const osmiuhelnik = new RegularPolygon({x: 32, y: 32, sides: 8, radius: 20, color:colors.pink})
+    game_loop.addShape(osmiuhelnik)
+
+## Zadání B -- Sněhulák
+Použijte tři vyplněné bílé kruhy vhodných velikostí, abyste nakreslili siluetu sněhuláka
+
+??? note "Řešení"
+    ```ts
+    import { createSaturn, SaturnPins } from "saturn";
+    import { GameLoop } from "game-loop"
+    import * as colors from "colors";
+    import { Circle, Rectangle} from "shapes";
+
+    const saturn = createSaturn()
+    const game_loop = new GameLoop(saturn.display)
+
+    const hlava = new Circle({x: 32, y: 50, radius: 10, color: colors.white, fill:true})
+    game_loop.addShape(hlava)
+    const telo = new Circle({x: 32, y: 32, radius: 10, color: colors.white, fill:true})
+    game_loop.addShape(telo)
+    const spodek = new Circle({x:32, y: 15, radius:10, color: colors.white, fill: true})
+    game_loop.addShape(spodek)
+    ```
 
 ## Výstupní úloha V1
 Vhodným složením trojúhelníku a obdélníku nakreslete domeček.
