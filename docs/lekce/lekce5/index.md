@@ -65,7 +65,7 @@ Vyzkoušíme si ještě rotace. Před prováděním rotací je dobré nastavit s
 Celý dosavadní kód by měl vypadat nějak takto:
 === "Bločky"
     ![](./assets/summary.png)
-=== "TypeScript
+=== "TypeScript"
     ```ts
     import { createSaturn, SaturnPins } from "saturn";
     import { GameLoop } from "game-loop"
