@@ -23,7 +23,7 @@ Do nového projektu nepotřebujeme další knihovny
 
 Ještě než začneme s vykreslováním jednoduchých tvarů, je potřeba si připravit kostru projektu:
 
-=== "Bločky"
+#=== "Bločky"
     ![](./assets/stub.png)
 === "TypeScript"
     ```ts
@@ -34,6 +34,8 @@ Ještě než začneme s vykreslováním jednoduchých tvarů, je potřeba si př
 
     const saturn = createSaturn()
     const game_loop = new GameLoop(saturn.display)
+    
+    // Sem pište svůj kód
     ```
 
 Nejdříve si vykreslíme jednoduchý prázdný čtverec a vyplněný kruh:
