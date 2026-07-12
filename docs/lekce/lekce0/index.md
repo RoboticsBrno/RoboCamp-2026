@@ -38,7 +38,7 @@ Aby nám všechno správně fungovalo, musíme Jacula nejprve nainstalovat, a k 
 
     ![Flash firmware](./assets/flashFirmware.png)
 
-6. Počkejte, než se firmware naflashuje. Jakmile se objeví dialog, stačí ho odkliknout.
+6. Počkejte na dokončení nahrávání firmwaru. Následně odpojte a znovu připojte USB kabel a potvrďte dialogové okno.
 
     ![Flash firmware done](./assets/flashFirmwareDone.png)
 
