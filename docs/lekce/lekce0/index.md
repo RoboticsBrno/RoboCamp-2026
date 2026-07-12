@@ -9,7 +9,6 @@ Tento program nám umožní jednoduše psát instrukce (programy), které nahraj
 Tyto programy budou specifikovat, jak se Robodeck má chovat a umožní nám s ním komunikovat.
 Aby nám všechno správně fungovalo, musíme Jacula nejprve nainstalovat, a k němu i několik dalších programů.
 
-<!-- TODO je toto potreba? - ano @C2Coder -->
 !!! note "Na Linuxu je třeba přidat oprávnění udev, [více zde](https://docs.espressif.com/projects/esp-idf/en/v5.2.2/esp32s2/api-guides/dfu.html#udev-rule-linux-only)."
 
 ### Firmware
