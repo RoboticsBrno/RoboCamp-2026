@@ -63,23 +63,26 @@ Vyzkoušíme si ještě rotace. Před prováděním rotací je dobré nastavit s
     obdelnik.rotate(45)
     ```
 Celý dosavadní kód by měl vypadat nějak takto:
-```ts
-import { createSaturn, SaturnPins } from "saturn";
-import { GameLoop } from "game-loop"
-import * as colors from "colors";
-import { Circle, Rectangle} from "shapes";
+=== "Bločky"
+    ![](./assets/summary.png)
+=== "TypeScript
+    ```ts
+    import { createSaturn, SaturnPins } from "saturn";
+    import { GameLoop } from "game-loop"
+    import * as colors from "colors";
+    import { Circle, Rectangle} from "shapes";
 
-const saturn = createSaturn()
-const game_loop = new GameLoop(saturn.display)
+    const saturn = createSaturn()
+    const game_loop = new GameLoop(saturn.display)
 
-const obdelnik = new Rectangle({x: 10, y: 10, width: 10, height:20, color: colors.yellow})
-game_loop.addShape(obdelnik)
-const kruh = new Circle({x: 32, y: 32, radius: 5, color: colors.green, fill: true})
-game_loop.addShape(kruh)
+    const obdelnik = new Rectangle({x: 10, y: 10, width: 10, height:20, color: colors.yellow})
+    game_loop.addShape(obdelnik)
+    const kruh = new Circle({x: 32, y: 32, radius: 5, color: colors.green, fill: true})
+    game_loop.addShape(kruh)
 
-obdelnik.setPivot(0, 0)
-obdelnik.rotate(45)
-```
+    obdelnik.setPivot(0, 0)
+    obdelnik.rotate(45)
+    ```
 !!! note "Všiměte si, že nastavení pivotu na souřadnice 0, 0 vede k rotaci okolo rohu čtverce, ne okolo pixelu se souřadnicemi 0, 0. Jak bychom to museli udělat, kdybychom chtěli více tvarů otáčet kolem jednoho středu?"
 
 Abyste nemuseli vlastnoručně psát kód pro každý tvar. Připravili jsme vám Návrhář.
