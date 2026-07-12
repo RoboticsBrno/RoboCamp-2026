@@ -1,5 +1,7 @@
 # Gyro
 
+!!! danger "Našli jsme chyby, nepoužívat!!!"
+
 Gyroskop měří úhel natočení v 3 osách. Umožňuje detekci otáčení, naklonění a pohybu robota.
 
 ## Vytvoření projektu

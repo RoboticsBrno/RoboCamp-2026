@@ -1,5 +1,7 @@
 # RFID
 
+!!! danger "Našli jsme chyby, nepoužívat!!!"
+
 RFID čtečka umožňuje číst a zapisovat data z/na RFID tagy. Umožňuje například identifikaci objektů, přístupové systémy nebo počítání kol.
 
 ## Vytvoření projektu

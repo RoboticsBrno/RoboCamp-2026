@@ -1,5 +1,7 @@
 # IR
 
+!!! danger "Našli jsme chyby, nepoužívat!!!"
+
 IR senzor detekuje infračervené světlo. Umožňuje například detekci překážek, čáry nebo komunikaci s jinými zařízeními.
 
 ## Vytvoření projektu
