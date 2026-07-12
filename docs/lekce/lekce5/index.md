@@ -93,18 +93,21 @@ Abyste nemuseli vlastnoručně psát kód pro každý tvar. Připravili jsme vá
 Podívejte se co všechno vám kategorie bločků pro vykreslování geometrických tvarů nabízí. Najděte způsob jak osmiúhelník na obrazovku.
 
 ??? note "Řešení"
-    ```ts
-    import { createSaturn, SaturnPins } from "saturn";
-    import { GameLoop } from "game-loop"
-    import * as colors from "colors";
-    import {RegularPolygon} from "shapes";
+    === "Bločky"
+        ![](./assets/octogon.png)
+    === "TypeScript"
+        ```ts
+        import { createSaturn, SaturnPins } from "saturn";
+        import { GameLoop } from "game-loop"
+        import * as colors from "colors";
+        import {RegularPolygon} from "shapes";
 
-    const saturn = createSaturn()
-    const game_loop = new GameLoop(saturn.display)
+        const saturn = createSaturn()
+        const game_loop = new GameLoop(saturn.display)
 
-    const osmiuhelnik = new RegularPolygon({x: 32, y: 32, sides: 8, radius: 20, color:colors.pink})
-    game_loop.addShape(osmiuhelnik)
-    ```
+        const osmiuhelnik = new RegularPolygon({x: 32, y: 32, sides: 8, radius: 20, color:colors.pink})
+        game_loop.addShape(osmiuhelnik)
+        ```
 
 ## Zadání B -- Sněhulák
 Použijte tři vyplněné bílé kruhy vhodných velikostí, abyste nakreslili siluetu sněhuláka
