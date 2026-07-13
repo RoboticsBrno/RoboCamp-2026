@@ -22,16 +22,18 @@ Proměnná slouží k ukládání dat, se kterými program pracuje. Může obsah
 
 ```ts
 let score = 0;
-let name = "Pepa";
+let name = "Jogurt";
 let ledOn = true;
 ```
 
 Hodnotu proměnné lze měnit. Například:
 
 ```ts
+score = 5;
 score = score + 1;
 ledOn = false;
 ```
+
 
 !!! example "Příklady použití"
 
@@ -84,6 +86,11 @@ for (let i = 0; i < 64; i++) {
 }
 ```
 
+!!! example "Kde se **for** používají?"
+    - kreslení obrázku na display
+    - blikání LED několikrát za sebou
+    - jízda robotka ve čtverci
+
 **while** cyklus se používá, když nevíme, kolikrát chceme část programu opakovat. Opakuje se, dokud je splněna podmínka.
 
 ```ts
@@ -94,47 +101,47 @@ while(!button.isPressed()) {
 console.log("Button pressed");
 ```
 
-!!! example "Kde se cykly používají?"
+!!! example "Kde se **while** používají?"
+    - pravidelné čtení senzorů
+    - hlavní smyčka programu robota
 
-    - pravidelné čtení senzorů,
-    - blikání LED,
-    - hlavní smyčka programu robota.
+Poznávací cvičení - jaký cyklus použijeme?
+    - Ohříváme vodu, dokud nebude mít 60°C
+    - Procházíme seznam, u kterého víme počet záznamů
+    - Chceme, aby ledka blikala na pozadí
 
 ---
+
 
 ## Funkce
 
 Funkce je pojmenovaný blok kódu, který lze použít opakovaně. Díky tomu nemusíme stejný kód kopírovat na více míst. 
 
 ```ts
-function blink() {
-    led.set(0, colors.red);
-    led.show();
-    await sleep(200);
-    led.set(0, colors.off);
-    led.show();
+function drawLine(){
+    for(let i = 0; i < 64; i++) {
+        display.setPixel(i, 0, colors.red);
+    }
 }
+
 ```
 
 Funkci spustíme jejím zavoláním.
 
 ```ts
-blink();
-blink();
+drawLine();
 ```
 
 Funkce mohou přijímat také parametry. Parametry jsou vstupní hodnoty, které funkce potřebuje k vykonání své práce.
 
 ```ts
-function blink(delay: number) {
-    led.set(0, colors.red);
-    led.show();
-    await sleep(delay);
-    led.set(0, colors.off);
-    led.show();
+function drawLine(color: Color, length: number){
+    for(let i = 0; i < length; i++) {
+        display.setPixel(i, 0, color);
+    }
 }
 
-blink(1000);
+drawLine(colors.red, 64);
 ```
 
 !!! note
