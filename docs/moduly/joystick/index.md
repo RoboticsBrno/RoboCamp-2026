@@ -19,7 +19,6 @@ Joystick je zařízení, které umožňuje ovládat něco pohybem v ploše. Jedn
 
 Do nového projektu nainstalujeme potřebné knihovny:
 
-- `utils`
 - `button`
 
 ## Použití
@@ -28,7 +27,6 @@ Joystick je připojen k PMODu na Saturnu. Osa X je na pinu 1, osa Y na pinu 2 a 
 
 ```ts
 import * as adc from "adc";
-import * as utils from "utils";
 import { SaturnPins } from "saturn";
 
 adc.configure(SaturnPins.Pmod1.Pin1);
@@ -37,8 +35,8 @@ adc.configure(SaturnPins.Pmod1.Pin2);
 setInterval(() => {
     const x = adc.read(SaturnPins.Pmod1.Pin1);
     const y = adc.read(SaturnPins.Pmod1.Pin2);
-    const sx = utils.map(x, 0, 1023, 0, 63);
-    const sy = utils.map(y, 0, 1023, 0, 63);
+    const sx = Math.map(x, 0, 1023, 0, 63);
+    const sy = Math.map(y, 0, 1023, 0, 63);
     console.log(`X: ${sx}, Y: ${sy}`);
 }, 50);
 ```
