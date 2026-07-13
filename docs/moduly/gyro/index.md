@@ -1,5 +1,24 @@
 # Akcelerometr a gyroskop
 
+## Vytvoření projektu
+
+=== "Odkaz"
+    Stačí kliknout na odkaz, otevře se nám VSCode a nabídne se nám možnost vytvořit projekt z připraveného balíčku.
+
+    [Vytvořit projekt]( vscode://cubicap.jaculus/import?uri=https://2026.robotickytabor.cz/moduly/gyro/gyro-example.tar.gz){.md-button .md-button--primary}
+=== "Command line"
+    Tento příkaz stačí zadat do terminálu v adresáři, kde chceme mít projekt uložený. Změníme `<PROJECT_NAME>` na název projektu, který chceme vytvořit.
+    
+    ```bash
+    jac project-create --package https://2026.robotickytabor.cz/moduly/gyro/gyro-example.tar.gz <PROJECT_NAME>
+    ```
+
+## Instalace knihoven
+
+Do nového projektu nainstalujeme potřebné knihovny:
+
+- `mpu6050`
+
 Jeden z modulů, které si můžeme připojit k RoboDecku je MPU6050 -- Integrovaný gyroskop a akcelerometr v jednom pouzdru. 
 
 ## Akcelerometr
@@ -10,11 +29,6 @@ Akcelerometr měří zrychlení (změnu v rychlosti v čase). Poku si ho dáme d
 
 Gyroskop nám řekne, jak rychle, a kolem které osy se otáčí. Jelikož není ovlivněný gravitací, tak je schopný detekovat i otočení kolem svislé osy. Gyroskopy se často používají k odhadování orientace podobně jako akcelerometry. Pokud známe výchozí orientaci a rychlost a směr otáčení, můžeme postupným sčítáním spočítat současnou pozici. Je ale potřeba si pohlídat tzv. drift. Gyroskop zaznamenává pomalé otáčení i když se ve skutečnosti nehýbe a postupně se tak vzdaluje od skutečné orientace. Toto můžeme řešit použitím nějakého referenčního senzoru, například kompasu, nebo akcelerometru.
 
-## Instalace knihoven
-
-Do projektu je potřeba nainstalovat:
-
-`mpu6050`
 
 ## Jak to použít
 
