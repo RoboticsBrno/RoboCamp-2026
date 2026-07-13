@@ -1,0 +1,49 @@
+# 5ti-směrný spínač (5-way switch)
+### Example project
+=== "Odkaz"
+    Stačí kliknout na odkaz, otevře se nám VSCode a nabídne se nám možnost vytvořit projekt z připraveného balíčku.
+
+    [Create project]( vscode://cubicap.jaculus/import?uri=https://2026.robotickytabor.cz/moduly/5way/5way-example.tar.gz){.md-button .md-button--primary}
+=== "VSCode extension"
+    Otevřeme VSCode, v levém exploreru kliknema na extension `Jaculus` a tlačítko `Create Project`. Vybereme adresář, kde chceme mít projekt uložený a zadáme název projektu. Poté v menu vybereme možnost `Custom package URL` a zadáme toto URL: 
+    
+    `https://2026.robotickytabor.cz/moduly/5way/5way-example.tar.gz`.
+=== "Command line"
+    Tento příkaz stačí zadat do terminálu v adresáři, kde chceme mít projekt uložený. Změníme `<PROJECT_NAME>` na název projektu, který chceme vytvořit.
+    
+    ```bash
+    jac project-create --package https://2026.robotickytabor.cz/moduly/5way/5way-example.tar.gz <PROJECT_NAME>
+    ```
+=== "Zip"
+    Stáhneme si tento zip soubor, rozbalíme jej a otevřeme ve VSCode.
+    
+    [Zip soubor](https://2026.robotickytabor.cz/moduly/5way/5way-example.zip){.md-button .md-button--primary}
+
+<!-- ### Montáž
+Pokud nemáte sestavený DPad, můžete si jej sestavit podle [návodu](https://pmod.robotikabrno.cz/DPad/manual/). -->
+
+### Zapojení
+
+!!! warning "Upozornění"
+    Tento modul se nesmí zapojit přímo, jeho konektor není kompatibilní s PMOD!
+
+Každé tlačítko je vyvedeno na jeho konektoru, pro zapojení použijte prodlužovací drátky. Zapojte `GND` do GND a pak každý z pinů (`F`,`B`,`L`,`R`,`M`) zapojte do vstupů PMODů. Tento modul má více výstupů než jeden PMOD má dostupný, proto je potřeba jeden z pinů zapojit do ještě dalšího PMODu.
+S tlačítky pracujeme stejně jako s tlačítkem na desce - knihovna `button`.
+
+### Knihovna
+5ti-směrný spínač je modul, který se skládá z pěti tlačítek (nahoru, dolů, vlevo, vpravo a uprostřed). Typicky se používá pro ovládání, pohyb nebo navigaci v menu. 
+
+5ti-směrný spínač je připojen k PMODu pomocí prodlužovacích drátků. Můžete si piny buď vyčíst z popisků na Saturnu, nebo z objektu `SaturnPins` z knihovny `saturn`, například `SaturnPins.Pmod1.Pin1`.
+
+Je potřeba nainstalovat knihovnu `button`.
+
+```ts
+import { Button } from "button";
+import { SaturnPins } from "saturn"
+
+const btn = new Button(SaturnPins.Pmod1.Pin1);
+
+btn.on("click", () => {
+    console.log("Button clicked!");
+});
+```
