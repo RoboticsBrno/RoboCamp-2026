@@ -1,69 +1,83 @@
 # Moduly
 
-### DPad
+## Správné zapojení modulů
+
+
+### ✅ Správné zapojení 
+
+Desky by na sebe měli navazovat
+![Correct](../assets/correct.jpg)
+
+
+### ❌ Špatné zapojení 
+
+Protože desky nejsou ve stejné rovině, modul je zapojený špatně
+![Wrong](../assets/wrong.jpg)
+
+## DPad
 
 [Stavba](https://pmod.robotikabrno.cz/DPad/){ .md-button }
 [Použití](dpad/index.md){ .md-button }
 
 ---
 
-### Gyro
+## Gyro
 
 [Stavba](https://pmod.robotikabrno.cz/gyro/){ .md-button }
 [Použití](gyro/index.md){ .md-button }
 
 ---
 
-### IR
+## IR
 
 [Stavba](https://pmod.robotikabrno.cz/IR/){ .md-button }
 [Použití](ir/index.md){ .md-button }
 
 ---
 
-### Joystick
+## Joystick
 
 [Stavba](https://pmod.robotikabrno.cz/joystick/){ .md-button }
 [Použití](joystick/index.md){ .md-button }
 
 ---
 
-### Fotorezistor
+## Fotorezistor
 
 [Stavba](https://pmod.robotikabrno.cz/photoresistor/){ .md-button }
 [Použití](fotorezistor/index.md){ .md-button }
 
 ---
 
-### Piezo
+## Piezo
 
 [Stavba](https://pmod.robotikabrno.cz/PIEZO/){ .md-button }
 [Použití](piezo/index.md){ .md-button }
 
 ---
 
-### Enkodér
+## Enkodér
 
 [Stavba](https://pmod.robotikabrno.cz/r-encoder/){ .md-button }
 [Použití](enkoder/index.md){ .md-button }
 
 ---
 
-### RFID
+## RFID
 
 [Stavba](https://pmod.robotikabrno.cz/RFID/){ .md-button }
 [Použití](rfid/index.md){ .md-button }
 
 ---
 
-### RTC
+## RTC
 
 [Stavba](https://pmod.robotikabrno.cz/RTC/){ .md-button }
 [Použití](rtc/index.md){ .md-button }
 
 ---
 
-### Teplota
+## Teplota
 
 [Stavba](https://pmod.robotikabrno.cz/thermometer/){ .md-button }
 [Použití](teplota/index.md){ .md-button }
