@@ -6,8 +6,8 @@ Builder scén je grafický editor pro navrhování obrázků na 64×64 LED displ
 import { createSaturn, SaturnPins } from "saturn";
 import { GameLoop } from "game-loop";
 
-const sat = createSaturn()
-const gl = new GameLoop(sat.display)
+const saturn = createSaturn()
+const game_loop = new GameLoop(sat.display)
 
 function generateScene() {
 	
