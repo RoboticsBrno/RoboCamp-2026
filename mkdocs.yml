@@ -150,6 +150,7 @@ nav:
       #- lekce/lekce8/index.md
       #- lekce/lekce9/index.md
       - lekce/scene-builder/index.md
+      - lekce/programKoncepty/index.md
   - Rozšířující moduly:
       - moduly/index.md
       - moduly/dpad/index.md
