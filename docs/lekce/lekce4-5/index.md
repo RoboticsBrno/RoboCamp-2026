@@ -229,6 +229,8 @@
         adc.configure(SaturnPins.Pmod1.Pin1);
         adc.configure(SaturnPins.Pmod1.Pin2);
 
+        const saturn = createSaturn();
+
         const btn = new Button(SaturnPins.Pmod1.Pin4);
 
         btn.on("press", () => {
