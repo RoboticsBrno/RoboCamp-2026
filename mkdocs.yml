@@ -164,6 +164,8 @@ nav:
       - moduly/rfid/index.md
       - moduly/rtc/index.md
       - moduly/teplota/index.md
+      - moduly/5way/index.md
+      - moduly/slider/index.md
   - Programovací výzvy:
       - challenge/index.md
       - challenge/snake.md

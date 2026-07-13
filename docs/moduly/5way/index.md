@@ -3,24 +3,13 @@
 === "Odkaz"
     Stačí kliknout na odkaz, otevře se nám VSCode a nabídne se nám možnost vytvořit projekt z připraveného balíčku.
 
-    [Create project]( vscode://cubicap.jaculus/import?uri=https://2026.robotickytabor.cz/moduly/5way/5way-example.tar.gz){.md-button .md-button--primary}
-=== "VSCode extension"
-    Otevřeme VSCode, v levém exploreru kliknema na extension `Jaculus` a tlačítko `Create Project`. Vybereme adresář, kde chceme mít projekt uložený a zadáme název projektu. Poté v menu vybereme možnost `Custom package URL` a zadáme toto URL: 
-    
-    `https://2026.robotickytabor.cz/moduly/5way/5way-example.tar.gz`.
+    [Vytvořit projekt]( vscode://cubicap.jaculus/import?uri=https://2026.robotickytabor.cz/moduly/5way/5way-example.tar.gz){.md-button .md-button--primary}
 === "Command line"
     Tento příkaz stačí zadat do terminálu v adresáři, kde chceme mít projekt uložený. Změníme `<PROJECT_NAME>` na název projektu, který chceme vytvořit.
     
     ```bash
     jac project-create --package https://2026.robotickytabor.cz/moduly/5way/5way-example.tar.gz <PROJECT_NAME>
     ```
-=== "Zip"
-    Stáhneme si tento zip soubor, rozbalíme jej a otevřeme ve VSCode.
-    
-    [Zip soubor](https://2026.robotickytabor.cz/moduly/5way/5way-example.zip){.md-button .md-button--primary}
-
-<!-- ### Montáž
-Pokud nemáte sestavený DPad, můžete si jej sestavit podle [návodu](https://pmod.robotikabrno.cz/DPad/manual/). -->
 
 ### Zapojení
 
@@ -33,7 +22,7 @@ S tlačítky pracujeme stejně jako s tlačítkem na desce - knihovna `button`.
 ### Knihovna
 5ti-směrný spínač je modul, který se skládá z pěti tlačítek (nahoru, dolů, vlevo, vpravo a uprostřed). Typicky se používá pro ovládání, pohyb nebo navigaci v menu. 
 
-5ti-směrný spínač je připojen k PMODu pomocí prodlužovacích drátků. Můžete si piny buď vyčíst z popisků na Saturnu, nebo z objektu `SaturnPins` z knihovny `saturn`, například `SaturnPins.Pmod1.Pin1`.
+5ti-směrný spínač je připojen k PMODu pomocí prodlužovacích drátků. Můžete si piny buď vyčíst z popisků na Saturnu, nebo z objektu `SaturnPins` z knihovny `saturn`, například `SaturnPins.Pmod3.Pin1` (ideální je PMOD3, protože potžebujeme 5 pinů).
 
 Je potřeba nainstalovat knihovnu `button`.
 
@@ -41,9 +30,25 @@ Je potřeba nainstalovat knihovnu `button`.
 import { Button } from "button";
 import { SaturnPins } from "saturn"
 
-const btn = new Button(SaturnPins.Pmod1.Pin1);
+const btnFront = new Button(SaturnPins.Pmod3.Pin1);
+const btnBack = new Button(SaturnPins.Pmod3.Pin2);
+const btnLeft = new Button(SaturnPins.Pmod3.Pin3);
+const btnRight = new Button(SaturnPins.Pmod3.Pin4);
+const btnMiddle = new Button(SaturnPins.Pmod3.Pin5);
 
-btn.on("click", () => {
-    console.log("Button clicked!");
+btnFront.on("click", () => {
+    console.log("Front!");
+});
+btnBack.on("click", () => {
+    console.log("Back!");
+});
+btnLeft.on("click", () => {
+    console.log("Left!");
+});
+btnRight.on("click", () => {
+    console.log("Right!");
+});
+btnMiddle.on("click", () => {
+    console.log("Click!");
 });
 ```
