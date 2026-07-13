@@ -1,34 +1,45 @@
 # Lekce 4 - Proměnné a podmínky
 
 === "Bločky"
-    <!-- TODO blocky  -->
-    V bločkovém programování si držíme stav pomocí **proměnných**. Proměnné jsou pojmenované hodnoty,
+    ## Proměnné
+    V programování si držíme data a stav pomocí **proměnných**. Proměnné jsou pojmenované hodnoty,
     které můžeme měnit a opakovaně používat v různých částech kódu.
 
-    Proměnnou vytvoříme pomocí rozkliknutí kategorie "Proměnné" a zmáčknutím tlačítka pro vytvoření proměnné, kterou si pojmenujeme.
+    ## Vytvoření projektu
+    
+    Pokud víte, jak na to, přeskočte k [Zadání A](#zadanie-a).
+    
+    1. Otevřeme editor [Jacly](https://jacly.jaculus.org/project) a vytvoříme nový projekt.
+    2. Typ zvolíme `Jacly bloky projekt` a šablonu `template-jacly-saturn`.
+    3. Před nahráním programu se musíme připojit k Saturnu (viz lekce 1).
+    
+    !!! warning "Pokročilá nastavení neměníme."
+    
+    Proměnnou vytvoříme pomocí rozkliknutí kategorie "Proměnné" a zmáčknutím tlačítka pro vytvoření proměnné, kterou si smysluplně pojmenujeme.
 
-    Hodnoty přiřazujeme do proměnných pomocí bloku `nastavit <název proměnné> na`.
+    Hodnoty přiřazujeme do proměnných pomocí bloku `nastavit <název proměnné> na`. Pokud chceme zadat do proměnné hodnotu, můžeme použít buď číselný blok z kategorie `Matematika`, nebo blok z kategorie "Logika" pro pravdivostní hodnoty `true` a `false`.
 
     ![První proměnné s bločky](./assets/blocksFirst.png)
 
-    S proměnnými stejně jako s čísly můžeme provádět základní operace.
+    S číselnými proměnnými můžeme provádět základní operace stejně jako s čísly.
 
     ![Počítání s proměnnými](./assets/blocksArithmetics.png)
 
+    ## Podmínky
     Abychom na základě hodnot proměnných mohli měnit chování programu, potřebujeme **podmínky**.
 
-    V kategorii "Logika" máme bloček "pokud" nám umožňuje rozhodnout, jestli se určitý kus kódu vykoná, nebo ne.
-    Používá se k tomu pravdivostní hodnoty `true` (pravda) a `false` (nepravda).
+    Pro práci s podmínkami používáme bločky z kategorie "Logika". Začneme bločkem "pokud". Ten nám umožňuje rozhodnout, jestli se určitý kus kódu vykoná, nebo ne.
+    Používá k tomu pravdivostní hodnoty `true` (pravda) a `false` (nepravda).
 
     Například, pokud máme proměnnou `podmínka` typu boolean, pak následující kód:
 
     ![Podmínky s bločky](./assets/blocksConditions.png)
 
     znamená:
-    Pokud je `podmínka` pravda (`true`), proměnná `result` bude mít hodnotu 20.
-    Pokud je `podmínka` nepravda (`false`), `result` zůstane 10.
+    Pokud je `podmínka` pravda (`true`), program vytiskne do konzole `Ahoj`.
+    Pokud je `podmínka` nepravda (`false`), program nevytiskne nic.
 
-    Podmínky často používáme i pro porovnávání čísel. Například:
+    Podmínky často používáme pro porovnávání čísel. Například:
 
     ![Porovnávání s bločky](./assets/blocksComparison.png)
 
@@ -42,17 +53,15 @@
     - `>` zjistí, jestli je první číslo větší než druhé
     - `≤` a `≥` zjistí, jestli je menší/rovno nebo větší/rovno
 
+    ### Pokud ... jinak
     Pokud chceme, aby se podle podmínky vykonal jeden nebo druhý kus kódu, použijeme `pokud ... jinak`.
     To uděláme tak, že klikneme na nastavovací tlačítko bloku `pokud` a v nově otevřeném okně si za blok `pokud` přidáme blok `jinak`.
     
     ![pokud jinak s bločky](./assets/blocksIfElse.png)
 
-    Takto můžeme jednoduše řídit, co má program dělat podle různých situací.
+    Takto můžeme jednoduše, co má program dělat podle různých situací.
 
-    Pokud podmínka platí, vykoná se kód `a`, pokud neplatí, vykoná se kód `b`.
-
-
-
+    ### Barvy
     Za použití proměnných a podmínek rozsvítíme jeden pixel na displayi různými barvami.
 
     Barevné světlo vytváříme ze tří základních barev: červená (RED), zelená (GREEN), a modrá (BLUE).
@@ -65,7 +74,7 @@
     Ve výchozím stavu je LED vypnutá (hodnoty `(0, 0, 0)`), a nejsilnější bílé světlo získáme použitím všech
     barev na maximum (hodnoty `(255, 255, 255)`).
 
-    Druhou variantou je použití předdefinovaných barev, které jsou v souboru `colors.ts`. Nesmíme zapomenout soubor importovat `import * as colors from "colors";`. Příklad použití obou variant:
+    Druhou variantou je použití předdefinovaných barev z kategorie `Barvy`. Příklad použití obou variant:
 
     ![demonstrace blikaní s LEDkou na display](./assets/blocksBlink.png)
 
@@ -78,21 +87,20 @@
         ![Řešení zadání A](./assets/blocksA.png)
 
     ## Zadání B
-
-    Pomocí funkce `colors.rainbow` budeme procházet duhu. Jde o funkci (o těch si povíme trochu více později), která dostane číslo od 0 do 360,
-    a na základě toho vrátí barvu na barevném spektru. V daném intervalu (např. 100 ms) budeme postupně zvyšovat číslo a nastavovat barvu LEDky na `colors.rainbow(cislo)`. Pokud naše číslo přesáhne hodnotu `360`, musíme ho
+    Pomocí bločku `Barva podle HSV` budeme procházet duhu. Jde o bloček, která dostane číslo od 0 do 360 a dá nám barvu na barevném spektru. Číslo budeme postupně zvyšovat a nastavovat barvu LEDky na `Barva podle HSV`. Pokud naše číslo přesáhne hodnotu `360`, musíme ho
     opět nastavit na `0`.
 
     ??? note "Řešení"
         ![Řešení zadání B](./assets/blocksB.png)
 
     ## Zadání C
-    <!-- TODO instalace knihovny button -->
 
     Tentokrát budeme reagovat na stisk tlačítka.
 
     Po stisku tlačítka zhasneme aktuální LEDku, a rozsvítíme tu další.
     Pokud při stisku tlačítka svítí poslední LED, zhasneme ji, a rozsvítíme opět první LED.
+
+    Budete si muset nainstalovat balíček `button`.
 
     ??? note "Řešení"
         ![Řešení zadání C](./assets/blocksC.png)
@@ -109,15 +117,30 @@
 
     !!! tip "Pro dobrovolníky"
 
-        - Jezdec může při běhu měnit barvy (např. pomocí funkce `rainbow`)
+        - Jezdec může při běhu měnit barvy.
 
         - Jezdec může zanechávat stopu: barva nezmizí hned, ale až s odstupem. Barva může "mizet" postupně: intenzita stopy se časem snižuje.
 
 === "TypeScript"
-    <!-- TODO typescript  -->
-    <!-- TODO new project creation -->
-    <!-- TODO instalace knihovny rphub75 -->
-    <!-- TODO instalace knihovny button -->
+    ## Vytvoření projektu
+
+    === "Odkaz"
+        Stačí kliknout na odkaz, otevře se nám VSCode a nabídne se nám možnost vytvořit projekt z připraveného balíčku.
+
+        [Vytvořit projekt]( vscode://cubicap.jaculus/import?uri=https://2026.robotickytabor.cz/lekce/baseExample.tar.gz){.md-button .md-button--primary}
+    === "Command line"
+        Tento příkaz stačí zadat do terminálu v adresáři, kde chceme mít projekt uložený. Změníme `<PROJECT_NAME>` na název projektu, který chceme vytvořit.
+        
+        ```bash
+        jac project-create --package https://2026.robotickytabor.cz/lekce/baseExample.tar.gz <PROJECT_NAME>
+        ```
+
+    ## Instalace knihoven
+
+    Do nového projektu nainstalujeme potřebné knihovny:
+
+    - `button`
+
     V imperativním programování si držíme stav pomocí **proměnných**. Proměnné jsou pojmenované hodnoty,
     které můžeme měnit a opakovaně používat v různých částech kódu.
 
@@ -146,33 +169,33 @@
     let c: number = a + b; // c je 15
     let d: number = b - a; // d je -5
     ```
-
     Abychom na základě hodnot proměnných mohli měnit chování programu, potřebujeme **podmínky**.
 
+    ### Podmínky
     Podmínka `if` nám umožňuje rozhodnout, jestli se určitý kus kódu vykoná, nebo ne.
     Používá se k tomu pravdivostní hodnoty `true` (pravda) a `false` (nepravda).
 
     Například, pokud máme proměnnou `podmínka` typu boolean, pak následující kód:
 
     ```ts
-    let result: number = 10;
+    let result: boolean = true;
     if (podmínka) {
-      result = 20;
+      console.log("Ahoj");
     }
     ```
 
     znamená:
-    Pokud je `podmínka` pravda (`true`), proměnná `result` bude mít hodnotu 20.
-    Pokud je `podmínka` nepravda (`false`), `result` zůstane 10.
+    Pokud je `podmínka` pravda (`true`), program vytiskne do konzole `Ahoj`.
+    Pokud je `podmínka` nepravda (`false`), program nevytiskne nic.
 
     Podmínky často používáme i pro porovnávání čísel. Například:
 
     ```ts
-    let first: number;
-    let second: number;
+    let first: number = 10;
+    let second: number = 20;
     // ...
-    if (first == second) {
-      // tento kód se vykoná, pokud jsou obě čísla stejná
+    if (first < second) {
+      // tento kód se vykoná, pokud je první číslo menší než druhé
     }
     ```
 
@@ -193,12 +216,9 @@
     }
     ```
 
-    Takto můžeme jednoduše řídit, co má program dělat podle různých situací.
+    Takto můžeme řídit, co má program dělat podle různých situací.
 
-    Pokud podmínka platí, vykoná se kód `a`, pokud neplatí, vykoná se kód `b`.
-
-
-
+    ### Barvy
     Za použití proměnných a podmínek rozsvítíme jeden pixel na displayi různými barvami.
 
     Barevné světlo vytváříme ze tří základních barev: červená (RED), zelená (GREEN), a modrá (BLUE).
@@ -211,7 +231,7 @@
     Ve výchozím stavu je LED vypnutá (hodnoty `(0, 0, 0)`), a nejsilnější bílé světlo získáme použitím všech
     barev na maximum (hodnoty `(255, 255, 255)`).
 
-    Druhou variantou je použití předdefinovaných barev, které jsou v souboru `colors.ts`. Nesmíme zapomenout soubor importovat `import * as colors from "colors";`. Příklad použití obou variant:
+    Druhou variantou je použití předdefinovaných barev z knihovny `colors`. 
 
     ```ts
     display.setPixel(0, 0, colors.off); // Vypne LEDku pomocí předdefinované barvy
@@ -223,28 +243,18 @@
     display.show();
     ```
 
-    <!-- TODO update new project creation -->
-    Vytvoříme si nový projekt z odkazu:
-
-    === "Odkaz"
-        ```
-        https://robutek.robotikabrno.cz/v2/robot/lekce4/project4.tar.gz
-        ```
-    === "Zip"
-        [Stáhnout ZIP](./project4.zip){ .md-button .md-button--primary }
-
-
     ## Zadání A
 
     Pomocí jedné proměnné se stavem a podmínky každou sekundu buď rozsvítíme, nebo zhasneme LEDku na displeji.
 
-    ??? note "Řešení"
+    ??? tip "Řešení"
 
         ```ts
         import * as colors from "colors";
-        import { Display } from "rphub75";
+        import { createSaturn } from "saturn";
 
-        let display: Display = new Display(); // Vytvoření speciální proměnné display
+        const saturn = createSaturn();
+        const display = saturn.display; // Vytvoření speciální proměnné display
 
         let on: boolean = false; // LED je vypnutá
 
@@ -268,13 +278,14 @@
     a na základě toho vrátí barvu na barevném spektru. V daném intervalu (např. 100 ms) budeme postupně zvyšovat číslo a nastavovat barvu LEDky na `colors.rainbow(cislo)`. Pokud naše číslo přesáhne hodnotu `360`, musíme ho
     opět nastavit na `0`.
 
-    ??? note "Řešení"
+    ??? tip "Řešení"
 
         ```ts
         import * as colors from "colors";
-        import { Display } from "rphub75";
+        import { createSaturn } from "saturn";
 
-        let display: Display = new Display(); // Vytvoření speciální proměnné display
+        const saturn = createSaturn();
+        const display = saturn.display; // Vytvoření speciální proměnné display
 
         let shade = 0; // Držíme si stav s aktuálním odstínem
 
@@ -295,19 +306,20 @@
     Po stisku tlačítka zhasneme aktuální LEDku, a rozsvítíme tu další.
     Pokud při stisku tlačítka svítí poslední LED, zhasneme ji, a rozsvítíme opět první LED.
 
-    ??? note "Řešení"
+    ??? tip "Řešení"
 
         ```ts
         import * as colors from "colors";
-        import { Display } from "rphub75";
+        import { SaturnPins, createSaturn } from "saturn";
         import { Button } from "button";
 
-        let display: Display = new Display(); // Vytvoření speciální proměnné display
+        const saturn = createSaturn();
+        const display = saturn.display; // Vytvoření speciální proměnné display
 
-        let button: Button = new Button(0); // Vytvoření speciální proměnné button s vstupem 0, což je číslo pinu BOOT tlačítka na Saturnu
+        const button = new Button(SaturnPins.BootBtn); // Vytvoření speciální proměnné button s pinem BOOT tlačítka na Saturnu
 
         let index: number = 0;
-        let color: colors.Rgb = colors.light_blue; // Vybereme si barvu
+        let color: Rgb = colors.light_blue; // Vybereme si barvu
         display.setPixel(0, 0, color); // Nastavíme LED na aktuální odstín
         display.show(); // Zobrazíme změny
 

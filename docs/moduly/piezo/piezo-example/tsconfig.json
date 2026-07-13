@@ -1,11 +1,12 @@
 {
     "compilerOptions": {
         "target": "es2023",
-        "module": "es2022",
+        "module": "nodenext",
         "lib": ["es2023"],
-        "moduleResolution": "node",
+        "moduleResolution": "nodenext",
         "sourceMap": false,
         "outDir": "build",
         "rootDir": "src",
+        "types": ["jaculus"]
     }
 }

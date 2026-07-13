@@ -147,9 +147,11 @@ nav:
       - lekce/lekce5/index.md
       - lekce/lekce6/index.md
       - lekce/lekce7/index.md
-      - lekce/lekce8/index.md
-      - lekce/lekce9/index.md
+      #- lekce/lekce8/index.md
+      #- lekce/lekce9/index.md
       - lekce/scene-builder/index.md
+      - lekce/programKoncepty/index.md
+      - lekce/game-loop/index.md
   - Rozšířující moduly:
       - moduly/index.md
       - moduly/dpad/index.md

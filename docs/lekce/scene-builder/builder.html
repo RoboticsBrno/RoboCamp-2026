@@ -4,16 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>64x64 Scene Editor</title>
+    <title>Editor scény 64x64</title>
     <style>
         :root {
             --bg-color: #1e1e1e;
             --panel-color: #252526;
             --text-color: #cccccc;
             --accent-color: #007acc;
+            --accent-glow: rgba(0, 122, 204, 0.35);
             --border-color: #3e3e42;
             --input-bg: #3c3c3c;
             --highlight: #444;
+            --radius: 4px;
+        }
+
+        * {
+            box-sizing: border-box;
         }
 
         body {
@@ -25,6 +31,24 @@
             height: 100vh;
             overflow: hidden;
             font-size: 13px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--panel-color);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--highlight);
         }
 
         /* --- Layout --- */
@@ -46,6 +70,10 @@
             align-items: center;
             justify-content: center;
             background-color: #121212;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 32px 32px;
             position: relative;
             overflow-y: auto;
             padding: 0 4rem;
@@ -53,11 +81,15 @@
 
         /* --- Components --- */
         h2 {
-            margin: 10px 15px;
-            font-size: 14px;
+            margin: 14px 15px 8px;
+            font-size: 12px;
             color: #fff;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.2px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            opacity: 0.85;
         }
 
         .panel-section {
@@ -67,22 +99,35 @@
 
         button {
             background-color: var(--input-bg);
-            color: white;
+            color: var(--text-color);
             border: 1px solid var(--border-color);
-            padding: 6px 12px;
+            border-radius: var(--radius);
+            padding: 6px 10px;
             cursor: pointer;
             width: 100%;
             margin-bottom: 4px;
             text-align: left;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease;
         }
 
         button:hover {
             background-color: var(--highlight);
+            color: #fff;
+        }
+
+        button:active {
+            transform: translateY(1px);
         }
 
         button.active {
             background-color: var(--accent-color);
             border-color: var(--accent-color);
+            color: #fff;
+            box-shadow: 0 0 0 3px var(--accent-glow);
         }
 
         button:disabled {
@@ -94,11 +139,13 @@
             display: flex;
             gap: 5px;
             align-items: center;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
         }
 
         .row label {
-            width: 70px;
+            width: 80px;
+            color: #999;
+            font-size: 12px;
         }
 
         .row input[type="number"],
@@ -110,10 +157,37 @@
         select {
             background: var(--input-bg);
             border: 1px solid var(--border-color);
+            border-radius: var(--radius);
             color: white;
-            padding: 4px;
+            padding: 5px 6px;
             width: 100%;
-            box-sizing: border-box;
+            font-size: 12px;
+            transition: border-color 0.12s ease, box-shadow 0.12s ease;
+        }
+
+        input:hover,
+        select:hover {
+            border-color: #5a5a60;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px var(--accent-glow);
+        }
+
+        input[type="color"] {
+            padding: 2px;
+            height: 28px;
+            cursor: pointer;
+        }
+
+        input[type="checkbox"] {
+            width: auto;
+            flex-grow: 0;
+            accent-color: var(--accent-color);
+            cursor: pointer;
         }
 
         /* --- Layer Tree --- */
@@ -124,11 +198,13 @@
         }
 
         .layer-item {
-            padding: 4px 10px;
+            padding: 5px 10px;
             cursor: pointer;
             display: flex;
             align-items: center;
             user-select: none;
+            border-left: 2px solid transparent;
+            transition: background-color 0.1s ease;
         }
 
         .layer-item:hover {
@@ -136,7 +212,7 @@
         }
 
         .layer-item.selected {
-            background-color: #37373d;
+            background-color: #2d3f4f;
             border-left: 2px solid var(--accent-color);
         }
 
@@ -162,7 +238,19 @@
             image-rendering: pixelated;
             background-color: #000;
             border: 1px solid #444;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            border-radius: 2px;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.04);
+        }
+
+        #status-bar {
+            margin-top: 12px;
+            color: #888;
+            background: var(--panel-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 4px 10px;
+            font-size: 12px;
+            font-family: 'Consolas', monospace;
         }
 
         /* --- Code Output --- */
@@ -183,22 +271,37 @@
 <body>
 
     <div class="sidebar-left">
-        <h2>Tools</h2>
+        <h2>🛠️ Nástroje</h2>
         <div class="panel-section">
-            <button id="tool-select" onclick="selectTool('select')" class="active">Cursor (Edit/Move)</button>
+            <button id="tool-select" onclick="selectTool('select')" class="active"><span>↖</span> Kurzor (úprava/přesun)</button>
             <div style="height: 10px;"></div>
-            <button id="tool-rectangle" onclick="selectTool('rectangle')">Rectangle</button>
-            <button id="tool-circle" onclick="selectTool('circle')">Circle</button>
-            <button id="tool-line" onclick="selectTool('line')">Line Segment</button>
-            <button id="tool-point" onclick="selectTool('point')">Point</button>
-            <button id="tool-regpoly" onclick="selectTool('regularPolygon')">Regular Polygon</button>
-            <button id="tool-poly" onclick="selectTool('polygon')">Polygon (Free)</button>
+            <button id="tool-rectangle" onclick="selectTool('rectangle')"><span>▭</span> Obdélník</button>
+            <button id="tool-circle" onclick="selectTool('circle')"><span>◯</span> Kruh</button>
+            <button id="tool-line" onclick="selectTool('line')"><span>╱</span> Úsečka</button>
+            <button id="tool-point" onclick="selectTool('point')"><span>·</span> Bod</button>
+            <button id="tool-regpoly" onclick="selectTool('regularPolygon')"><span>⬡</span> Pravidelný mnohoúhelník</button>
+            <button id="tool-poly" onclick="selectTool('polygon')"><span>⬠</span> Mnohoúhelník (volný)</button>
         </div>
 
-        <h2>Scene Hierarchy</h2>
+        <details class="panel-section">
+            <summary style="cursor:pointer; color:#fff; font-weight:bold;">❓ Nápověda k ovládání</summary>
+            <ul style="margin:8px 0 0; padding-left:18px; line-height:1.6; color:#aaa; font-size:12px;">
+                <li>Kreslení tvaru: vyberte nástroj vlevo, klikněte a tažením myši ho nakreslete na plátně.</li>
+                <li>Volný mnohoúhelník: klikáním přidávejte body, dvojklikem tvar dokončíte.</li>
+                <li>Výběr a přesun: nástrojem Kurzor klikněte na objekt a táhněte ho po plátně.</li>
+                <li>Změna velikosti: táhněte za barevné úchyty na rozích, koncích úsečky nebo vrcholech mnohoúhelníku vybraného objektu.</li>
+                <li>Úprava mnohoúhelníku: dvojklik na jeho hranu přidá nový vrchol, klik pravým tlačítkem na vrchol ho smaže.</li>
+                <li>Seskupení: vyberte objekty a stiskněte Shift+G, nebo použijte tlačítko Seskupit.</li>
+                <li>Smazání: vyberte objekt a stiskněte D, nebo použijte tlačítko Smazat.</li>
+                <li>Vlastnosti vybraného objektu upravíte v panelu vpravo.</li>
+                <li>Export: tlačítkem "Vygenerovat kód" vytvoříte JS kód scény ke zkopírování.</li>
+            </ul>
+        </details>
+
+        <h2>🗂️ Hierarchie scény</h2>
         <div class="panel-section" style="display:flex; gap:5px;">
-            <button onclick="groupSelected()" style="flex:1;">Group (Ctrl+G)</button>
-            <button onclick="deleteSelected()" style="flex:1; background:#822;">Delete</button>
+            <button onclick="groupSelected()" style="flex:1;">📁 Seskupit (Shift+G)</button>
+            <button onclick="deleteSelected()" style="flex:1; background:#5c2323; border-color:#7a2e2e;">🗑 Smazat (D)</button>
         </div>
         <div class="layer-list" id="layer-list">
         </div>
@@ -206,30 +309,30 @@
 
     <div class="main-area">
         <canvas id="canvas" width="64" height="64"></canvas>
-        <div style="margin-top: 10px; color: #666;" id="status-bar">X: 0 Y: 0</div>
+        <div id="status-bar">X: 0 Y: 0</div>
     </div>
 
     <div class="sidebar-right">
-        <h2>Global Settings</h2>
+        <h2>⚙️ Globální nastavení</h2>
         <div class="panel-section">
             <div class="row">
-                <label>Canvas Width</label>
+                <label>Šířka plátna</label>
                 <input type="number" id="canvas-width" value="64" onchange="resizeCanvasWidth(this.value)">
             </div>
             <div class="row">
-                <label>Canvas Height</label>
+                <label>Výška plátna</label>
                 <input type="number" id="canvas-height" value="64" onchange="resizeCanvasHeight(this.value)">
             </div>
         </div>
-        <h2>Properties</h2>
+        <h2>📝 Vlastnosti</h2>
         <div class="panel-section" id="properties-panel">
-            <p style="color:#666; font-style:italic; text-align:center;">Select an object to edit</p>
+            <p style="color:#666; font-style:italic; text-align:center;">Vyberte objekt k úpravě</p>
         </div>
 
-        <h2>Export</h2>
+        <h2>📤 Export</h2>
         <div class="panel-section">
-            <button onclick="generateCode()">Generate Code</button>
-            <button onclick="copyToClipboard()">Copy to Clipboard</button>
+            <button onclick="generateCode()">⚡ Vygenerovat kód</button>
+            <button onclick="copyToClipboard()">📋 Zkopírovat do schránky</button>
         </div>
         <textarea id="output-code" readonly></textarea>
     </div>
@@ -259,6 +362,10 @@
             dragStart: null,
             dragOffsets: {},
             isDragging: false,
+            isResizing: false,
+            resizeNodeId: null,
+            resizeInvMat: null,
+            resizeStart: null,
             isDrawing: false,
             drawStartPos: {x: 0, y: 0},
             polyVertices: [],
@@ -307,7 +414,6 @@
                 parent: 'root',
                 rotation: 0,
                 z: 0,
-                hasCollider: false,
                 pivotX: 0,
                 pivotY: 0,
                 ...props
@@ -327,7 +433,6 @@
                 parent: 'root',
                 x: 0, y: 0,
                 z: 0,
-                color: '#ffffff',
                 rotation: 0,
                 children: []
             };
@@ -369,7 +474,7 @@
             let temp = newParent;
             while (temp.parent) {
                 if (temp.parent === childId) {
-                    alert("Cannot move a group inside its own child!");
+                    alert("Nelze přesunout skupinu do jejího vlastního potomka!");
                     return;
                 }
                 if (temp.parent === 'root') break;
@@ -473,14 +578,100 @@
             ];
         }
 
+        // --- RESIZE HANDLES ---
+        function getGlobalMatrix(nodeId) {
+            const chain = [];
+            let curr = SCENE.objects[nodeId];
+            while (curr) {
+                chain.unshift(curr);
+                if (!curr.parent) break;
+                curr = SCENE.objects[curr.parent];
+            }
+            let mat = [1, 0, 0, 1, 0, 0];
+            chain.forEach(n => { mat = multiplyMatrices(mat, getObjectMatrix(n)); });
+            return mat;
+        }
+
+        // Local-space corner points used as resize handles. Only shapes with a
+        // simple size parameter (width/height or radius) get handles.
+        function getResizeHandles(node) {
+            if (node.type === 'rectangle') {
+                const w = node.width, h = node.height;
+                return [{x: 0, y: 0}, {x: w, y: 0}, {x: w, y: h}, {x: 0, y: h}];
+            }
+            if (node.type === 'circle' || node.type === 'regularPolygon') {
+                const r = node.radius;
+                return [{x: -r, y: -r}, {x: r, y: -r}, {x: r, y: r}, {x: -r, y: r}];
+            }
+            if (node.type === 'line') {
+                return [{x: 0, y: 0}, {x: node.x2 - node.x, y: node.y2 - node.y}];
+            }
+            if (node.type === 'polygon' && node.vertices) {
+                return node.vertices.map(v => ({x: v[0], y: v[1]}));
+            }
+            return [];
+        }
+
+        function hitTestResizeHandles(pos) {
+            const tolerance = 2.5;
+            for (const id of STATE.selectedIds) {
+                const node = SCENE.objects[id];
+                if (!node) continue;
+                const handles = getResizeHandles(node);
+                if (handles.length === 0) continue;
+                const globalMat = getGlobalMatrix(id);
+                for (let i = 0; i < handles.length; i++) {
+                    const wp = transformPoint(handles[i].x, handles[i].y, globalMat);
+                    if (Math.abs(wp.x - pos.x) <= tolerance && Math.abs(wp.y - pos.y) <= tolerance) {
+                        return {nodeId: id, globalMat, corner: i};
+                    }
+                }
+            }
+            return null;
+        }
+
+        // Local corner coordinates of the rectangle opposite the given corner index.
+        function oppositeRectCorner(cornerIndex, width, height) {
+            const corners = [{x: 0, y: 0}, {x: width, y: 0}, {x: width, y: height}, {x: 0, y: height}];
+            return corners[(cornerIndex + 2) % 4];
+        }
+
+        // Finds the closest polygon edge to a canvas point and where along it to
+        // insert a new vertex. Returns null if no edge is within tolerance.
+        function hitTestPolygonEdge(node, globalMat, pos) {
+            const invMat = invertMatrix(globalMat);
+            if (!invMat || !node.vertices) return null;
+            const local = transformPoint(pos.x, pos.y, invMat);
+            const vs = node.vertices;
+            const tolerance = 2;
+
+            for (let i = 0; i < vs.length; i++) {
+                const a = vs[i], b = vs[(i + 1) % vs.length];
+                const dx = b[0] - a[0], dy = b[1] - a[1];
+                const lenSq = dx * dx + dy * dy;
+                let t = lenSq !== 0 ? ((local.x - a[0]) * dx + (local.y - a[1]) * dy) / lenSq : 0;
+                t = Math.max(0, Math.min(1, t));
+                const px = a[0] + t * dx, py = a[1] + t * dy;
+                const dist = Math.sqrt((local.x - px) ** 2 + (local.y - py) ** 2);
+                if (dist <= tolerance) {
+                    return {insertIndex: i + 1, point: [Math.round(local.x), Math.round(local.y)]};
+                }
+            }
+            return null;
+        }
+
         // --- RENDERING ---
         function hexToRgba(hex) {return hex;}
 
-        function renderCanvas() {
+        function renderSceneOnly() {
             ctx.fillStyle = '#000000';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             renderNode(SCENE.root, [1, 0, 0, 1, 0, 0]);
+        }
+
+        function renderCanvas() {
+            renderSceneOnly();
 
             if (STATE.isDrawing && STATE.tool !== 'select' && STATE.tool !== 'polygon') {
                 renderPreview();
@@ -656,17 +847,62 @@
 
             ctx.save();
             ctx.setTransform(1, 0, 0, 1, 0, 0);
-            ctx.strokeStyle = '#00ccff';
-            ctx.lineWidth = 1;
 
             if (minX !== Infinity) {
-                ctx.strokeRect(minX, minY, maxX - minX, maxY - minY);
+                const w = maxX - minX, h = maxY - minY;
+
+                // dark halo so the outline stays visible over any background color
+                ctx.strokeStyle = 'rgba(0, 0, 0, 0.7)';
+                ctx.lineWidth = 3;
+                ctx.setLineDash([]);
+                ctx.strokeRect(minX, minY, w, h);
+
+                // dashed accent line on top
+                ctx.strokeStyle = '#00e5ff';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([3, 2]);
+                ctx.strokeRect(minX, minY, w, h);
+                ctx.setLineDash([]);
             }
 
-            const worldPos = transformPoint(node.pivotX || 0, node.pivotY || 0, globalMat);
+            // resize handles
+            const handles = getResizeHandles(node);
+            const hs = node.type === 'polygon' ? 0.8 : 1.5;
+            const handleColor = node.type === 'polygon' ? '#2ecc40' : '#00e5ff';
+            handles.forEach(hpt => {
+                const wp = transformPoint(hpt.x, hpt.y, globalMat);
+                ctx.fillStyle = handleColor;
+                ctx.fillRect(wp.x - hs, wp.y - hs, hs * 2, hs * 2);
+                ctx.strokeStyle = 'rgba(0, 0, 0, 0.8)';
+                ctx.lineWidth = 0.5;
+                ctx.strokeRect(wp.x - hs, wp.y - hs, hs * 2, hs * 2);
+            });
 
-            ctx.fillStyle = '#f00';
-            ctx.fillRect(worldPos.x - 0.5, worldPos.y - 0.5, 1, 1);
+            // pivot marker: crosshair with contrasting outline
+            const worldPos = transformPoint(node.pivotX || 0, node.pivotY || 0, globalMat);
+            ctx.strokeStyle = 'rgba(0, 0, 0, 0.8)';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(worldPos.x - 3, worldPos.y);
+            ctx.lineTo(worldPos.x + 3, worldPos.y);
+            ctx.moveTo(worldPos.x, worldPos.y - 3);
+            ctx.lineTo(worldPos.x, worldPos.y + 3);
+            ctx.stroke();
+
+            ctx.strokeStyle = '#ff3b3b';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(worldPos.x - 3, worldPos.y);
+            ctx.lineTo(worldPos.x + 3, worldPos.y);
+            ctx.moveTo(worldPos.x, worldPos.y - 3);
+            ctx.lineTo(worldPos.x, worldPos.y + 3);
+            ctx.stroke();
+
+            ctx.fillStyle = '#ff3b3b';
+            ctx.beginPath();
+            ctx.arc(worldPos.x, worldPos.y, 1, 0, Math.PI * 2);
+            ctx.fill();
+
             ctx.restore();
         }
 
@@ -801,11 +1037,66 @@
             return false;
         }
 
+        document.addEventListener('keydown', e => {
+            const typingInField = ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName);
+            if (typingInField) return;
+
+            if (e.shiftKey && e.key.toLowerCase() === 'g') {
+                e.preventDefault();
+                groupSelected();
+            } else if (e.key.toLowerCase() === 'd') {
+                e.preventDefault();
+                deleteSelected();
+            }
+        });
+
         canvas.addEventListener('mousedown', e => {
             const pos = getMousePos(e);
             STATE.currentMouse = pos;
 
             if (STATE.tool === 'select') {
+                const handleHit = hitTestResizeHandles(pos);
+                if (handleHit) {
+                    const node = SCENE.objects[handleHit.nodeId];
+                    STATE.isResizing = true;
+                    STATE.resizeNodeId = handleHit.nodeId;
+                    STATE.resizeInvMat = invertMatrix(handleHit.globalMat);
+                    STATE.resizeStart = {
+                        width: node.width,
+                        height: node.height,
+                        radius: node.radius,
+                        x: node.x,
+                        y: node.y,
+                        rotation: node.rotation || 0
+                    };
+
+                    if (node.type === 'rectangle') {
+                        const corner = handleHit.corner;
+                        const anchorLocal = oppositeRectCorner(corner, node.width, node.height);
+                        const anchorGlobal = transformPoint(anchorLocal.x, anchorLocal.y, handleHit.globalMat);
+                        const rotMat = getObjectMatrix({rotation: node.rotation || 0, pivotX: 0, pivotY: 0, x: 0, y: 0});
+                        const f0Mat = getObjectMatrix({rotation: node.rotation || 0, pivotX: node.pivotX || 0, pivotY: node.pivotY || 0, x: 0, y: 0});
+                        STATE.resizeStart.corner = corner;
+                        STATE.resizeStart.anchorGlobal = anchorGlobal;
+                        STATE.resizeStart.invRotMat = invertMatrix(rotMat);
+                        STATE.resizeStart.f0Mat = f0Mat;
+                    } else if (node.type === 'line') {
+                        const corner = handleHit.corner;
+                        const handles = getResizeHandles(node);
+                        const anchorLocal = handles[1 - corner];
+                        const anchorGlobal = transformPoint(anchorLocal.x, anchorLocal.y, handleHit.globalMat);
+                        const rotMat = getObjectMatrix({rotation: node.rotation || 0, pivotX: 0, pivotY: 0, x: 0, y: 0});
+                        const f0Mat = getObjectMatrix({rotation: node.rotation || 0, pivotX: node.pivotX || 0, pivotY: node.pivotY || 0, x: 0, y: 0});
+                        STATE.resizeStart.corner = corner;
+                        STATE.resizeStart.anchorGlobal = anchorGlobal;
+                        STATE.resizeStart.invRotMat = invertMatrix(rotMat);
+                        STATE.resizeStart.f0Mat = f0Mat;
+                    } else if (node.type === 'polygon') {
+                        STATE.resizeStart.vertexIndex = handleHit.corner;
+                    }
+                    return;
+                }
+
                 const hitId = hitTest(pos.x, pos.y);
 
                 if (hitId) {
@@ -853,6 +1144,8 @@
                         STATE.dragOffsets[id] = {
                             initialX: o.x,
                             initialY: o.y,
+                            initialX2: o.x2,
+                            initialY2: o.y2,
                             clickX: pos.x,
                             clickY: pos.y
                         };
@@ -881,30 +1174,63 @@
             STATE.currentMouse = pos;
             statusEl.innerText = `X: ${Math.round(pos.x)} Y: ${Math.round(pos.y)}`;
 
-            if (STATE.tool === 'select' && STATE.isDragging) {
-                STATE.selectedIds.forEach(id => {
-                    const off = STATE.dragOffsets[id];
-                    const o = SCENE.objects[id];
-                    o.x = Math.round(off.initialX + (pos.x - off.clickX));
-                    o.y = Math.round(off.initialY + (pos.y - off.clickY));
-                });
+            if (STATE.isResizing) {
+                const node = SCENE.objects[STATE.resizeNodeId];
+                const rs = STATE.resizeStart;
+
+                if (node.type === 'rectangle') {
+                    // Keep the opposite corner fixed at rs.anchorGlobal: derive the
+                    // drag vector in the shape's un-rotated local axes, then re-anchor.
+                    const v = transformPoint(pos.x - rs.anchorGlobal.x, pos.y - rs.anchorGlobal.y, rs.invRotMat);
+                    const signs = [[-1, -1], [1, -1], [1, 1], [-1, 1]][rs.corner];
+                    const newWidth = Math.max(1, Math.round(v.x * signs[0]));
+                    const newHeight = Math.max(1, Math.round(v.y * signs[1]));
+
+                    const anchorLocalNew = oppositeRectCorner(rs.corner, newWidth, newHeight);
+                    const anchorF = transformPoint(anchorLocalNew.x, anchorLocalNew.y, rs.f0Mat);
+
+                    node.width = newWidth;
+                    node.height = newHeight;
+                    node.x = Math.round(rs.anchorGlobal.x - anchorF.x);
+                    node.y = Math.round(rs.anchorGlobal.y - anchorF.y);
+                } else if (node.type === 'circle' || node.type === 'regularPolygon') {
+                    const local = transformPoint(pos.x, pos.y, STATE.resizeInvMat);
+                    // Handles sit at the bounding square's corners (distance r*sqrt2 from
+                    // the center), so divide out that factor to avoid a jump on grab.
+                    node.radius = Math.max(1, Math.round(Math.sqrt(local.x * local.x + local.y * local.y) / Math.SQRT2));
+                } else if (node.type === 'line') {
+                    // Same opposite-endpoint-anchored approach as the rectangle case.
+                    const v = transformPoint(pos.x - rs.anchorGlobal.x, pos.y - rs.anchorGlobal.y, rs.invRotMat);
+                    if (rs.corner === 1) {
+                        node.x2 = Math.round(rs.x + v.x);
+                        node.y2 = Math.round(rs.y + v.y);
+                    } else {
+                        const lNew = {x: -v.x, y: -v.y};
+                        const anchorF = transformPoint(lNew.x, lNew.y, rs.f0Mat);
+                        node.x = Math.round(rs.anchorGlobal.x - anchorF.x);
+                        node.y = Math.round(rs.anchorGlobal.y - anchorF.y);
+                        node.x2 = Math.round(node.x + lNew.x);
+                        node.y2 = Math.round(node.y + lNew.y);
+                    }
+                } else if (node.type === 'polygon') {
+                    // Each vertex is independent local geometry, no anchor needed.
+                    const local = transformPoint(pos.x, pos.y, STATE.resizeInvMat);
+                    node.vertices[rs.vertexIndex] = [Math.round(local.x), Math.round(local.y)];
+                }
+
                 updatePropertiesPanel();
                 renderCanvas();
             }
-            else if (STATE.isDrawing || STATE.tool === 'polygon') {
-                renderCanvas();
-            }
-        }); canvas.addEventListener('mousemove', e => {
-            const pos = getMousePos(e);
-            STATE.currentMouse = pos;
-            statusEl.innerText = `X: ${Math.round(pos.x)} Y: ${Math.round(pos.y)}`;
-
-            if (STATE.tool === 'select' && STATE.isDragging) {
+            else if (STATE.tool === 'select' && STATE.isDragging) {
                 STATE.selectedIds.forEach(id => {
                     const off = STATE.dragOffsets[id];
                     const o = SCENE.objects[id];
                     o.x = Math.round(off.initialX + (pos.x - off.clickX));
                     o.y = Math.round(off.initialY + (pos.y - off.clickY));
+                    if (o.type === 'line') {
+                        o.x2 = Math.round(off.initialX2 + (pos.x - off.clickX));
+                        o.y2 = Math.round(off.initialY2 + (pos.y - off.clickY));
+                    }
                 });
                 updatePropertiesPanel();
                 renderCanvas();
@@ -915,7 +1241,13 @@
         });
 
         canvas.addEventListener('mouseup', e => {
-            if (STATE.tool === 'select') {
+            if (STATE.isResizing) {
+                STATE.isResizing = false;
+                STATE.resizeNodeId = null;
+                STATE.resizeInvMat = null;
+                STATE.resizeStart = null;
+            }
+            else if (STATE.tool === 'select') {
                 STATE.isDragging = false;
             }
             else if (STATE.tool !== 'polygon' && STATE.isDrawing) {
@@ -926,12 +1258,29 @@
 
         canvas.addEventListener('dblclick', e => {
             if (STATE.tool === 'polygon') {
+                // A double-click fires two mousedowns, each pushing a vertex at
+                // (almost) the same spot - drop the duplicate before finishing.
+                STATE.polyVertices.pop();
                 finishPoly();
                 return;
             }
 
             if (STATE.tool === 'select') {
                 const pos = getMousePos(e);
+
+                if (STATE.selectedIds.length === 1) {
+                    const selNode = SCENE.objects[STATE.selectedIds[0]];
+                    if (selNode && selNode.type === 'polygon') {
+                        const edgeHit = hitTestPolygonEdge(selNode, getGlobalMatrix(selNode.id), pos);
+                        if (edgeHit) {
+                            selNode.vertices.splice(edgeHit.insertIndex, 0, edgeHit.point);
+                            renderCanvas();
+                            updatePropertiesPanel();
+                            return;
+                        }
+                    }
+                }
+
                 const hitId = hitTest(pos.x, pos.y);
 
                 if (hitId) {
@@ -982,6 +1331,23 @@
                 }
             }
         });
+
+        canvas.addEventListener('contextmenu', e => {
+            e.preventDefault();
+            if (STATE.tool !== 'select') return;
+
+            const pos = getMousePos(e);
+            const handleHit = hitTestResizeHandles(pos);
+            if (!handleHit) return;
+
+            const node = SCENE.objects[handleHit.nodeId];
+            if (node.type === 'polygon' && node.vertices.length > 3) {
+                node.vertices.splice(handleHit.corner, 1);
+                updatePropertiesPanel();
+                renderCanvas();
+            }
+        });
+
         function finishShape(endPos) {
             const start = STATE.drawStartPos;
             let props = {
@@ -1141,8 +1507,8 @@
         function updatePropertiesPanel() {
             propPanelEl.innerHTML = '';
             if (STATE.selectedIds.length !== 1) {
-                if (STATE.selectedIds.length > 1) propPanelEl.innerHTML = '<p style="color:#888; text-align:center">Multiple objects selected</p>';
-                else propPanelEl.innerHTML = '<p style="color:#888; text-align:center">No selection</p>';
+                if (STATE.selectedIds.length > 1) propPanelEl.innerHTML = '<p style="color:#888; text-align:center">Vybráno více objektů</p>';
+                else propPanelEl.innerHTML = '<p style="color:#888; text-align:center">Nic není vybráno</p>';
                 return;
             }
 
@@ -1167,50 +1533,36 @@
                 propPanelEl.appendChild(div);
             };
 
-            createInput('Name', 'text', obj.name, 'name');
+            createInput('Název', 'text', obj.name, 'name');
             createInput('X', 'number', obj.x, 'x');
             createInput('Y', 'number', obj.y, 'y');
             createInput('Z', 'number', obj.z, 'z');
-            createInput('Rotation', 'number', obj.rotation, 'rotation');
-            createInput('Color', 'color', obj.color, 'color');
-            createInput('Pivot X', 'number', obj.pivotX || 0, 'pivotX');
-            createInput('Pivot Y', 'number', obj.pivotY || 0, 'pivotY');
+            createInput('Rotace', 'number', obj.rotation, 'rotation');
+            createInput('Barva', 'color', obj.color, 'color');
+            createInput('Střed X', 'number', obj.pivotX || 0, 'pivotX');
+            createInput('Střed Y', 'number', obj.pivotY || 0, 'pivotY');
 
             if (obj.type !== 'collection' && obj.type !== 'line') {
-                createInput('Fill', 'checkbox', obj.fill, 'fill');
+                createInput('Výplň', 'checkbox', obj.fill, 'fill');
             }
 
             if (obj.type === 'rectangle') {
-                createInput('Width', 'number', obj.width, 'width');
-                createInput('Height', 'number', obj.height, 'height');
+                createInput('Šířka', 'number', obj.width, 'width');
+                createInput('Výška', 'number', obj.height, 'height');
             } else if (obj.type === 'circle' || obj.type === 'regularPolygon') {
-                createInput('Radius', 'number', obj.radius, 'radius');
+                createInput('Poloměr', 'number', obj.radius, 'radius');
             }
             if (obj.type === 'regularPolygon') {
-                createInput('Sides', 'number', obj.sides, 'sides');
+                createInput('Strany', 'number', obj.sides, 'sides');
             }
             if (obj.type === 'line') {
                 createInput('X2', 'number', obj.x2, 'x2');
                 createInput('Y2', 'number', obj.y2, 'y2');
             }
-
-            if (obj.type !== 'collection') {
-                const sep = document.createElement('div');
-                sep.style.borderTop = '1px solid #444';
-                sep.style.margin = '10px 0';
-                propPanelEl.appendChild(sep);
-                createInput('Collider', 'checkbox', obj.hasCollider, 'hasCollider');
-            }
         }
 
         function generateCode() {
-            let c = `async function generatedScene() {\n`;
-            c += `\tsetupSpi();\n`;
-            c += `\tconst renderer = new Renderer(64, 64);\n`;
-            c += `\tconst renderBuffer = new ArrayBuffer(64 * 64 * 3);\n`;
-            c += `\tconst syncBuffer = buildSyncBuffer();\n`;
-            c += `\tconst modesetBuffer = buildModesetBuffer(64, Format.RGB_888);`;
-            c += `\tconst scene = new Collection({ x: 0, y: 0, color: [0,0,0,1] });\n\n`;
+            let c = `const scene = new Collection({ x: 0, y: 0, z: 0 });\n\n`;
 
             const usedNames = new Set();
 
@@ -1230,70 +1582,71 @@
                 }
                 usedNames.add(safeName);
 
-                const colStr = `[${hexToRgbArr(node.color)}]`;
+                const colStr = hexToRgbCall(node.color);
 
                 if (node.type === 'collection') {
-                    c += `\tconst ${safeName} = new Collection({ x: ${node.x}, y: ${node.y}, color: ${colStr}, z: ${node.z} });\n`;
-                    c += `\t${parentVarName}.add(${safeName});\n`;
-                    if (node.rotation) c += `\t${safeName}.rotate(${node.rotation});\n\n`;
-                    if (node.pivotX || node.pivotY) c += `\t${safeName}.setPivot(${node.pivotX || node.x}, ${node.pivotY || node.y});\n`;
+                    c += `const ${safeName} = new Collection({ x: ${node.x}, y: ${node.y}, z: ${node.z} });\n`;
+                    c += `${parentVarName}.add(${safeName});\n`;
+                    if (node.rotation) c += `${safeName}.setRotationAngle(${node.rotation});\n`;
+                    if (node.pivotX || node.pivotY) c += `${safeName}.setPivot(${node.pivotX || 0}, ${node.pivotY || 0});\n`;
+                    c += `\n`;
                     if (node.children) {
                         node.children.forEach(childId => processNode(childId, safeName));
                     }
                 }
                 else {
                     let className = '';
-                    let props = `\t\tx: ${node.x}, y: ${node.y},\n`;
-                    props += `\t\tcolor: ${colStr},\n`;
-                    props += `\t\tz: ${node.z},\n`;
+                    let props = `\tx: ${node.x}, y: ${node.y},\n`;
+                    props += `\tcolor: ${colStr},\n`;
+                    props += `\tz: ${node.z},\n`;
 
                     if (node.type === 'rectangle') {
                         className = 'Rectangle';
-                        props += `\t\twidth: ${node.width}, height: ${node.height},\n\t\tfill: ${node.fill}`;
+                        props += `\twidth: ${node.width}, height: ${node.height},\n\tfill: ${node.fill}`;
                     } else if (node.type === 'circle') {
                         className = 'Circle';
-                        props += `\t\tradius: ${node.radius},\n\t\tfill: ${node.fill}`;
+                        props += `\tradius: ${node.radius},\n\tfill: ${node.fill}`;
                     } else if (node.type === 'line') {
                         className = 'LineSegment';
-                        props += `\t\tx2: ${node.x2}, y2: ${node.y2}`;
+                        props += `\tx2: ${node.x2}, y2: ${node.y2}`;
                     } else if (node.type === 'point') {
                         className = 'Point';
                     } else if (node.type === 'regularPolygon') {
                         className = 'RegularPolygon';
-                        props += `\t\tradius: ${node.radius}, sides: ${node.sides},\n\t\tfill: ${node.fill}`;
+                        props += `\tradius: ${node.radius}, sides: ${node.sides},\n\tfill: ${node.fill}`;
                     } else if (node.type === 'polygon') {
                         className = 'Polygon';
-                        props += `\t\tfill: ${node.fill},\n\t\tvertices: ${JSON.stringify(node.vertices)}`;
+                        props += `\tfill: ${node.fill},\n\tvertices: ${JSON.stringify(node.vertices)}`;
                     }
 
-                    c += `\tconst ${safeName} = new ${className}({\n${props}\n  });\n`;
-                    if (node.rotation) c += `\t${safeName}.rotate(${node.rotation});\n`;
-                    if (node.hasCollider) c += `\t${safeName}.addCollider();\n`;
-                    if (node.pivotX || node.pivotY) c += `\t${safeName}.setPivot(${node.pivotX || node.x}, ${node.pivotY || node.y});\n`;
-                    c += `\t${parentVarName}.add(${safeName});\n\n`;
+                    c += `const ${safeName} = new ${className}({\n${props}\n});\n`;
+                    if (node.rotation) c += `${safeName}.setRotationAngle(${node.rotation});\n`;
+                    if (node.pivotX || node.pivotY) c += `${safeName}.setPivot(${node.pivotX || 0}, ${node.pivotY || 0});\n`;
+                    c += `${parentVarName}.add(${safeName});\n\n`;
                 }
             };
             processNode('root', 'scene');
-            c += `\twhile (true) {\n\t\trenderer.render(scene, renderBuffer, true, Format.RGB_888, -1);\n\t\tsendRpHub75Frame(syncBuffer, modesetBuffer, renderBuffer);\n\t\tawait sleep(100);\n\t}\n}`;
-            codeOutputEl.value = c;
+            c += `return scene;\n`;
+
+            const indented = c.split('\n').map(line => line ? '\t' + line : line).join('\n');
+            codeOutputEl.value = `function generateScene() {\n${indented}}\n`;
+        }
+
+        function hexToRgbCall(hex) {
+            if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
+                let c = hex.substring(1).split('');
+                if (c.length == 3) {
+                    c = [c[0], c[0], c[1], c[1], c[2], c[2]];
+                }
+                const num = parseInt(c.join(''), 16);
+                return `rgb(${(num >> 16) & 255}, ${(num >> 8) & 255}, ${num & 255})`;
+            }
+            return 'rgb(255, 255, 255)';
         }
 
         function copyToClipboard() {
             codeOutputEl.select();
             document.execCommand('copy');
-        }
-
-        function hexToRgbArr(hex) {
-            let c;
-            if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
-                c = hex.substring(1).split('');
-                if (c.length == 3) {
-                    c = [c[0], c[0], c[1], c[1], c[2], c[2]];
-                }
-                c = '0x' + c.join('');
-                return [(c >> 16) & 255, (c >> 8) & 255, c & 255, 1];
-            }
-            return [255, 255, 255, 1];
         }
 
         init();
