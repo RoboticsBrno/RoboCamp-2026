@@ -66,6 +66,13 @@ nastavíme barvu pixelu a potvrdíme změny. Příklad:
 !!! warning "Upozornění"
     Dokud není zavolána funkce `show`, změny se nepropíšou!
 
+!!! warning "Displej vzhůru nohama?"
+    Podle toho, jak je displej namontovaný, se může stát, že bude otočený o 180°. V takovém případě stačí funkci `createSaturn` předat parametr `flip`:
+
+    ```ts
+    const saturn = createSaturn(true);
+    ```
+
 ## Zadání A
 
 Nakresli semafor: zelenou, žlutou a červenou tečku vedle sebe.
