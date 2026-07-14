@@ -256,17 +256,23 @@ Napište funkci `drawPolygon()`, která vezme 2 argumenty: počet stran a délku
     async function drawPolygon(sides: number, size: number): Promise<void> {
         let x = 32;
         let y = 32;
+        let headingRad = 0;
+
         for (let side: number = 0; side < sides; side++) {
-            for (let i: number = 0; i < size; i++) {
-                display.setPixel(x, y, colors.white);
-                x += Math.cos(turnAngle(sides) * Math.PI / 180);
-                y += Math.sin(turnAngle(sides) * Math.PI / 180);
+            const dx = Math.cos(headingRad);
+            const dy = Math.sin(headingRad);
+
+            for (let i: number = 1; i < size; i++) {
+                display.setPixel(Math.round(x), Math.round(y), colors.white);
+                x += dx;
+                y += dy;
             }
+            headingRad += turnAngle(sides) * Math.PI / 180;
         }
         display.show();
     }
 
-    await drawPolygon(5, 10);
+    await drawPolygon(4, 10);
     ```
 
 ## Výstupní úkol V1
