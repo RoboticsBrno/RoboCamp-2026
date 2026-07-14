@@ -49,9 +49,10 @@ for (let i = 0; i < temperatures.length; i++) {
 
 ## Asynchronní funkce
 
-Program vykonává úkony postupně. Pokud bychom čekali třeba na zmáčknutí tlačítka, program by zamrzl, dokud by se tlačítko nezmáčklo. Pokud si jako příklad vezmeme sanitku, která bliká a zároveň čeká na vstup "jet dopředu", tak pokud by nebyl zmáčknutý plyn, neblikala by ani houkačka. Aby program mohl dělat více věcí najednou, používají se asynchronní funkce.
+Některé operace trvají delší dobu. Například čekání na stisk tlačítka, načtení dat ze senzoru nebo krátká časová prodleva. Kdyby program při těchto operacích pouze čekal, nemohl by mezitím dělat nic jiného.
 
-### `async`
+Asynchronní funkce umožňují programu začít takovou operaci a pokračovat v jiné práci, zatímco na její dokončení čeká. Díky tomu může robot například současně blikat LEDkami, reagovat na tlačítka nebo ovládat motory, i když zrovna čeká na data ze senzoru.
+
 
 `async` z funkce udělá asynchronní funkci. Když ji zavoláme, program může pokračovat dál.
 
@@ -68,7 +69,7 @@ prepareRobot();
 
 ### `await`
 
-`await` použijeme uvnitř `async` funkce tam, kde se má na chvíli počkat.
+`await` použijeme uvnitř `async` funkce tam, kde se má na chvíli počkat. V hlavním programu mimo funkce také můžeme použít `await`.
 
 ```ts
 async function countDown() {
@@ -78,6 +79,24 @@ async function countDown() {
     }
     console.log("Start!");
 }
+```
+
+`async` a `await` můžeme používat i v `setInterval`/`setTimeout`, `button.on` a podobné.
+
+```ts
+setInterval(async () => {
+    console.log("Vypis 1");
+    await sleep(500);
+    console.log("Vypis 2");
+}, 10000);
+```
+
+```ts
+button.on("click", async () => {
+    console.log("Kliknuto!");
+    await sleep(1000);
+    console.log("Po jedné sekundě");
+});
 ```
 
 `await` se hodí hlavně pro věci jako čekání, animace nebo čtení dat z modulu.
