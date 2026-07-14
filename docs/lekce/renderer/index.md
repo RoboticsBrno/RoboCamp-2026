@@ -131,6 +131,14 @@ Ve svém projektu si vytvořte složku `assets` v **kořenové** složce projekt
 
 ![správný formát projektu](./assets/format-projektu.png)
 
+Musíte si poté otevřít soubor `package.json` kde si musíte najít nastavení `"files"`
+
+![originální formát souboru package.json](./assets/orig-package.png)
+
+Kde si dotejte `,"assets/**/*"` po `"build/**/*"`, jak to správně má vypadat:
+
+![nový formát souboru package.json](./assets/novy-package.png)
+
 Poté se textura dá načíst takhle, kde `#!ts "{JMENO_SOUBORU}.bmp"` změňte za svůj obrázek:
 
 ```ts
