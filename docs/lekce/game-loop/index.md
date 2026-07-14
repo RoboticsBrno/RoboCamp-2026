@@ -39,7 +39,6 @@ Následující ukázka demonstruje detekci kolizí mezi dvěma kružnicemi. Jedn
 
 ```ts
 ...
-
 let circleA = new Circle({
     x: 32,
     y: 32,
@@ -48,8 +47,8 @@ let circleA = new Circle({
 });
 loop.addShape(circleA);
 let circleB = new Circle({
-    x: 48,
-    y: 48,
+    x: 32,
+    y: 32,
     radius: 8,
     color: colors.blue,
 });
@@ -57,13 +56,14 @@ loop.addShape(circleB);
 
 let dx = 1;
 loop.on("tick", (delta) => {
-    circleB.move(dx, 0);
-    if (circleB.x > 64 || circleB.x < 0) {
+    let x = circleB.getX() + dx;
+    circleB.setX(x);
+    if (x > 64 || x < 0) {
         dx *= -1;
     }
 });
 
-loop.on("collision", (shapeA, shapeB) => {
-    console.log("Kolize mezi tvary:", shapeA, shapeB);
+loop.on("collision", circleA, circleB, () => {
+    console.log(`Detekována kolize ${Date.now()}`);
 });
 ```
