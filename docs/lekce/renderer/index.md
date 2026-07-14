@@ -119,6 +119,53 @@ Barevné vlastnosti tvarů lze nahradit texturou (`Texture` z knihovny `renderer
 - `setTextureRotation(rotation)`, `setTextureOffset(offsetX, offsetY)`, `setTextureScale(scaleX, scaleY)` – natočení, posun a měřítko vzorkování textury na tvaru.
 - `setUVRotation`, `setUVOffsetX`/`setUVOffsetY`, `setUVScaleX`/`setUVScaleY` – obdobné jemnější nastavení UV souřadnic.
 
+### Jak načíst textury do Jaculus
+
+Aby jste mohli nastavit své obrázky jako textury tvarů, musíte je přesunout do Saturnu.
+
+!!! danger "Upozornění"
+    `Renderer` umí ukázat jenom Bitmap obrázky (`.bmp`)!
+    Pomocí [online converteru](https://convert.town/jpg-to-bmp) si můžete překonvertovat na správný formát.
+
+Ve svém projektu si vytvořte složku `assets` v **kořenové** složce projektu. Tam si dejte obrázky v formátu BMP. Projekt by měl vypadat například takto:
+
+![správný formát projektu](./assets/format-projektu.png)
+
+Poté se textura dá načíst takhle, kde `#!ts "{JMENO_SOUBORU}.bmp"` změňte za svůj obrázek:
+
+```ts
+const obrazek = new Texture();
+obrazek.load("/data/code/assets/{JMENO_SOUBORU}.bmp")
+```
+Funkce `load` vyhodí `boolean` zda se textura uspěšně načetla. Využívejte toho aby jste předešli errorům.
+Zde je minimální příkladový kód pro zobrazení textury na čtverci:
+
+```ts
+import { GameLoop } from "game-loop";
+import { createSaturn } from "saturn";
+import { Rectangle } from "shapes";
+import * as colors from "colors";
+import { Texture } from "renderer";
+
+let sat = createSaturn();
+let loop = new GameLoop(sat.display);
+// vytvoříme si tvar na kterém chceme načíst texturu
+const ctverec = new Rectangle({x: 10, y: 0, color: colors.red, width:40, height:40, fill:true});
+loop.addShape(ctverec);
+// vytvoříme objekt Texture:
+const obrazek = new Texture();
+// nastaví aby se textura posouvala s objektem
+ctverec.setFixTexture(true);
+
+// if podmínka pro kontrolu zda obrázek v systému existuje, pokud ne tak vypíše error:
+const nactene = obrazek.load("/data/code/assets/obrazek.bmp");
+if(nactene) {
+    ctverec.setTexture(obrazek);
+} else {
+    console.error("Obrázek nebylo možné načíst!");
+}
+```
+
 ## Kolekce (`Collection`)
 
 `Collection` je tvar, který slouží jako **skupina jiných tvarů** – i kolekcí navzájem (kolekce se dají libovolně vnořovat). Sama dědí ze `Shape`, takže má pozici, rotaci, pivot i měřítko úplně stejně jako kterýkoliv jiný tvar.
