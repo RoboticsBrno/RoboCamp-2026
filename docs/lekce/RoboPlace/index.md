@@ -47,6 +47,8 @@ Protokol se v minulosti měnil. Zdrojový kód ukázkového klienta níže si o 
 
 Následující program je samostatný klient - stačí ho nahrát na desku a po spuštění nakreslí jeden pixel na sdílené plátno. Souřadnice a barvu si můžeš na začátku souboru libovolně upravit.
 
+Ke kreslení stačí zavolat funkci `drawOnCanvas(x, y, color)` - vše ostatní v souboru (skládání paketu, hlavička, odesílání) je jen její vnitřek, kterým se nemusíš zabývat. Barva se zadává stejně jako v knihovně `colors` - jako jedno číslo ve formátu `0xRRGGBB`, ať už napsané přímo (`0xf57da5`) nebo poskládané funkcí `colors.rgb(r, g, b)`.
+
 ```ts
 import { begin, sendBlob, on } from 'simpleradio';
 
@@ -58,16 +60,14 @@ import { begin, sendBlob, on } from 'simpleradio';
  *
  * Uprav X, Y a barvu níže a nahraj to do své desky.
  *   X a Y: 0-127 (pozice na plátně 128x128)
- *   R, G, B: 0-255 (kolik červené/zelené/modré)
+ *   COLOR: barva ve formátu 0xRRGGBB, stejně jako v knihovně `colors`
  *
  * Kdykoliv budeš chtít kreslit znovu, změň hodnoty a nahraj to znovu.
  */
 
 const X = 64;
 const Y = 64;
-const R = 255;
-const G = 0;
-const B = 255;
+const COLOR = 0xf57da5;
 
 // --- od tohoto místa dolů už nic upravovat nemusíš ---
 
@@ -111,7 +111,11 @@ function assertByte(name: string, value: number): void {
     }
 }
 
-function encodeDrawPacket(x: number, y: number, r: number, g: number, b: number): Uint8Array {
+function encodeDrawPacket(x: number, y: number, color: number): Uint8Array {
+    // Rozbalení 0xRRGGBB na jednotlivé kanály - stejný formát jako `colors.rgb`.
+    const r = (color >> 16) & 0xff;
+    const g = (color >> 8) & 0xff;
+    const b = color & 0xff;
     assertByte("r", r);
     assertByte("g", g);
     assertByte("b", b);
@@ -127,8 +131,11 @@ function encodeDrawPacket(x: number, y: number, r: number, g: number, b: number)
     return packet;
 }
 
-function drawOnCanvas(x: number, y: number, r: number, g: number, b: number) {
-    sendBlob(encodeDrawPacket(x, y, r, g, b));
+// Zavolej tuhle funkci - a jenom tuhle - abys nakreslil pixel na sdílené plátno.
+// Souřadnice (x, y) jsou v rozsahu 0-127, barva (color) ve formátu 0xRRGGBB -
+// stejně jako u `colors.rgb`/`colors.hexToRgb` z lekce o displeji.
+function drawOnCanvas(x: number, y: number, color: number) {
+    sendBlob(encodeDrawPacket(x, y, color));
 }
 
 const REPLY_WAIT_MS = 1000;
@@ -137,10 +144,9 @@ export async function placePlayer() {
     begin(RADIO_GROUP);
     on("string", (str) => console.log(`Server: ${str}`));
 
-    drawOnCanvas(10, 10, 167, 54, 230);
+    drawOnCanvas(X, Y, COLOR);
 
-    const hex = (n: number) => n.toString(16).padStart(2, '0');
-    console.log(`Nakresleno (${X}, ${Y}) barvou #${hex(R)}${hex(G)}${hex(B)}`);
+    console.log(`Nakresleno (${X}, ${Y}) barvou #${COLOR.toString(16).padStart(6, '0')}`);
 
     await sleep(REPLY_WAIT_MS);
 }
@@ -149,5 +155,5 @@ export async function placePlayer() {
 ## Vyzkoušej si
 
 1. Nahraj si ukázkový klient na svou desku beze změn a zkontroluj, že se na sdíleném plátně objeví tvůj pixel.
-2. Zkus si upravit `X`, `Y`, `R`, `G` a `B` na začátku souboru a nahrát program znovu - vyzkoušej, kam všude na plátně dokážeš kreslit.
+2. Zkus si upravit `X`, `Y` a `COLOR` na začátku souboru a nahrát program znovu - vyzkoušej, kam všude a jakou barvou dokážeš na plátně kreslit.
 3. Domluv se s kamarádem vedle sebe a zkuste kreslit na plátno současně ze dvou desek - uvidíte, jak se oba pixely objeví na stejném displeji.
