@@ -154,6 +154,7 @@ nav:
       - lekce/pokrocily-programatorsky-rychlokurz/index.md
       - lekce/game-loop/index.md
       - lekce/renderer/index.md
+      - lekce/RoboPlace/index.md
   - Rozšířující moduly:
       - moduly/index.md
       - moduly/dpad/index.md
