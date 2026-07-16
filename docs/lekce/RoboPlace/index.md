@@ -36,7 +36,7 @@ V hlavičce si všimni, že pro `VERSION` a `TYPE` je vyhrazený jen 1 bit - dok
 
 Protokol se v minulosti měnil. Zdrojový kód ukázkového klienta níže si o tom nechává poznámku - changelog poslední verze:
 
-**Verze 2**
+**Verze 1**
 
 - Opravena kontrola hranic souřadnic - souřadnice mimo rozsah se nově hlásí, místo aby se potichu zahodily.
 - Odstraněn nezdokumentovaný ladicí/řídicí kanál.
@@ -85,7 +85,7 @@ const COLOR = 0xf57da5;
  * | 6    | B (0-255)                                                   |
  */
 
-// Seznam změn verze 2:
+// Seznam změn verze 1:
 // - opravena kontrola hranic souřadnic - souřadnice mimo rozsah se nyní
 //   hlásí místo tichého zahození
 // - odstraněn nezdokumentovaný ladicí/řídicí kanál
