@@ -7,7 +7,7 @@ import { createSaturn, SaturnPins } from "saturn";
 import { GameLoop } from "game-loop";
 
 const saturn = createSaturn()
-const game_loop = new GameLoop(sat.display)
+const game_loop = new GameLoop(saturn.display)
 
 function generateScene() {
 	

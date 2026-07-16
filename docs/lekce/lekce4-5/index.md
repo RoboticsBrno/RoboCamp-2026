@@ -199,6 +199,7 @@
         adc.configure(SaturnPins.Pmod1.Pin1);
         adc.configure(SaturnPins.Pmod1.Pin2);
         const saturn = createSaturn();
+        const display = saturn.display
 
         setInterval(() => {
             let x = adc.read(SaturnPins.Pmod1.Pin1);
@@ -207,9 +208,9 @@
             let screenX = utils.map(x, 0, 1023, 0, 63);
             let screenY = utils.map(y, 0, 1023, 0, 63);
 
-            saturn.display.fill(colors.off);
-            saturn.display.setPixel(screenX, screenY, colors.green);
-            saturn.display.show();
+            display.fill(colors.off);
+            display.setPixel(screenX, screenY, colors.green);
+            display.show();
         }, 50);
         ```
 
@@ -230,6 +231,7 @@
         adc.configure(SaturnPins.Pmod1.Pin2);
 
         const saturn = createSaturn();
+        const display = saturn.display
 
         const btn = new Button(SaturnPins.Pmod1.Pin4);
 
@@ -240,14 +242,14 @@
             let screenX = utils.map(x, 0, 1023, 0, 63);
             let screenY = utils.map(y, 0, 1023, 0, 63);
 
-            saturn.display.fill(colors.off);
-            saturn.display.setPixel(screenX, screenY, colors.red);
-            saturn.display.show();
+            display.fill(colors.off);
+            display.setPixel(screenX, screenY, colors.red);
+            display.show();
         });
 
         btn.on("release", () => {
-            saturn.display.fill(colors.off);
-            saturn.display.show();
+            display.fill(colors.off);
+            display.show();
         });
         ```
 

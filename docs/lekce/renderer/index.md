@@ -141,39 +141,6 @@ Kde si dotejte `,"assets/**/*"` po `"build/**/*"`, jak to správně má vypadat:
 
 Poté se textura dá načíst takhle, kde `#!ts "{JMENO_SOUBORU}.bmp"` změňte za svůj obrázek:
 
-```ts
-const obrazek = new Texture();
-obrazek.load("/data/code/assets/{JMENO_SOUBORU}.bmp")
-```
-Funkce `load` vyhodí `boolean` zda se textura uspěšně načetla. Využívejte toho aby jste předešli errorům.
-Zde je minimální příkladový kód pro zobrazení textury na čtverci:
-
-```ts
-import { GameLoop } from "game-loop";
-import { createSaturn } from "saturn";
-import { Rectangle } from "shapes";
-import * as colors from "colors";
-import { Texture } from "renderer";
-
-let sat = createSaturn();
-let loop = new GameLoop(sat.display);
-// vytvoříme si tvar na kterém chceme načíst texturu
-const ctverec = new Rectangle({x: 10, y: 0, color: colors.red, width:40, height:40, fill:true});
-loop.addShape(ctverec);
-// vytvoříme objekt Texture:
-const obrazek = new Texture();
-// nastaví aby se textura posouvala s objektem
-ctverec.setFixTexture(true);
-
-// if podmínka pro kontrolu zda obrázek v systému existuje, pokud ne tak vypíše error:
-const nactene = obrazek.load("/data/code/assets/obrazek.bmp");
-if(nactene) {
-    ctverec.setTexture(obrazek);
-} else {
-    console.error("Obrázek nebylo možné načíst!");
-}
-```
-
 ## Kolekce (`Collection`)
 
 `Collection` je tvar, který slouží jako **skupina jiných tvarů** – i kolekcí navzájem (kolekce se dají libovolně vnořovat). Sama dědí ze `Shape`, takže má pozici, rotaci, pivot i měřítko úplně stejně jako kterýkoliv jiný tvar.
@@ -181,7 +148,7 @@ if(nactene) {
 ```ts
 import { Collection, Circle, Rectangle } from "shapes";
 
-const group = new Collection({ x: 32, y: 32 });
+const scene = new Collection({ x: 32, y: 32 });
 group.add(new Circle({ x: 0, y: 0, radius: 4, color: 0xff0000 }));
 group.add(new Rectangle({ x: 10, y: 0, width: 4, height: 4, color: 0x00ff00 }));
 ```
@@ -213,15 +180,75 @@ const robot = new Collection({ x: 32, y: 32 });
 robot.add(new Rectangle({ x: -4, y: -4, width: 8, height: 8, color: 0xffffff })); // tělo
 robot.add(new LineSegment({ x: 0, y: 0, x2: 8, y2: 0, color: 0xff0000 })); // "nos" ukazující směr
 
-loop.on("tick", () => {
+while (true) {
+    renderer.render()
     robot.rotate(2); // celý robot (i s nosem) se otáčí okolo svého středu
-});
+}
 ```
 
 ### Z-order v kolekcích
 
 Hodnota `z` (`setZ`/`getZ`) určuje pořadí vykreslování v rámci kolekce, do které je tvar přidán – tvary s vyšším `z` se vykreslují nad tvary s nižším `z`.
 
-## Formáty pixelů (`Format`)
+---
 
-Konstruktoru `Renderer` se předává formát výstupních pixelů (`Format.RGB_565_LITTLE`, `Format.RGBA_8888` apod.) a volitelná rotace celého obrazu po 90° krocích – v běžném použití přes `game-loop`/`saturn` se ale s `Renderer` a `Format` pracovat nemusí, o vykreslování se stará knihovna sama.
+## Jak používat renderer 
+
+```ts
+const obrazek = new Texture();
+obrazek.load("/data/code/assets/{JMENO_SOUBORU}.bmp")
+```
+
+Funkce `load` vyhodí `boolean` zda se textura uspěšně načetla. Využívejte toho aby jste předešli errorům.
+Zde je minimální příkladový kód pro zobrazení textury na čtverci:
+
+```ts
+import { createSaturn } from "saturn";
+import { Rectangle } from "shapes";
+import * as colors from "colors";
+import { Texture } from "renderer";
+
+
+// připravíme si objekty pro saturn a display
+const saturn = createSaturn();
+const display = saturn.display
+
+// inicializujeme renderer s požadovanými rozměry, formátem (nechte jak je), a otočením (0 = 0°, 1 = 90°...)
+const renderer = new Renderer(64, 64, Format.RGB_888, 1);
+
+// vytvoříme scénu do které budeme přidávat svoje objekty
+const scene = new Collection({ x: 0, y: 0, z: 0 });
+
+// vytvoříme si tvar na kterém chceme načíst texturu
+const ctverec = new Rectangle({x: 10, y: 0, color: colors.red, width:40, height:40, fill:true});
+
+// vytvoříme objekt Texture:
+const obrazek = new Texture();
+
+// if podmínka pro kontrolu zda obrázek v systému existuje, pokud ne tak vypíše error:
+const nactene = obrazek.load("/data/code/assets/obrazek.bmp");
+if(nactene) {
+    ctverec.setTexture(obrazek);
+} else {
+    console.error("Obrázek nebylo možné načíst!");
+}
+
+// nastaví aby se textura posouvala s objektem
+ctverec.setFixTexture(true);
+
+// přidáme si náš čtverec do scény
+scene.add(ctvrerec)
+
+// vytvoříme si nekonečnou smyčku kde budemě dělat to co potřebujeme
+while (true){
+
+    // ------------------------------------------------------ //
+    // Zde můžeme přidat kód který např. otáčí se čtvercem... //
+    // ------------------------------------------------------ //
+
+    // vykreslíme naši scénu na display, to musíme vždy na konci smyčky
+    renderer.render(scene, display.frame);
+    // počkáme chvíly ať to nebě ží až moc rychle
+    await sleep(10);
+}
+

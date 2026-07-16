@@ -210,12 +210,13 @@
         
         import { createSaturn } from "saturn";
 
-        const sat = createSaturn();
+        const saturn = createSaturn();
+        const display = saturn.display;
         
         // tento for loop prochází řádky, po Y od 0 do 64 (výška displeje)
-        for (let y = 0; y < sat.display.height;y++) { 
+        for (let y = 0; y < display.height;y++) { 
             // tento for loop prochází už každý bod na určeném řádku, po X od 0 do 64 (šířka displeje)
-            for (let x = 0; x <sat.display.width;x++){
+            for (let x = 0; x <display.width;x++){
                 //ZDE vykresluj pixely a vypočítej správné hodnoty barvy
             }
         }
@@ -229,23 +230,24 @@
         import { rgb } from "colors";
         import { createSaturn } from "saturn";
 
-        const sat = createSaturn();
+        const saturn = createSaturn();
+        const display = saturn.display;
 
         // tento for loop prochází řádky, po Y od 0 do 64 (výška displeje)
-        for (let y = 0; y < sat.display.height;y++) { 
+        for (let y = 0; y < display.height;y++) { 
             // tento for loop prochází už každý bod na určeném řádku, po X od 0 do 64 (šířka displeje)
-            for (let x = 0; x <sat.display.width;x++){ 
+            for (let x = 0; x <display.width;x++){ 
                 // přepočítáme souřadnici X tak, aby jsme dostali celý rozsah červené
-                let red = (x/sat.display.width)*255;
+                let red = (x/display.width)*255;
                 // přepočítáme souřadnici Y tak, aby jsme dostali celý rozsah modré
-                let blue = (y/sat.display.height)*255;
+                let blue = (y/display.height)*255;
                 
                 // pomocí dříve vypočítaných hodnotách nastavíme barvu na vybraný pixel.
-                sat.display.setPixel(x,y,rgb(red,0,blue));
+                display.setPixel(x,y,rgb(red,0,blue));
             }
         }
         // Nakonec vyzobrazíme všechny pixely na displeji.
-        sat.display.show();
+        display.show();
         ```
 
     ## Zadání výstupního úkolu V1

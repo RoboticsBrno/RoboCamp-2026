@@ -15,7 +15,7 @@ import { LineSegment } from "shapes";
 import * as colors from "colors";
 
 
-let saturn = createSaturn();
+const saturn = createSaturn();
 let loop = new GameLoop(saturn.display);
 
 let line = new LineSegment({

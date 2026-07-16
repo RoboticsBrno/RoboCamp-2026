@@ -7,17 +7,18 @@ import * as colors from "colors";
 adc.configure(SaturnPins.Pmod1.Pin1);
 adc.configure(SaturnPins.Pmod1.Pin2);
 
-const sat = createSaturn();
+const saturn = createSaturn();
+const display = saturn.display;
 
 const btn = new Button(SaturnPins.Pmod1.Pin4);
 
 btn.on("click", async () => {
     console.log("Button pressed!");
-    sat.display.fill(colors.red);
-    sat.display.show();
+    display.fill(colors.red);
+    display.show();
     await sleep(50);
-    sat.display.fill(colors.off);
-    sat.display.show();
+    display.fill(colors.off);
+    display.show();
 });
 
 
@@ -30,7 +31,7 @@ setInterval(() => {
 
     console.log(`X: ${x}, Y: ${y}, ScreenX: ${screenX}, ScreenY: ${screenY}`);
 
-    sat.display.fill(colors.off);
-    sat.display.setPixel(screenX, screenY, colors.green);
-    sat.display.show();
+    display.fill(colors.off);
+    display.setPixel(screenX, screenY, colors.green);
+    display.show();
 }, 50);
