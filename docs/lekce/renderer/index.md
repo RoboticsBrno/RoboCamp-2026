@@ -141,6 +141,46 @@ Kde si dotejte `,"assets/**/*"` po `"build/**/*"`, jak to správně má vypadat:
 
 Poté se textura dá načíst takhle, kde `#!ts "{JMENO_SOUBORU}.bmp"` změňte za svůj obrázek:
 
+### Jak používat textury
+```ts
+import { createSaturn } from "saturn";
+import { Rectangle } from "shapes";
+import * as colors from "colors";
+import { Texture } from "renderer";
+
+// připravíme si objekty pro saturn a game loop
+const saturn = createSaturn();
+const loop = new GameLoop(saturn.display)
+
+// vytvoříme si objekt Texture a načteme do něj texturu 
+const obrazek = new Texture();
+obrazek.load("/data/code/assets/{JMENO_SOUBORU}.bmp")
+
+// vytvoříme si tvar na kterém chceme načíst texturu
+const ctverec = new Rectangle({x: 10, y: 0, color: colors.red, width:40, height:40, fill:true});
+
+// nastaví aby se textura posouvala s objektem
+ctverec.setFixTexture(true);
+
+// nastavíme texturu čtverce
+ctverec.setTexture(obrazek);
+
+// přidáme náš čtverec do game loopy
+loop.addShape(ctverec);
+
+loop.on("tick", (delta) => {
+    // ------------------------------------------------------ //
+    // Zde můžeme přidat kód který např. otáčí se čtvercem... //
+    // ------------------------------------------------------ //
+});
+
+
+```
+
+Funkce `load` vyhodí `boolean` zda se textura uspěšně načetla. Využívejte toho aby jste předešli errorům.
+Zde je minimální příkladový kód pro zobrazení textury na čtverci:
+
+
 ## Kolekce (`Collection`)
 
 `Collection` je tvar, který slouží jako **skupina jiných tvarů** – i kolekcí navzájem (kolekce se dají libovolně vnořovat). Sama dědí ze `Shape`, takže má pozici, rotaci, pivot i měřítko úplně stejně jako kterýkoliv jiný tvar.
@@ -194,13 +234,6 @@ Hodnota `z` (`setZ`/`getZ`) určuje pořadí vykreslování v rámci kolekce, do
 
 ## Jak používat renderer 
 
-```ts
-const obrazek = new Texture();
-obrazek.load("/data/code/assets/{JMENO_SOUBORU}.bmp")
-```
-
-Funkce `load` vyhodí `boolean` zda se textura uspěšně načetla. Využívejte toho aby jste předešli errorům.
-Zde je minimální příkladový kód pro zobrazení textury na čtverci:
 
 ```ts
 import { createSaturn } from "saturn";
@@ -227,6 +260,7 @@ const obrazek = new Texture();
 
 // if podmínka pro kontrolu zda obrázek v systému existuje, pokud ne tak vypíše error:
 const nactene = obrazek.load("/data/code/assets/obrazek.bmp");
+
 if(nactene) {
     ctverec.setTexture(obrazek);
 } else {
@@ -252,3 +286,4 @@ while (true){
     await sleep(10);
 }
 
+```

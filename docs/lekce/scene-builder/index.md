@@ -17,7 +17,7 @@ function generateScene() {
 
 const scene = generateScene()
 
-gl.addShape(scene)
+game_loop.addShape(scene)
 ```
 
 [Builder](builder.html){ .md-button }
