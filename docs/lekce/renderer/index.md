@@ -143,6 +143,7 @@ Poté se textura dá načíst takhle, kde `#!ts "{JMENO_SOUBORU}.bmp"` změňte 
 
 ### Jak používat textury
 ```ts
+import { GameLoop } from "game-loop";
 import { createSaturn } from "saturn";
 import { Rectangle } from "shapes";
 import * as colors from "colors";
